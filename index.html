@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,421 +5,396 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Minecraft Enchantment Calculator</title>
-<meta name="description" content="Free Minecraft Enchantment Calculator. Check compatible and conflicting enchantments for your Minecraft items.">
+
+<meta name="description"
+content="Free Minecraft Enchantment Calculator. Check compatible and conflicting enchantments for swords, tools, armor, bows, tridents, maces and more.">
+
+<meta name="keywords"
+content="Minecraft enchantment calculator, Minecraft enchantments, enchantment compatibility, Minecraft Java, Minecraft Bedrock">
 
 <style>
-* {
-    box-sizing: border-box;
+
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #101214;
-    color: #fff;
+html{
+    scroll-behavior:smooth;
 }
 
-header {
-    padding: 25px 15px;
-    text-align: center;
-    background: #171a1d;
-    border-bottom: 1px solid #292d31;
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at top,#263b2c 0,#111614 35%,#090b0c 100%);
+    color:#fff;
+    min-height:100vh;
 }
 
-h1 {
-    margin: 0 0 10px;
-    font-size: 30px;
+/* TOP BAR */
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(10,13,11,.94);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid #304336;
+    padding:12px 18px;
 }
 
-header p {
-    color: #aaa;
-    margin: 0;
+.nav{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
 }
 
-.container {
-    width: 92%;
-    max-width: 800px;
-    margin: 30px auto;
+.logo{
+    font-weight:900;
+    font-size:18px;
 }
 
-.card {
-    background: #191d21;
-    border: 1px solid #292e33;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+.logo span{
+    color:#65d96f;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+.nav-links{
+    display:flex;
+    gap:8px;
 }
 
-select {
-    width: 100%;
-    padding: 13px;
-    border-radius: 8px;
-    border: 1px solid #444;
-    background: #101214;
-    color: white;
-    font-size: 16px;
+.nav-links button{
+    width:auto;
+    margin:0;
+    padding:8px 13px;
+    font-size:13px;
+    background:#182019;
+    border:1px solid #304336;
 }
 
-.enchantments {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
-    margin-top: 15px;
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:55px 18px 35px;
 }
 
-.enchant {
-    background: #111417;
-    border: 1px solid #30353a;
-    padding: 12px;
-    border-radius: 9px;
+.hero-badge{
+    display:inline-block;
+    padding:7px 13px;
+    border-radius:30px;
+    background:#17321d;
+    border:1px solid #315f39;
+    color:#8df398;
+    font-size:13px;
+    margin-bottom:16px;
 }
 
-.enchant label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    cursor: pointer;
+.hero h1{
+    margin:0;
+    font-size:clamp(30px,7vw,52px);
+    line-height:1.1;
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    border: 0;
-    border-radius: 9px;
-    background: #38a852;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
+.hero h1 span{
+    color:#67e271;
 }
 
-button:hover {
-    opacity: .9;
+.hero p{
+    max-width:650px;
+    margin:18px auto 0;
+    color:#aeb8b0;
+    line-height:1.6;
 }
 
-.result {
-    display: none;
-    margin-top: 20px;
-    padding: 18px;
-    border-radius: 10px;
-    background: #111417;
+/* MAIN */
+
+.container{
+    width:92%;
+    max-width:1050px;
+    margin:auto;
 }
 
-.success {
-    color: #54d66a;
+.card{
+    background:rgba(20,26,22,.94);
+    border:1px solid #2b3b30;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 10px 35px rgba(0,0,0,.22);
 }
 
-.warning {
-    color: #ffcc55;
+.card-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
 }
 
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #777;
-    font-size: 14px;
+.card-title h2{
+    margin:0;
+    font-size:21px;
 }
 
-@media (max-width: 500px) {
-    h1 {
-        font-size: 24px;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>⚔️ Minecraft Enchantment Calculator</h1>
-    <p>Check enchantment compatibility for your Minecraft items.</p>
-</header>
-
-<div class="container">
-
-    <div class="card">
-
-        <label for="edition">Minecraft Edition</label>
-
-        <select id="edition">
-            <option value="java">Java Edition</option>
-            <option value="bedrock">Bedrock Edition</option>
-        </select>
-
-        <br><br>
-
-        <label for="item">Choose your item</label>
-
-        <select id="item">
-            <option value="sword">⚔️ Sword</option>
-            <option value="pickaxe">⛏️ Pickaxe</option>
-            <option value="axe">🪓 Axe</option>
-            <option value="bow">🏹 Bow</option>
-            <option value="trident">🔱 Trident</option>
-            <option value="mace">🔨 Mace</option>
-            <option value="helmet">🪖 Helmet</option>
-            <option value="chestplate">🛡️ Chestplate</option>
-            <option value="leggings">🛡️ Leggings</option>
-            <option value="boots">👢 Boots</option>
-        </select>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Choose Enchantments</h2>
-
-        <div class="enchantments" id="enchantments"></div>
-
-        <button onclick="calculate()">
-            Calculate Compatibility
-        </button>
-
-        <div class="result" id="result"></div>
-
-    </div>
-
-</div>
-
-<footer>
-    Minecraft Enchantment Calculator — Fan-made utility website.
-</footer>
-
-<script>
-
-const enchantments = {
-
-    sword: [
-        ["Sharpness V", "sharpness"],
-        ["Smite V", "smite"],
-        ["Bane of Arthropods V", "bane"],
-        ["Looting III", "looting"],
-        ["Fire Aspect II", "fire"],
-        ["Knockback II", "knockback"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    pickaxe: [
-        ["Efficiency V", "efficiency"],
-        ["Fortune III", "fortune"],
-        ["Silk Touch I", "silk"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    axe: [
-        ["Sharpness V", "sharpness"],
-        ["Smite V", "smite"],
-        ["Bane of Arthropods V", "bane"],
-        ["Efficiency V", "efficiency"],
-        ["Fortune III", "fortune"],
-        ["Silk Touch I", "silk"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    bow: [
-        ["Power V", "power"],
-        ["Punch II", "punch"],
-        ["Flame I", "flame"],
-        ["Infinity I", "infinity"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    trident: [
-        ["Loyalty III", "loyalty"],
-        ["Riptide III", "riptide"],
-        ["Channeling I", "channeling"],
-        ["Impaling V", "impaling"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    mace: [
-        ["Density V", "density"],
-        ["Breach IV", "breach"],
-        ["Wind Burst III", "windburst"],
-        ["Fire Aspect II", "fire"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    helmet: [
-        ["Protection IV", "protection"],
-        ["Fire Protection IV", "fireprotection"],
-        ["Blast Protection IV", "blastprotection"],
-        ["Projectile Protection IV", "projectileprotection"],
-        ["Respiration III", "respiration"],
-        ["Aqua Affinity I", "aqua"],
-        ["Thorns III", "thorns"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    chestplate: [
-        ["Protection IV", "protection"],
-        ["Fire Protection IV", "fireprotection"],
-        ["Blast Protection IV", "blastprotection"],
-        ["Projectile Protection IV", "projectileprotection"],
-        ["Thorns III", "thorns"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    leggings: [
-        ["Protection IV", "protection"],
-        ["Fire Protection IV", "fireprotection"],
-        ["Blast Protection IV", "blastprotection"],
-        ["Projectile Protection IV", "projectileprotection"],
-        ["Thorns III", "thorns"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ],
-
-    boots: [
-        ["Protection IV", "protection"],
-        ["Fire Protection IV", "fireprotection"],
-        ["Blast Protection IV", "blastprotection"],
-        ["Projectile Protection IV", "projectileprotection"],
-        ["Feather Falling IV", "feather"],
-        ["Depth Strider III", "depth"],
-        ["Frost Walker II", "frost"],
-        ["Soul Speed III", "soul"],
-        ["Thorns III", "thorns"],
-        ["Unbreaking III", "unbreaking"],
-        ["Mending I", "mending"]
-    ]
-};
-
-const conflicts = [
-    ["sharpness", "smite"],
-    ["sharpness", "bane"],
-    ["smite", "bane"],
-    ["fortune", "silk"],
-    ["infinity", "mending"],
-    ["loyalty", "riptide"],
-    ["channeling", "riptide"],
-    ["depth", "frost"],
-    ["protection", "fireprotection"],
-    ["protection", "blastprotection"],
-    ["protection", "projectileprotection"],
-    ["fireprotection", "blastprotection"],
-    ["fireprotection", "projectileprotection"],
-    ["blastprotection", "projectileprotection"],
-    ["density", "breach"]
-];
-
-function loadEnchantments() {
-
-    const item = document.getElementById("item").value;
-
-    const container = document.getElementById("enchantments");
-
-    container.innerHTML = "";
-
-    enchantments[item].forEach(e => {
-
-        const div = document.createElement("div");
-
-        div.className = "enchant";
-
-        div.innerHTML = `
-            <label>
-                <input type="checkbox" value="${e[1]}">
-                ${e[0]}
-            </label>
-        `;
-
-        container.appendChild(div);
-
-    });
+.badge{
+    background:#203d27;
+    border:1px solid #396a42;
+    color:#8df398;
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:12px;
 }
 
-function calculate() {
+/* CONTROLS */
 
-    const selected = [...document.querySelectorAll(
-        '#enchantments input:checked'
-    )].map(x => x.value);
-
-    const result = document.getElementById("result");
-
-    if (selected.length < 2) {
-
-        result.style.display = "block";
-
-        result.innerHTML = `
-            <div class="warning">
-                Select at least two enchantments.
-            </div>
-        `;
-
-        return;
-    }
-
-    let problems = [];
-
-    for (let pair of conflicts) {
-
-        if (
-            selected.includes(pair[0]) &&
-            selected.includes(pair[1])
-        ) {
-
-            problems.push(
-                `${pair[0]} conflicts with ${pair[1]}`
-            );
-
-        }
-    }
-
-    result.style.display = "block";
-
-    if (problems.length === 0) {
-
-        result.innerHTML = `
-            <div class="success">
-                ✅ These enchantments are compatible!
-            </div>
-
-            <br>
-
-            You can combine the selected enchantments
-            on this item, subject to the selected edition
-            and the game's applicable mechanics.
-        `;
-
-    } else {
-
-        result.innerHTML = `
-            <div class="warning">
-                ❌ Conflicting enchantments found:
-            </div>
-
-            <br>
-
-            ${problems.map(p => `• ${p}`).join("<br>")}
-        `;
-    }
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
 
-document.getElementById("item").addEventListener(
-    "change",
-    loadEnchantments
-);
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+    color:#dce7de;
+}
 
-loadEnchantments();
+select,
+input[type="text"]{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #39473d;
+    background:#0d110f;
+    color:#fff;
+    font-size:15px;
+    outline:none;
+}
 
-</script>
+select:focus,
+input[type="text"]:focus{
+    border-color:#67e271;
+}
 
-</body>
-</html>
+/* SEARCH */
+
+.search{
+    position:relative;
+    margin-bottom:16px;
+}
+
+.search input{
+    padding-left:42px;
+}
+
+.search-icon{
+    position:absolute;
+    left:14px;
+    top:13px;
+    font-size:17px;
+}
+
+/* ENCHANTMENTS */
+
+.enchantments{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
+}
+
+.enchant{
+    position:relative;
+    background:#101512;
+    border:1px solid #2d3930;
+    border-radius:12px;
+    padding:13px;
+    transition:.18s;
+}
+
+.enchant:hover{
+    transform:translateY(-2px);
+    border-color:#4d8055;
+}
+
+.enchant.conflict{
+    border-color:#a84444;
+    background:#241313;
+}
+
+.enchant label{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    cursor:pointer;
+    margin:0;
+}
+
+.enchant input{
+    width:18px;
+    height:18px;
+    accent-color:#55d761;
+    flex-shrink:0;
+}
+
+.enchant-name{
+    font-weight:bold;
+}
+
+.enchant-info{
+    display:block;
+    color:#7f8b82;
+    font-size:12px;
+    margin-top:4px;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:10px;
+    margin-top:18px;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    color:#fff;
+    background:#39a94b;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover{
+    filter:brightness(1.1);
+    transform:translateY(-1px);
+}
+
+button.secondary{
+    background:#1b251e;
+    border:1px solid #344238;
+}
+
+button.danger{
+    background:#351a1a;
+    border:1px solid #673535;
+}
+
+/* COUNTER */
+
+.counter{
+    color:#98a49b;
+    font-size:13px;
+    margin-top:12px;
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:12px;
+    background:#0c100e;
+    border:1px solid #2c382f;
+    line-height:1.6;
+}
+
+.result.success{
+    border-color:#397a43;
+}
+
+.result.error{
+    border-color:#8a3b3b;
+}
+
+.result-title{
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.success-text{
+    color:#6ee879;
+}
+
+.warning-text{
+    color:#ff7777;
+}
+
+.conflict-list{
+    margin-top:10px;
+}
+
+.conflict-item{
+    background:#251414;
+    border:1px solid #653333;
+    border-radius:8px;
+    padding:9px;
+    margin-top:7px;
+    color:#ffaaaa;
+}
+
+/* QUICK TOOLS */
+
+.tools{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.tool{
+    padding:20px 12px;
+    text-align:center;
+    background:#111713;
+    border:1px solid #2c3930;
+    border-radius:13px;
+}
+
+.tool-icon{
+    font-size:28px;
+}
+
+.tool h3{
+    margin:9px 0 5px;
+    font-size:15px;
+}
+
+.tool p{
+    margin:0;
+    color:#7f8982;
+    font-size:12px;
+}
+
+/* INFO */
+
+.info{
+    color:#b3bdb5;
+    line-height:1.75;
+}
+
+.info h2{
+    color:#fff;
+}
+
+.info h3{
+    color:#8eea96;
+}
+
+/* FOOTER */
+
+footer{
+    max-width:1050px;
+    margin:30px auto 0;
+    padding:30px 20px;
+    border-top:1px solid #29342d;
+    color:#727c74;
+    text-align:center
