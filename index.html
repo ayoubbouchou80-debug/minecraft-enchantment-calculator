@@ -1,1 +1,426 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Minecraft Enchantment Calculator</title>
+<meta name="description" content="Free Minecraft Enchantment Calculator. Check compatible and conflicting enchantments for your Minecraft items.">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101214;
+    color: #fff;
+}
+
+header {
+    padding: 25px 15px;
+    text-align: center;
+    background: #171a1d;
+    border-bottom: 1px solid #292d31;
+}
+
+h1 {
+    margin: 0 0 10px;
+    font-size: 30px;
+}
+
+header p {
+    color: #aaa;
+    margin: 0;
+}
+
+.container {
+    width: 92%;
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.card {
+    background: #191d21;
+    border: 1px solid #292e33;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #101214;
+    color: white;
+    font-size: 16px;
+}
+
+.enchantments {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.enchant {
+    background: #111417;
+    border: 1px solid #30353a;
+    padding: 12px;
+    border-radius: 9px;
+}
+
+.enchant label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 9px;
+    background: #38a852;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.result {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 10px;
+    background: #111417;
+}
+
+.success {
+    color: #54d66a;
+}
+
+.warning {
+    color: #ffcc55;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    font-size: 14px;
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>⚔️ Minecraft Enchantment Calculator</h1>
+    <p>Check enchantment compatibility for your Minecraft items.</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <label for="edition">Minecraft Edition</label>
+
+        <select id="edition">
+            <option value="java">Java Edition</option>
+            <option value="bedrock">Bedrock Edition</option>
+        </select>
+
+        <br><br>
+
+        <label for="item">Choose your item</label>
+
+        <select id="item">
+            <option value="sword">⚔️ Sword</option>
+            <option value="pickaxe">⛏️ Pickaxe</option>
+            <option value="axe">🪓 Axe</option>
+            <option value="bow">🏹 Bow</option>
+            <option value="trident">🔱 Trident</option>
+            <option value="mace">🔨 Mace</option>
+            <option value="helmet">🪖 Helmet</option>
+            <option value="chestplate">🛡️ Chestplate</option>
+            <option value="leggings">🛡️ Leggings</option>
+            <option value="boots">👢 Boots</option>
+        </select>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Choose Enchantments</h2>
+
+        <div class="enchantments" id="enchantments"></div>
+
+        <button onclick="calculate()">
+            Calculate Compatibility
+        </button>
+
+        <div class="result" id="result"></div>
+
+    </div>
+
+</div>
+
+<footer>
+    Minecraft Enchantment Calculator — Fan-made utility website.
+</footer>
+
+<script>
+
+const enchantments = {
+
+    sword: [
+        ["Sharpness V", "sharpness"],
+        ["Smite V", "smite"],
+        ["Bane of Arthropods V", "bane"],
+        ["Looting III", "looting"],
+        ["Fire Aspect II", "fire"],
+        ["Knockback II", "knockback"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    pickaxe: [
+        ["Efficiency V", "efficiency"],
+        ["Fortune III", "fortune"],
+        ["Silk Touch I", "silk"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    axe: [
+        ["Sharpness V", "sharpness"],
+        ["Smite V", "smite"],
+        ["Bane of Arthropods V", "bane"],
+        ["Efficiency V", "efficiency"],
+        ["Fortune III", "fortune"],
+        ["Silk Touch I", "silk"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    bow: [
+        ["Power V", "power"],
+        ["Punch II", "punch"],
+        ["Flame I", "flame"],
+        ["Infinity I", "infinity"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    trident: [
+        ["Loyalty III", "loyalty"],
+        ["Riptide III", "riptide"],
+        ["Channeling I", "channeling"],
+        ["Impaling V", "impaling"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    mace: [
+        ["Density V", "density"],
+        ["Breach IV", "breach"],
+        ["Wind Burst III", "windburst"],
+        ["Fire Aspect II", "fire"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    helmet: [
+        ["Protection IV", "protection"],
+        ["Fire Protection IV", "fireprotection"],
+        ["Blast Protection IV", "blastprotection"],
+        ["Projectile Protection IV", "projectileprotection"],
+        ["Respiration III", "respiration"],
+        ["Aqua Affinity I", "aqua"],
+        ["Thorns III", "thorns"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    chestplate: [
+        ["Protection IV", "protection"],
+        ["Fire Protection IV", "fireprotection"],
+        ["Blast Protection IV", "blastprotection"],
+        ["Projectile Protection IV", "projectileprotection"],
+        ["Thorns III", "thorns"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    leggings: [
+        ["Protection IV", "protection"],
+        ["Fire Protection IV", "fireprotection"],
+        ["Blast Protection IV", "blastprotection"],
+        ["Projectile Protection IV", "projectileprotection"],
+        ["Thorns III", "thorns"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ],
+
+    boots: [
+        ["Protection IV", "protection"],
+        ["Fire Protection IV", "fireprotection"],
+        ["Blast Protection IV", "blastprotection"],
+        ["Projectile Protection IV", "projectileprotection"],
+        ["Feather Falling IV", "feather"],
+        ["Depth Strider III", "depth"],
+        ["Frost Walker II", "frost"],
+        ["Soul Speed III", "soul"],
+        ["Thorns III", "thorns"],
+        ["Unbreaking III", "unbreaking"],
+        ["Mending I", "mending"]
+    ]
+};
+
+const conflicts = [
+    ["sharpness", "smite"],
+    ["sharpness", "bane"],
+    ["smite", "bane"],
+    ["fortune", "silk"],
+    ["infinity", "mending"],
+    ["loyalty", "riptide"],
+    ["channeling", "riptide"],
+    ["depth", "frost"],
+    ["protection", "fireprotection"],
+    ["protection", "blastprotection"],
+    ["protection", "projectileprotection"],
+    ["fireprotection", "blastprotection"],
+    ["fireprotection", "projectileprotection"],
+    ["blastprotection", "projectileprotection"],
+    ["density", "breach"]
+];
+
+function loadEnchantments() {
+
+    const item = document.getElementById("item").value;
+
+    const container = document.getElementById("enchantments");
+
+    container.innerHTML = "";
+
+    enchantments[item].forEach(e => {
+
+        const div = document.createElement("div");
+
+        div.className = "enchant";
+
+        div.innerHTML = `
+            <label>
+                <input type="checkbox" value="${e[1]}">
+                ${e[0]}
+            </label>
+        `;
+
+        container.appendChild(div);
+
+    });
+}
+
+function calculate() {
+
+    const selected = [...document.querySelectorAll(
+        '#enchantments input:checked'
+    )].map(x => x.value);
+
+    const result = document.getElementById("result");
+
+    if (selected.length < 2) {
+
+        result.style.display = "block";
+
+        result.innerHTML = `
+            <div class="warning">
+                Select at least two enchantments.
+            </div>
+        `;
+
+        return;
+    }
+
+    let problems = [];
+
+    for (let pair of conflicts) {
+
+        if (
+            selected.includes(pair[0]) &&
+            selected.includes(pair[1])
+        ) {
+
+            problems.push(
+                `${pair[0]} conflicts with ${pair[1]}`
+            );
+
+        }
+    }
+
+    result.style.display = "block";
+
+    if (problems.length === 0) {
+
+        result.innerHTML = `
+            <div class="success">
+                ✅ These enchantments are compatible!
+            </div>
+
+            <br>
+
+            You can combine the selected enchantments
+            on this item, subject to the selected edition
+            and the game's applicable mechanics.
+        `;
+
+    } else {
+
+        result.innerHTML = `
+            <div class="warning">
+                ❌ Conflicting enchantments found:
+            </div>
+
+            <br>
+
+            ${problems.map(p => `• ${p}`).join("<br>")}
+        `;
+    }
+}
+
+document.getElementById("item").addEventListener(
+    "change",
+    loadEnchantments
+);
+
+loadEnchantments();
+
+</script>
+
+</body>
+</html>
