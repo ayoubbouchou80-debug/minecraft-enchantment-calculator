@@ -4,985 +4,432 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Minecraft Enchantment Calculator</title>
+<title>Minecraft Anvil XP Optimizer</title>
 
 <meta name="description"
-content="Free Minecraft Enchantment Calculator. Check compatible and conflicting enchantments for swords, tools, armor, bows, tridents, maces and more.">
+content="Minecraft Anvil XP Optimizer. Find the cheapest enchantment book combining order and avoid Too Expensive!">
 
 <style>
-*{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-    margin:0;
     font-family:Arial,Helvetica,sans-serif;
     background:
-    radial-gradient(circle at top,#263b2c 0,#111614 35%,#090b0c 100%);
-    color:#fff;
+        radial-gradient(circle at top,#26352b 0,#111712 45%,#090d0a 100%);
+    color:#f4f4f4;
     min-height:100vh;
 }
 
-.topbar{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(10,13,11,.94);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid #304336;
-    padding:12px 18px;
+button,select,input{
+    font:inherit;
 }
 
-.nav{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.logo{
-    font-weight:900;
-    font-size:18px;
-}
-
-.logo span{color:#65d96f}
-
-.nav-links{
-    display:flex;
-    gap:8px;
-}
-
-.nav-links button{
-    width:auto;
-    margin:0;
-    padding:8px 13px;
-    font-size:13px;
-    background:#182019;
-    border:1px solid #304336;
-}
-
-.hero{
-    text-align:center;
-    padding:55px 18px 35px;
-}
-
-.hero-badge{
-    display:inline-block;
-    padding:7px 13px;
-    border-radius:30px;
-    background:#17321d;
-    border:1px solid #315f39;
-    color:#8df398;
-    font-size:13px;
-    margin-bottom:16px;
-}
-
-.hero h1{
-    margin:0;
-    font-size:clamp(30px,7vw,52px);
-    line-height:1.1;
-}
-
-.hero h1 span{color:#67e271}
-
-.hero p{
-    max-width:650px;
-    margin:18px auto 0;
-    color:#aeb8b0;
-    line-height:1.6;
+button{
+    cursor:pointer;
 }
 
 .container{
-    width:92%;
-    max-width:1050px;
+    width:min(1150px,94%);
     margin:auto;
 }
 
-.card{
-    background:rgba(20,26,22,.94);
-    border:1px solid #2b3b30;
-    border-radius:18px;
-    padding:22px;
-    margin-bottom:20px;
-    box-shadow:0 10px 35px rgba(0,0,0,.22);
+/* HEADER */
+
+header{
+    border-bottom:1px solid #39483c;
+    background:rgba(8,12,9,.88);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:20;
 }
 
-.card-title{
+.nav{
+    min-height:70px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:900;
+    font-size:20px;
+}
+
+.logo img{
+    width:38px;
+    height:38px;
+    image-rendering:pixelated;
+    object-fit:contain;
+}
+
+.version{
+    font-size:12px;
+    color:#9bb39f;
+    border:1px solid #425343;
+    padding:6px 9px;
+    border-radius:6px;
+}
+
+/* HERO */
+
+.hero{
+    padding:55px 0 35px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:clamp(32px,6vw,60px);
+    line-height:1;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#75d35f;
+}
+
+.hero p{
+    max-width:720px;
+    margin:auto;
+    color:#aebcaf;
+    line-height:1.7;
+}
+
+/* CARDS */
+
+.card{
+    background:rgba(20,28,22,.94);
+    border:1px solid #354337;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 15px 50px rgba(0,0,0,.25);
+}
+
+.section-title{
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.section-subtitle{
+    color:#89998c;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+/* ITEM SELECTOR */
+
+.item-layout{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:25px;
+}
+
+.item-preview{
+    border:1px solid #3c4e40;
+    border-radius:10px;
+    background:
+        linear-gradient(135deg,#172018,#0e130f);
+    min-height:270px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:15px;
+}
+
+.item-preview img{
+    width:125px;
+    height:125px;
+    object-fit:contain;
+    image-rendering:pixelated;
+    filter:drop-shadow(0 8px 15px rgba(0,0,0,.6));
+}
+
+.item-preview strong{
+    font-size:18px;
+}
+
+.controls{
+    display:grid;
+    gap:15px;
+}
+
+.field{
+    display:grid;
+    gap:7px;
+}
+
+.field label{
+    color:#9dac9f;
+    font-size:13px;
+}
+
+select,
+input[type="number"],
+input[type="text"]{
+    width:100%;
+    background:#0d130f;
+    color:white;
+    border:1px solid #3c4d40;
+    border-radius:7px;
+    padding:12px;
+    outline:none;
+}
+
+select:focus,
+input:focus{
+    border-color:#6fc75b;
+}
+
+.grid-two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* BOOK BUILDER */
+
+.builder{
+    margin-top:22px;
+}
+
+.enchant-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
     gap:10px;
     margin-bottom:18px;
 }
 
-.card-title h2{
-    margin:0;
-    font-size:21px;
-}
-
-.badge{
-    background:#203d27;
-    border:1px solid #396a42;
-    color:#8df398;
-    border-radius:20px;
-    padding:5px 9px;
-    font-size:12px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.field label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:8px;
-    color:#dce7de;
-}
-
-select,input[type="text"]{
-    width:100%;
-    padding:14px;
-    border-radius:10px;
-    border:1px solid #39473d;
-    background:#0d110f;
-    color:#fff;
-    font-size:15px;
-    outline:none;
-}
-
-select:focus,input[type="text"]:focus{
-    border-color:#67e271;
-}
-
-.search{
-    position:relative;
-    margin:20px 0 16px;
-}
-
-.search input{padding-left:42px}
-
-.search-icon{
-    position:absolute;
-    left:14px;
-    top:13px;
-    font-size:17px;
-}
-
-.enchantments{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:10px;
-}
-
-.enchant{
-    background:#101512;
-    border:1px solid #2d3930;
-    border-radius:12px;
-    padding:13px;
-    transition:.18s;
-}
-
-.enchant:hover{
-    transform:translateY(-2px);
-    border-color:#4d8055;
-}
-
-.enchant.conflict{
-    border-color:#a84444;
-    background:#241313;
-}
-
-.enchant label{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    cursor:pointer;
-    margin:0;
-}
-
-.enchant input{
-    width:18px;
-    height:18px;
-    accent-color:#55d761;
-    flex-shrink:0;
-}
-
-.enchant-name{font-weight:bold}
-
-.enchant-info{
-    display:block;
-    color:#7f8b82;
-    font-size:12px;
-    margin-top:4px;
-}
-
-.buttons{
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr;
-    gap:10px;
-    margin-top:18px;
-}
-
-button{
-    border:0;
-    border-radius:10px;
-    padding:13px;
-    color:#fff;
-    background:#39a94b;
-    font-weight:bold;
-    font-size:15px;
-    cursor:pointer;
-    transition:.15s;
-}
-
-button:hover{
-    filter:brightness(1.1);
-    transform:translateY(-1px);
-}
-
-button.secondary{
-    background:#1b251e;
-    border:1px solid #344238;
-}
-
-button.danger{
-    background:#351a1a;
-    border:1px solid #673535;
-}
-
-.counter{
-    color:#98a49b;
-    font-size:13px;
-    margin-top:12px;
-}
-
-.result{
-    display:none;
-    margin-top:20px;
-    padding:18px;
-    border-radius:12px;
-    background:#0c100e;
-    border:1px solid #2c382f;
-    line-height:1.6;
-}
-
-.result.success{border-color:#397a43}
-.result.error{border-color:#8a3b3b}
-
-.result-title{
-    font-size:19px;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.success-text{color:#6ee879}
-.warning-text{color:#ff7777}
-
-.conflict-item{
-    background:#251414;
-    border:1px solid #653333;
+.enchant-row{
+    background:#111811;
+    border:1px solid #2f3e32;
     border-radius:8px;
-    padding:9px;
-    margin-top:7px;
-    color:#ffaaaa;
+    padding:10px;
+    display:grid;
+    grid-template-columns:1fr 80px;
+    gap:8px;
+    align-items:center;
 }
 
-.tools{
+.enchant-name{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.enchant-meta{
+    color:#738176;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.enchant-row select{
+    padding:8px;
+}
+
+/* BUTTONS */
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.btn{
+    border:1px solid #455746;
+    background:#182219;
+    color:white;
+    padding:12px 17px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#233124;
+}
+
+.btn-primary{
+    background:#3d8e32;
+    border-color:#61b751;
+}
+
+.btn-primary:hover{
+    background:#4da63e;
+}
+
+.btn-danger{
+    background:#632b2b;
+    border-color:#914040;
+}
+
+/* BOOKS */
+
+.books-section{
+    margin-top:22px;
+}
+
+.books-list{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
     gap:12px;
 }
 
-.tool{
-    padding:20px 12px;
-    text-align:center;
-    background:#111713;
-    border:1px solid #2c3930;
-    border-radius:13px;
+.book-card{
+    background:#101710;
+    border:1px solid #354438;
+    border-radius:10px;
+    padding:13px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    position:relative;
 }
 
-.tool-icon{font-size:28px}
-
-.tool h3{
-    margin:9px 0 5px;
-    font-size:15px;
+.book-card img{
+    width:52px;
+    height:52px;
+    image-rendering:pixelated;
+    object-fit:contain;
 }
 
-.tool p{
-    margin:0;
-    color:#7f8982;
+.book-info{
+    min-width:0;
+}
+
+.book-info strong{
+    display:block;
+    font-size:14px;
+}
+
+.book-info span{
+    color:#89978c;
     font-size:12px;
 }
 
-.info{
-    color:#b3bdb5;
-    line-height:1.75;
+.remove-book{
+    position:absolute;
+    right:7px;
+    top:7px;
+    border:0;
+    background:transparent;
+    color:#b66b6b;
+    font-size:18px;
 }
 
-.info h2{color:#fff}
-.info h3{color:#8eea96}
+/* OPTIMIZE */
 
-footer{
-    max-width:1050px;
-    margin:30px auto 0;
-    padding:30px 20px;
-    border-top:1px solid #29342d;
-    color:#727c74;
+.optimize-box{
+    margin-top:25px;
+    text-align:center;
+    padding:28px;
+    border-radius:12px;
+    background:
+        linear-gradient(135deg,#19251b,#111711);
+    border:1px solid #435646;
+}
+
+.optimize-button{
+    width:100%;
+    max-width:520px;
+    padding:17px;
+    border-radius:8px;
+    border:1px solid #78d463;
+    background:#3c9132;
+    color:white;
+    font-weight:900;
+    font-size:17px;
+}
+
+.optimize-button:hover{
+    background:#4ba73d;
+}
+
+/* RESULTS */
+
+.results{
+    margin-top:25px;
+    display:none;
+}
+
+.result-summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#0d130e;
+    border:1px solid #354337;
+    border-radius:9px;
+    padding:17px;
     text-align:center;
 }
 
-@media(max-width:700px){
-    .grid{grid-template-columns:1fr}
-    .buttons{grid-template-columns:1fr}
-    .tools{grid-template-columns:1fr 1fr}
-    .nav-links{display:none}
+.stat span{
+    display:block;
+    color:#89988c;
+    font-size:12px;
+    margin-bottom:6px;
 }
 
-@media(max-width:400px){
-    .tools{grid-template-columns:1fr}
-}
-</style>
-</head>
-
-<body>
-
-<header class="topbar">
-    <nav class="nav">
-        <div class="logo">⚔️ Minecraft <span>EnchantCalc</span></div>
-
-        <div class="nav-links">
-            <button onclick="scrollToCalculator()">Calculator</button>
-            <button onclick="document.getElementById('info').scrollIntoView()">Guide</button>
-        </div>
-    </nav>
-</header>
-
-<section class="hero">
-
-    <div class="hero-badge">⛏️ Free Minecraft Tool</div>
-
-    <h1>Minecraft <span>Enchantment</span> Calculator</h1>
-
-    <p>
-        Check enchantment compatibility, find conflicts,
-        and build the perfect Minecraft gear.
-    </p>
-
-</section>
-
-<main class="container">
-
-    <section class="card" id="calculator">
-
-        <div class="card-title">
-            <h2>🧙 Enchantment Calculator</h2>
-            <span class="badge">FREE</span>
-        </div>
-
-        <div class="grid">
-
-            <div class="field">
-                <label for="item">Choose an item</label>
-
-                <select id="item" onchange="updateEnchantments()">
-                    <option value="sword">⚔️ Sword</option>
-                    <option value="axe">🪓 Axe</option>
-                    <option value="pickaxe">⛏️ Pickaxe</option>
-                    <option value="shovel">🛠️ Shovel</option>
-                    <option value="bow">🏹 Bow</option>
-                    <option value="crossbow">🏹 Crossbow</option>
-                    <option value="trident">🔱 Trident</option>
-                    <option value="mace">🔨 Mace</option>
-                    <option value="helmet">🪖 Helmet</option>
-                    <option value="chestplate">🛡️ Chestplate</option>
-                    <option value="leggings">👖 Leggings</option>
-                    <option value="boots">🥾 Boots</option>
-                    <option value="elytra">🪽 Elytra</option>
-                    <option value="fishing">🎣 Fishing Rod</option>
-                </select>
-
-            </div>
-
-            <div class="field">
-
-                <label for="version">Minecraft Edition</label>
-
-                <select id="version">
-                    <option>Java Edition</option>
-                    <option>Bedrock Edition</option>
-                </select>
-
-            </div>
-
-        </div>
-
-        <div class="search">
-
-            <span class="search-icon">🔎</span>
-
-            <input
-                type="text"
-                id="search"
-                placeholder="Search enchantments..."
-                oninput="filterEnchantments()"
-            >
-
-        </div>
-
-        <div id="enchantments" class="enchantments"></div>
-
-        <div class="counter">
-            Selected: <strong id="counter">0</strong>
-        </div>
-
-        <div class="buttons">
-
-            <button onclick="checkCompatibility()">
-                ⚡ Check Compatibility
-            </button>
-
-            <button class="secondary" onclick="selectAll()">
-                Select All
-            </button>
-
-            <button class="danger" onclick="clearAll()">
-                Clear
-            </button>
-
-        </div>
-
-        <div id="result" class="result"></div>
-
-    </section>
-
-
-    <section class="card">
-
-        <div class="card-title">
-            <h2>⚡ Quick Tools</h2>
-        </div>
-
-        <div class="tools">
-
-            <div class="tool">
-                <div class="tool-icon">⚔️</div>
-                <h3>Weapons</h3>
-                <p>Find sword & axe enchantments</p>
-            </div>
-
-            <div class="tool">
-                <div class="tool-icon">🛡️</div>
-                <h3>Armor</h3>
-                <p>Build powerful armor</p>
-            </div>
-
-            <div class="tool">
-                <div class="tool-icon">🏹</div>
-                <h3>Ranged</h3>
-                <p>Bow & crossbow combinations</p>
-            </div>
-
-            <div class="tool">
-                <div class="tool-icon">🔨</div>
-                <h3>Tools</h3>
-                <p>Pickaxes, axes and more</p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="card info" id="info">
-
-        <h2>📖 Minecraft Enchantment Guide</h2>
-
-        <p>
-            Minecraft enchantments give your weapons, armor and tools
-            special abilities. However, some enchantments cannot be used
-            together on the same item.
-        </p>
-
-        <h3>What does this calculator do?</h3>
-
-        <p>
-            Select your Minecraft item and choose the enchantments you want.
-            The calculator checks whether your selected enchantments can
-            coexist and shows conflicts.
-        </p>
-
-        <h3>Why are enchantment conflicts important?</h3>
-
-        <p>
-            Some enchantments are mutually exclusive. For example,
-            Sharpness, Smite and Bane of Arthropods cannot normally be
-            combined on the same weapon.
-        </p>
-
-    </section>
-
-</main>
-
-
-<footer>
-    <div>⚔️ Minecraft EnchantCalc</div>
-    <p>Free Minecraft Enchantment Calculator</p>
-    <small>Not affiliated with Mojang or Microsoft.</small>
-</footer>
-
-
-<script>
-
-const enchantmentData = {
-
-sword: [
-    ["Sharpness","Damage"],
-    ["Smite","Undead damage"],
-    ["Bane of Arthropods","Arthropod damage"],
-    ["Fire Aspect","Sets enemies on fire"],
-    ["Knockback","Knocks enemies away"],
-    ["Looting","More mob drops"],
-    ["Sweeping Edge","Stronger sweeping attacks"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"],
-    ["Curse of Vanishing","Disappears on death"]
-],
-
-axe: [
-    ["Sharpness","Damage"],
-    ["Smite","Undead damage"],
-    ["Bane of Arthropods","Arthropod damage"],
-    ["Efficiency","Faster mining"],
-    ["Fortune","More drops"],
-    ["Silk Touch","Drops the block itself"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-pickaxe: [
-    ["Efficiency","Faster mining"],
-    ["Fortune","More drops"],
-    ["Silk Touch","Drops the block itself"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"],
-    ["Curse of Vanishing","Disappears on death"]
-],
-
-shovel: [
-    ["Efficiency","Faster mining"],
-    ["Fortune","More drops"],
-    ["Silk Touch","Drops the block itself"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-bow: [
-    ["Power","More damage"],
-    ["Punch","Knockback"],
-    ["Flame","Burns arrows"],
-    ["Infinity","Infinite normal arrows"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-crossbow: [
-    ["Quick Charge","Faster loading"],
-    ["Multishot","Fires 3 projectiles"],
-    ["Piercing","Arrows pierce targets"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-trident: [
-    ["Impaling","More damage"],
-    ["Loyalty","Returns to player"],
-    ["Channeling","Lightning during storms"],
-    ["Riptide","Propels player in water/rain"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-mace: [
-    ["Density","More smash damage"],
-    ["Breach","Reduces armor effectiveness"],
-    ["Wind Burst","Launches player upward"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"],
-    ["Fire Aspect","Sets enemies on fire"]
-],
-
-helmet: [
-    ["Protection","General protection"],
-    ["Fire Protection","Fire protection"],
-    ["Blast Protection","Explosion protection"],
-    ["Projectile Protection","Projectile protection"],
-    ["Respiration","Breathe underwater"],
-    ["Aqua Affinity","Mine faster underwater"],
-    ["Thorns","Damages attackers"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-chestplate: [
-    ["Protection","General protection"],
-    ["Fire Protection","Fire protection"],
-    ["Blast Protection","Explosion protection"],
-    ["Projectile Protection","Projectile protection"],
-    ["Thorns","Damages attackers"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-leggings: [
-    ["Protection","General protection"],
-    ["Fire Protection","Fire protection"],
-    ["Blast Protection","Explosion protection"],
-    ["Projectile Protection","Projectile protection"],
-    ["Thorns","Damages attackers"],
-    ["Swift Sneak","Move faster while sneaking"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-boots: [
-    ["Protection","General protection"],
-    ["Fire Protection","Fire protection"],
-    ["Blast Protection","Explosion protection"],
-    ["Projectile Protection","Projectile protection"],
-    ["Feather Falling","Reduces fall damage"],
-    ["Depth Strider","Move faster underwater"],
-    ["Frost Walker","Walk on water"],
-    ["Soul Speed","Faster on soul blocks"],
-    ["Thorns","Damages attackers"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"]
-],
-
-elytra: [
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"],
-    ["Curse of Binding","Cannot remove normally"],
-    ["Curse of Vanishing","Disappears on death"]
-],
-
-fishing: [
-    ["Luck of the Sea","Better fishing loot"],
-    ["Lure","Faster catches"],
-    ["Unbreaking","Increases durability"],
-    ["Mending","Repairs with XP"],
-    ["Curse of Vanishing","Disappears on death"]
-]
-
-};
-
-
-/* ENCHANTMENT CONFLICTS */
-
-const conflicts = [
-
-["Sharpness","Smite"],
-["Sharpness","Bane of Arthropods"],
-
-["Smite","Bane of Arthropods"],
-
-["Fortune","Silk Touch"],
-
-["Infinity","Mending"],
-
-["Multishot","Piercing"],
-
-["Loyalty","Riptide"],
-
-["Channeling","Riptide"],
-
-["Depth Strider","Frost Walker"],
-
-["Protection","Fire Protection"],
-["Protection","Blast Protection"],
-["Protection","Projectile Protection"],
-
-["Fire Protection","Blast Protection"],
-["Fire Protection","Projectile Protection"],
-
-["Blast Protection","Projectile Protection"]
-
-];
-
-
-function updateEnchantments(){
-
-    const item = document.getElementById("item").value;
-
-    const container =
-        document.getElementById("enchantments");
-
-    container.innerHTML="";
-
-    enchantmentData[item].forEach((ench,index)=>{
-
-        const div=document.createElement("div");
-
-        div.className="enchant";
-
-        div.dataset.name=ench[0].toLowerCase();
-
-        div.innerHTML=`
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    value="${ench[0]}"
-                    onchange="updateCounter()"
-                >
-
-                <div>
-
-                    <div class="enchant-name">
-                        ${ench[0]}
-                    </div>
-
-                    <span class="enchant-info">
-                        ${ench[1]}
-                    </span>
-
-                </div>
-
-            </label>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-    updateCounter();
-
+.stat strong{
+    font-size:25px;
 }
 
-
-function updateCounter(){
-
-    const selected =
-        document.querySelectorAll(
-            "#enchantments input:checked"
-        ).length;
-
-    document.getElementById("counter").textContent=selected;
-
+.success{
+    color:#7bd967;
 }
 
-
-function filterEnchantments(){
-
-    const search =
-        document.getElementById("search")
-        .value
-        .toLowerCase();
-
-    document.querySelectorAll(".enchant").forEach(card=>{
-
-        const name=card.dataset.name;
-
-        card.style.display =
-            name.includes(search)
-            ? "block"
-            : "none";
-
-    });
-
+.warning{
+    color:#e2a84e;
 }
 
-
-function selectAll(){
-
-    document
-    .querySelectorAll("#enchantments input")
-    .forEach(input=>{
-        input.checked=true;
-    });
-
-    updateCounter();
-
+.error{
+    color:#e16b6b;
 }
 
+/* STEPS */
 
-function clearAll(){
-
-    document
-    .querySelectorAll("#enchantments input")
-    .forEach(input=>{
-        input.checked=false;
-    });
-
-    document
-    .querySelectorAll(".enchant")
-    .forEach(card=>{
-        card.classList.remove("conflict");
-    });
-
-    document.getElementById("result").style.display="none";
-
-    updateCounter();
-
+.steps{
+    display:grid;
+    gap:15px;
 }
 
-
-function checkCompatibility(){
-
-    const selected =
-        [...document.querySelectorAll(
-            "#enchantments input:checked"
-        )].map(input=>input.value);
-
-    const result=document.getElementById("result");
-
-    if(selected.length<2){
-
-        result.style.display="block";
-
-        result.className="result";
-
-        result.innerHTML=`
-            <div class="result-title">
-                ⚠️ Select at least two enchantments
-            </div>
-
-            <div>
-                Choose two or more enchantments to check
-                compatibility.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    const found=[];
-
-
-    conflicts.forEach(pair=>{
-
-        if(
-            selected.includes(pair[0]) &&
-            selected.includes(pair[1])
-        ){
-
-            found.push(pair);
-
-        }
-
-    });
-
-
-    document
-    .querySelectorAll(".enchant")
-    .forEach(card=>{
-        card.classList.remove("conflict");
-    });
-
-
-    result.style.display="block";
-
-
-    if(found.length===0){
-
-        result.className="result success";
-
-        result.innerHTML=`
-
-            <div class="result-title success-text">
-                ✅ Compatible!
-            </div>
-
-            <div>
-                No conflicts were found between
-                your selected enchantments.
-            </div>
-
-        `;
-
-    }else{
-
-        result.className="result error";
-
-        let html=`
-
-            <div class="result-title warning-text">
-                ❌ Enchantment Conflict
-            </div>
-
-            <div>
-                These enchantments cannot normally
-                be combined:
-            </div>
-
-            <div class="conflict-list">
-
-        `;
-
-
-        found.forEach(pair=>{
-
-            html+=`
-
-                <div class="conflict-item">
-                    ❌ <strong>${pair[0]}</strong>
-                    + 
-                    <strong>${pair[1]}</strong>
-                </div>
-
-            `;
-
-            document
-            .querySelectorAll(".enchant")
-            .forEach(card=>{
-
-                const name =
-                    card.querySelector(
-                        ".enchant-name"
-                    ).textContent;
-
-                if(pair.includes(name)){
-                    card.classList.add("conflict");
-                }
-
-            });
-
-        });
-
-
-        html+="</div>";
-
-        result.innerHTML=html;
-
-    }
-
+.step{
+    background:#0d130e;
+    border:1px solid #354337;
+    border-radius:11px;
+    overflow:hidden;
 }
 
-
-function scrollToCalculator(){
-
-    document
-    .getElementById("calculator")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
+.step-head{
+    padding:11px 15px;
+    background:#151e17;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
 }
 
+.step-number{
+    font-weight:900;
+}
 
-/* START */
+.step-cost{
+    font-weight:900;
+    color:#76d15f;
+}
 
-updateEnchantments();
-
-</script>
-
-</body>
-</html>
+.step-body{
+    padding:18px;
+    display:grid;
+    grid-template-columns:1fr 70px 1fr 70px 1fr;
+    gap:
