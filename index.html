@@ -432,4 +432,2298 @@ input:focus{
     padding:18px;
     display:grid;
     grid-template-columns:1fr 70px 1fr 70px 1fr;
-    gap:
+    gap:10px;
+    align-items:center;
+}
+
+.anvil-arrow{
+    text-align:center;
+    color:#718071;
+    font-size:24px;
+}
+
+.state{
+    border:1px solid #344136;
+    background:#121912;
+    border-radius:9px;
+    padding:12px;
+    min-height:125px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:8px;
+}
+
+.state img{
+    width:58px;
+    height:58px;
+    image-rendering:pixelated;
+    object-fit:contain;
+}
+
+.state-name{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.state-enchants{
+    color:#849286;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.anvil-image{
+    width:65px;
+    height:65px;
+    object-fit:contain;
+    image-rendering:pixelated;
+}
+
+/* PLAN */
+
+.plan-note{
+    padding:14px;
+    background:#121a13;
+    border-left:3px solid #65bd53;
+    color:#aab8ad;
+    line-height:1.6;
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+.empty{
+    color:#7f8d82;
+    text-align:center;
+    padding:25px;
+}
+
+/* GUIDE */
+
+.guide{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.guide-card{
+    background:#111811;
+    border:1px solid #334035;
+    border-radius:10px;
+    padding:18px;
+}
+
+.guide-card h3{
+    margin-bottom:8px;
+}
+
+.guide-card p{
+    color:#8f9d91;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    padding:30px 0;
+    border-top:1px solid #29342c;
+    color:#68756b;
+    text-align:center;
+    font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .item-layout{
+        grid-template-columns:1fr;
+    }
+
+    .item-preview{
+        min-height:220px;
+    }
+
+    .result-summary{
+        grid-template-columns:1fr;
+    }
+
+    .step-body{
+        grid-template-columns:1fr;
+    }
+
+    .anvil-arrow{
+        transform:rotate(90deg);
+    }
+
+    .guide{
+        grid-template-columns:1fr;
+    }
+
+    .grid-two{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+
+        <div class="logo">
+            <img
+                src="https://mcasset.cloud/1.21.11/assets/minecraft/textures/item/netherite_sword.png"
+                alt="Minecraft Sword">
+            <span>Anvil XP Optimizer</span>
+        </div>
+
+        <div class="version">
+            Java Edition
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+    <h1>Find the <span>Cheapest</span> Anvil Order</h1>
+    <p>
+        Add your enchanted books and let the optimizer search for a low-cost
+        combining order while avoiding the Survival "Too Expensive!" limit.
+    </p>
+</section>
+
+<!-- ITEM -->
+
+<section class="card">
+
+    <div class="section-title">1. Choose your item</div>
+    <div class="section-subtitle">
+        Select the equipment you want to enchant.
+    </div>
+
+    <div class="item-layout">
+
+        <div class="item-preview">
+
+            <img id="itemImage"
+                 src="https://mcasset.cloud/1.21.11/assets/minecraft/textures/item/netherite_sword.png"
+                 alt="Minecraft item">
+
+            <strong id="itemPreviewName">Netherite Sword</strong>
+
+        </div>
+
+        <div class="controls">
+
+            <div class="grid-two">
+
+                <div class="field">
+                    <label>Item</label>
+
+                    <select id="itemSelect"></select>
+                </div>
+
+                <div class="field" id="materialField">
+                    <label>Material</label>
+
+                    <select id="materialSelect"></select>
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label>Current prior anvil uses</label>
+
+                <input
+                    id="priorUses"
+                    type="number"
+                    min="0"
+                    max="5"
+                    value="0">
+            </div>
+
+            <div class="plan-note">
+                A brand-new item has 0 prior uses.
+                Every anvil operation increases the hidden prior-work penalty.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BOOK BUILDER -->
+
+<section class="card builder">
+
+    <div class="section-title">2. Add your enchanted books</div>
+
+    <div class="section-subtitle">
+        Choose an enchantment and its level, then add it to your inventory.
+    </div>
+
+    <div class="grid-two">
+
+        <div class="field">
+
+            <label>Enchantment</label>
+
+            <select id="enchantSelect"></select>
+
+        </div>
+
+        <div class="field">
+
+            <label>Level</label>
+
+            <select id="levelSelect"></select>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="actions">
+
+        <button class="btn btn-primary" id="addBook">
+            Add Enchanted Book
+        </button>
+
+        <button class="btn" id="addExample">
+            Load Example
+        </button>
+
+        <button class="btn btn-danger" id="clearBooks">
+            Clear Books
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="card books-section">
+
+    <div class="section-title">Your Books</div>
+
+    <div class="section-subtitle">
+        These are the books that the optimizer will arrange.
+    </div>
+
+    <div id="booksList" class="books-list">
+
+        <div class="empty">
+            No books added yet.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- OPTIMIZE -->
+
+<section class="optimize-box">
+
+    <button id="optimizeButton" class="optimize-button">
+        FIND CHEAPEST ORDER
+    </button>
+
+</section>
+
+
+<!-- RESULTS -->
+
+<section id="results" class="card results">
+
+    <div class="section-title">
+        Optimized Anvil Plan
+    </div>
+
+    <div class="section-subtitle">
+        Follow these steps in the exact order shown.
+    </div>
+
+    <div id="resultSummary"></div>
+
+    <div id="steps" class="steps"></div>
+
+</section>
+
+
+<!-- GUIDE -->
+
+<section class="guide">
+
+    <div class="guide-card">
+
+        <h3>Prior Work</h3>
+
+        <p>
+            The anvil remembers previous operations. The penalty grows
+            exponentially, so combining books intelligently can save many
+            levels.
+        </p>
+
+    </div>
+
+    <div class="guide-card">
+
+        <h3>Book Pairing</h3>
+
+        <p>
+            Instead of putting every book directly onto the item,
+            the optimizer can combine books together first.
+        </p>
+
+    </div>
+
+    <div class="guide-card">
+
+        <h3>Too Expensive</h3>
+
+        <p>
+            Survival anvil operations costing 40 levels or more are blocked.
+            The optimizer rejects such individual steps.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+    Minecraft Anvil XP Optimizer — Java Edition
+</footer>
+
+
+<script>
+
+/* =========================================================
+   MINECRAFT ASSETS
+========================================================= */
+
+const ASSET_VERSION = "1.21.11";
+
+const ASSET_BASE =
+    "https://mcasset.cloud/" +
+    ASSET_VERSION +
+    "/assets/minecraft/textures/item/";
+
+function asset(file){
+    return ASSET_BASE + file + ".png";
+}
+
+
+/* =========================================================
+   ENCHANTMENTS
+========================================================= */
+
+/*
+   book = Java enchanted-book multiplier.
+*/
+
+const ENCHANTMENTS = {
+
+    protection: {
+        name:"Protection",
+        max:4,
+        book:1
+    },
+
+    fire_protection:{
+        name:"Fire Protection",
+        max:4,
+        book:1
+    },
+
+    feather_falling:{
+        name:"Feather Falling",
+        max:4,
+        book:1
+    },
+
+    blast_protection:{
+        name:"Blast Protection",
+        max:4,
+        book:2
+    },
+
+    projectile_protection:{
+        name:"Projectile Protection",
+        max:4,
+        book:1
+    },
+
+    thorns:{
+        name:"Thorns",
+        max:3,
+        book:4
+    },
+
+    respiration:{
+        name:"Respiration",
+        max:3,
+        book:2
+    },
+
+    depth_strider:{
+        name:"Depth Strider",
+        max:3,
+        book:2
+    },
+
+    aqua_affinity:{
+        name:"Aqua Affinity",
+        max:1,
+        book:2
+    },
+
+    sharpness:{
+        name:"Sharpness",
+        max:5,
+        book:1
+    },
+
+    smite:{
+        name:"Smite",
+        max:5,
+        book:1
+    },
+
+    bane:{
+        name:"Bane of Arthropods",
+        max:5,
+        book:1
+    },
+
+    knockback:{
+        name:"Knockback",
+        max:2,
+        book:1
+    },
+
+    fire_aspect:{
+        name:"Fire Aspect",
+        max:2,
+        book:2
+    },
+
+    looting:{
+        name:"Looting",
+        max:3,
+        book:2
+    },
+
+    sweeping_edge:{
+        name:"Sweeping Edge",
+        max:3,
+        book:2
+    },
+
+    efficiency:{
+        name:"Efficiency",
+        max:5,
+        book:1
+    },
+
+    silk_touch:{
+        name:"Silk Touch",
+        max:1,
+        book:4
+    },
+
+    unbreaking:{
+        name:"Unbreaking",
+        max:3,
+        book:1
+    },
+
+    fortune:{
+        name:"Fortune",
+        max:3,
+        book:2
+    },
+
+    power:{
+        name:"Power",
+        max:5,
+        book:1
+    },
+
+    punch:{
+        name:"Punch",
+        max:2,
+        book:2
+    },
+
+    flame:{
+        name:"Flame",
+        max:1,
+        book:2
+    },
+
+    infinity:{
+        name:"Infinity",
+        max:1,
+        book:4
+    },
+
+    luck:{
+        name:"Luck of the Sea",
+        max:3,
+        book:2
+    },
+
+    lure:{
+        name:"Lure",
+        max:3,
+        book:2
+    },
+
+    frost_walker:{
+        name:"Frost Walker",
+        max:2,
+        book:4
+    },
+
+    mending:{
+        name:"Mending",
+        max:1,
+        book:2
+    },
+
+    binding:{
+        name:"Curse of Binding",
+        max:1,
+        book:4
+    },
+
+    vanishing:{
+        name:"Curse of Vanishing",
+        max:1,
+        book:4
+    },
+
+    impaling:{
+        name:"Impaling",
+        max:5,
+        book:2
+    },
+
+    riptide:{
+        name:"Riptide",
+        max:3,
+        book:2
+    },
+
+    loyalty:{
+        name:"Loyalty",
+        max:3,
+        book:1
+    },
+
+    channeling:{
+        name:"Channeling",
+        max:1,
+        book:4
+    },
+
+    multishot:{
+        name:"Multishot",
+        max:1,
+        book:2
+    },
+
+    piercing:{
+        name:"Piercing",
+        max:4,
+        book:1
+    },
+
+    quick_charge:{
+        name:"Quick Charge",
+        max:3,
+        book:1
+    },
+
+    soul_speed:{
+        name:"Soul Speed",
+        max:3,
+        book:4
+    },
+
+    swift_sneak:{
+        name:"Swift Sneak",
+        max:3,
+        book:4
+    },
+
+    density:{
+        name:"Density",
+        max:5,
+        book:1
+    },
+
+    breach:{
+        name:"Breach",
+        max:4,
+        book:2
+    },
+
+    wind_burst:{
+        name:"Wind Burst",
+        max:3,
+        book:2
+    },
+
+    lunge:{
+        name:"Lunge",
+        max:3,
+        book:1
+    }
+};
+
+
+/* =========================================================
+   CONFLICT GROUPS
+========================================================= */
+
+const CONFLICT_GROUPS = [
+
+    [
+        "sharpness",
+        "smite",
+        "bane"
+    ],
+
+    [
+        "protection",
+        "fire_protection",
+        "blast_protection",
+        "projectile_protection"
+    ],
+
+    [
+        "depth_strider",
+        "frost_walker"
+    ],
+
+    [
+        "fortune",
+        "silk_touch"
+    ],
+
+    [
+        "infinity",
+        "mending"
+    ],
+
+    [
+        "multishot",
+        "piercing"
+    ],
+
+    [
+        "riptide",
+        "loyalty",
+        "channeling"
+    ],
+
+    [
+        "density",
+        "breach",
+        "smite",
+        "bane"
+    ]
+];
+
+function conflicts(a,b){
+
+    if(a === b) return false;
+
+    return CONFLICT_GROUPS.some(group =>
+        group.includes(a) && group.includes(b)
+    );
+}
+
+
+/* =========================================================
+   ITEM DATABASE
+========================================================= */
+
+const ITEMS = {
+
+    sword:{
+        name:"Sword",
+        materials:[
+            ["wooden","Wooden"],
+            ["stone","Stone"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "sharpness","smite","bane",
+            "knockback","fire_aspect","looting",
+            "sweeping_edge","unbreaking","mending",
+            "binding","vanishing"
+        ]
+    },
+
+    axe:{
+        name:"Axe",
+        materials:[
+            ["wooden","Wooden"],
+            ["stone","Stone"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "sharpness","smite","bane",
+            "efficiency","silk_touch","fortune",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    pickaxe:{
+        name:"Pickaxe",
+        materials:[
+            ["wooden","Wooden"],
+            ["stone","Stone"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "efficiency","silk_touch","fortune",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    shovel:{
+        name:"Shovel",
+        materials:[
+            ["wooden","Wooden"],
+            ["stone","Stone"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "efficiency","silk_touch","fortune",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    hoe:{
+        name:"Hoe",
+        materials:[
+            ["wooden","Wooden"],
+            ["stone","Stone"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "efficiency","silk_touch","fortune",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    spear:{
+        name:"Spear",
+        materials:[
+            ["wooden","Wooden"],
+            ["stone","Stone"],
+            ["copper","Copper"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "sharpness","smite","bane",
+            "knockback","fire_aspect","looting",
+            "lunge","unbreaking","mending",
+            "vanishing"
+        ]
+    },
+
+    bow:{
+        name:"Bow",
+        materials:null,
+        file:"bow",
+        enchants:[
+            "power","punch","flame","infinity",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    crossbow:{
+        name:"Crossbow",
+        materials:null,
+        file:"crossbow",
+        enchants:[
+            "quick_charge","multishot","piercing",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    trident:{
+        name:"Trident",
+        materials:null,
+        file:"trident",
+        enchants:[
+            "impaling","riptide","loyalty",
+            "channeling","unbreaking","mending",
+            "vanishing"
+        ]
+    },
+
+    mace:{
+        name:"Mace",
+        materials:null,
+        file:"mace",
+        enchants:[
+            "density","breach","smite","bane",
+            "wind_burst","fire_aspect",
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    helmet:{
+        name:"Helmet",
+        materials:[
+            ["leather","Leather"],
+            ["chainmail","Chainmail"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "protection","fire_protection",
+            "blast_protection","projectile_protection",
+            "respiration","aqua_affinity","thorns",
+            "unbreaking","mending","binding","vanishing"
+        ]
+    },
+
+    chestplate:{
+        name:"Chestplate",
+        materials:[
+            ["leather","Leather"],
+            ["chainmail","Chainmail"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "protection","fire_protection",
+            "blast_protection","projectile_protection",
+            "thorns","unbreaking","mending",
+            "binding","vanishing"
+        ]
+    },
+
+    leggings:{
+        name:"Leggings",
+        materials:[
+            ["leather","Leather"],
+            ["chainmail","Chainmail"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "protection","fire_protection",
+            "blast_protection","projectile_protection",
+            "swift_sneak","thorns",
+            "unbreaking","mending","binding","vanishing"
+        ]
+    },
+
+    boots:{
+        name:"Boots",
+        materials:[
+            ["leather","Leather"],
+            ["chainmail","Chainmail"],
+            ["iron","Iron"],
+            ["golden","Golden"],
+            ["diamond","Diamond"],
+            ["netherite","Netherite"]
+        ],
+        enchants:[
+            "protection","fire_protection",
+            "blast_protection","projectile_protection",
+            "feather_falling","depth_strider",
+            "frost_walker","soul_speed",
+            "thorns","unbreaking","mending",
+            "binding","vanishing"
+        ]
+    },
+
+    turtle:{
+        name:"Turtle Shell",
+        materials:null,
+        file:"turtle_helmet",
+        enchants:[
+            "protection","fire_protection",
+            "blast_protection","projectile_protection",
+            "respiration","aqua_affinity","thorns",
+            "unbreaking","mending","binding","vanishing"
+        ]
+    },
+
+    elytra:{
+        name:"Elytra",
+        materials:null,
+        file:"elytra",
+        enchants:[
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    shield:{
+        name:"Shield",
+        materials:null,
+        file:"shield",
+        enchants:[
+            "unbreaking","mending","vanishing"
+        ]
+    },
+
+    fishing:{
+        name:"Fishing Rod",
+        materials:null,
+        file:"fishing_rod",
+        enchants:[
+            "luck","lure","unbreaking","mending","vanishing"
+        ]
+    },
+
+    shears:{
+        name:"Shears",
+        materials:null,
+        file:"shears",
+        enchants:[
+            "efficiency","silk_touch",
+            "unbreaking","mending"
+        ]
+    }
+};
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const itemSelect =
+    document.getElementById("itemSelect");
+
+const materialSelect =
+    document.getElementById("materialSelect");
+
+const materialField =
+    document.getElementById("materialField");
+
+const itemImage =
+    document.getElementById("itemImage");
+
+const itemPreviewName =
+    document.getElementById("itemPreviewName");
+
+const enchantSelect =
+    document.getElementById("enchantSelect");
+
+const levelSelect =
+    document.getElementById("levelSelect");
+
+const booksList =
+    document.getElementById("booksList");
+
+const results =
+    document.getElementById("results");
+
+const resultSummary =
+    document.getElementById("resultSummary");
+
+const stepsElement =
+    document.getElementById("steps");
+
+let books = [];
+
+
+/* =========================================================
+   ITEM UI
+========================================================= */
+
+function populateItems(){
+
+    itemSelect.innerHTML = "";
+
+    for(const key in ITEMS){
+
+        const option =
+            document.createElement("option");
+
+        option.value = key;
+        option.textContent = ITEMS[key].name;
+
+        itemSelect.appendChild(option);
+    }
+}
+
+
+function populateMaterials(){
+
+    const item =
+        ITEMS[itemSelect.value];
+
+    materialSelect.innerHTML = "";
+
+    if(!item.materials){
+
+        materialField.style.display = "none";
+
+        return;
+    }
+
+    materialField.style.display = "block";
+
+    item.materials.forEach(mat => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = mat[0];
+        option.textContent = mat[1];
+
+        materialSelect.appendChild(option);
+    });
+}
+
+
+function getItemFile(){
+
+    const key =
+        itemSelect.value;
+
+    const item =
+        ITEMS[key];
+
+    if(item.file){
+        return item.file;
+    }
+
+    const material =
+        materialSelect.value;
+
+    return material + "_" + key;
+}
+
+
+function updateItemPreview(){
+
+    populateMaterials();
+
+    const file =
+        getItemFile();
+
+    itemImage.src =
+        asset(file);
+
+    const item =
+        ITEMS[itemSelect.value];
+
+    const material =
+        materialSelect.options[
+            materialSelect.selectedIndex
+        ];
+
+    const materialName =
+        material ? material.textContent + " " : "";
+
+    itemPreviewName.textContent =
+        materialName + item.name;
+
+    populateEnchantments();
+}
+
+
+/* =========================================================
+   ENCHANTMENT UI
+========================================================= */
+
+function populateEnchantments(){
+
+    const item =
+        ITEMS[itemSelect.value];
+
+    enchantSelect.innerHTML = "";
+
+    item.enchants.forEach(id => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = id;
+        option.textContent =
+            ENCHANTMENTS[id].name;
+
+        enchantSelect.appendChild(option);
+    });
+
+    updateLevels();
+}
+
+
+function updateLevels(){
+
+    const id =
+        enchantSelect.value;
+
+    if(!id) return;
+
+    const max =
+        ENCHANTMENTS[id].max;
+
+    levelSelect.innerHTML = "";
+
+    for(let i=1;i<=max;i++){
+
+        const option =
+            document.createElement("option");
+
+        option.value = i;
+        option.textContent =
+            "Level " + i;
+
+        levelSelect.appendChild(option);
+    }
+}
+
+
+/* =========================================================
+   BOOK UI
+========================================================= */
+
+function addBook(){
+
+    const id =
+        enchantSelect.value;
+
+    const level =
+        Number(levelSelect.value);
+
+    if(!id || !level) return;
+
+    books.push({
+        id,
+        level,
+        work:0
+    });
+
+    renderBooks();
+}
+
+
+function renderBooks(){
+
+    if(books.length === 0){
+
+        booksList.innerHTML =
+            `<div class="empty">
+                No books added yet.
+             </div>`;
+
+        return;
+    }
+
+    booksList.innerHTML = "";
+
+    books.forEach((book,index)=>{
+
+        const card =
+            document.createElement("div");
+
+        card.className = "book-card";
+
+        card.innerHTML = `
+
+            <img
+                src="${asset("enchanted_book")}"
+                alt="Enchanted Book"
+                onerror="this.onerror=null;this.src='${asset("book")}'">
+
+            <div class="book-info">
+
+                <strong>
+                    ${ENCHANTMENTS[book.id].name}
+                    ${roman(book.level)}
+                </strong>
+
+                <span>
+                    Fresh enchanted book
+                </span>
+
+            </div>
+
+            <button
+                class="remove-book"
+                onclick="removeBook(${index})">
+                ×
+            </button>
+        `;
+
+        booksList.appendChild(card);
+    });
+}
+
+
+function removeBook(index){
+
+    books.splice(index,1);
+
+    renderBooks();
+}
+
+
+/* =========================================================
+   EXAMPLE
+========================================================= */
+
+function loadExample(){
+
+    itemSelect.value = "sword";
+
+    updateItemPreview();
+
+    books = [
+
+        {
+            id:"sharpness",
+            level:5,
+            work:0
+        },
+
+        {
+            id:"looting",
+            level:3,
+            work:0
+        },
+
+        {
+            id:"unbreaking",
+            level:3,
+            work:0
+        },
+
+        {
+            id:"mending",
+            level:1,
+            work:0
+        },
+
+        {
+            id:"fire_aspect",
+            level:2,
+            work:0
+        },
+
+        {
+            id:"knockback",
+            level:2,
+            work:0
+        }
+    ];
+
+    renderBooks();
+}
+
+
+/* =========================================================
+   MINECRAFT ANVIL MATH
+========================================================= */
+
+function penalty(work){
+
+    return Math.pow(2,work) - 1;
+}
+
+
+function cloneEnchants(obj){
+
+    return Object.assign({},obj);
+}
+
+
+function enchantList(obj){
+
+    return Object.keys(obj)
+        .sort()
+        .map(id =>
+            id + ":" + obj[id]
+        )
+        .join(",");
+}
+
+
+function hasConflictWithSet(id,enchants){
+
+    return Object.keys(enchants)
+        .some(existing =>
+            conflicts(id,existing)
+        );
+}
+
+
+/*
+   Merge target + sacrifice.
+
+   target:
+      {kind:"item"/"book", enchants:{}, work:0}
+
+   sacrifice:
+      same structure
+
+   For this optimizer the sacrifice is always a book.
+*/
+
+function mergeStates(target,sacrifice,targetIsItem){
+
+    const resultEnchants =
+        cloneEnchants(target.enchants);
+
+    let enchantCost = 0;
+
+    for(const id of Object.keys(sacrifice.enchants)){
+
+        const sacLevel =
+            sacrifice.enchants[id];
+
+        const data =
+            ENCHANTMENTS[id];
+
+        /* If target is an item, this enchantment
+           must be legal for that item. */
+
+        if(
+            targetIsItem &&
+            !ITEMS[itemSelect.value].enchants.includes(id)
+        ){
+            continue;
+        }
+
+        /* Conflict with another enchantment */
+
+        if(
+            !resultEnchants[id] &&
+            hasConflictWithSet(id,resultEnchants)
+        ){
+
+            /*
+              Java charges 1 level for an incompatible
+              enchantment when it is considered by the anvil.
+            */
+
+            enchantCost += 1;
+
+            continue;
+        }
+
+        let finalLevel;
+
+        if(!resultEnchants[id]){
+
+            finalLevel = sacLevel;
+
+            resultEnchants[id] =
+                finalLevel;
+
+        }else{
+
+            const current =
+                resultEnchants[id];
+
+            if(sacLevel > current){
+
+                finalLevel =
+                    Math.min(
+                        sacLevel,
+                        data.max
+                    );
+
+                resultEnchants[id] =
+                    finalLevel;
+
+            }else if(
+                sacLevel === current &&
+                current < data.max
+            ){
+
+                finalLevel =
+                    current + 1;
+
+                resultEnchants[id] =
+                    finalLevel;
+
+            }else{
+
+                finalLevel =
+                    current;
+            }
+        }
+
+        /*
+          Java enchantment transfer:
+          resulting level × book multiplier
+        */
+
+        enchantCost +=
+            finalLevel * data.book;
+    }
+
+    /*
+      If absolutely nothing useful can be transferred,
+      reject the operation.
+    */
+
+    if(
+        Object.keys(resultEnchants).length ===
+        Object.keys(target.enchants).length &&
+        enchantCost === 0
+    ){
+        return null;
+    }
+
+    const totalCost =
+        enchantCost +
+        penalty(target.work) +
+        penalty(sacrifice.work);
+
+    if(totalCost >= 40){
+        return null;
+    }
+
+    const resultWork =
+        Math.max(
+            target.work,
+            sacrifice.work
+        ) + 1;
+
+    return {
+
+        result:{
+            kind:target.kind,
+            enchants:resultEnchants,
+            work:resultWork
+        },
+
+        cost:totalCost
+    };
+}
+
+
+/* =========================================================
+   BOOK MERGE OPTIMIZER
+========================================================= */
+
+/*
+  For every subset of books we find the cheapest
+  way to turn them into one combined enchanted book.
+
+  This allows:
+
+       Book A + Book B
+              |
+          Book AB
+              |
+       Book AB + Book C
+              |
+          Book ABC
+
+  instead of simply putting every book directly
+  on the item.
+*/
+
+function optimizeBookSubset(bookArray){
+
+    const n =
+        bookArray.length;
+
+    const totalMasks =
+        1 << n;
+
+    const best =
+        Array(totalMasks)
+            .fill(null)
+            .map(()=>new Map());
+
+    /* Single books */
+
+    for(let i=0;i<n;i++){
+
+        const mask =
+            1 << i;
+
+        const b =
+            bookArray[i];
+
+        const state = {
+
+            book:{
+                kind:"book",
+
+                enchants:{
+                    [b.id]:b.level
+                },
+
+                work:0
+            },
+
+            cost:0,
+
+            steps:[]
+        };
+
+        best[mask].set(
+            0,
+            state
+        );
+    }
+
+
+    for(let mask=1;mask<totalMasks;mask++){
+
+        if(
+            (mask & (mask-1)) === 0
+        ){
+            continue;
+        }
+
+        /*
+          Partition mask into A + B.
+        */
+
+        for(
+            let a=(mask-1)&mask;
+            a>0;
+            a=(a-1)&mask
+        ){
+
+            const b =
+                mask ^ a;
+
+            if(b===0) continue;
+
+            /*
+              Avoid calculating the same
+              unordered partition twice.
+            */
+
+            if(a > b) continue;
+
+            const statesA =
+                [...best[a].values()];
+
+            const statesB =
+                [...best[b].values()];
+
+            for(const sa of statesA){
+
+                for(const sb of statesB){
+
+                    const mergedAB =
+                        mergeStates(
+                            sa.book,
+                            sb.book,
+                            false
+                        );
+
+                    const mergedBA =
+                        mergeStates(
+                            sb.book,
+                            sa.book,
+                            false
+                        );
+
+                    if(mergedAB){
+
+                        saveBookState(
+                            best,
+                            mask,
+                            sa,
+                            sb,
+                            mergedAB,
+                            "A"
+                        );
+                    }
+
+                    if(mergedBA){
+
+                        saveBookState(
+                            best,
+                            mask,
+                            sb,
+                            sa,
+                            mergedBA,
+                            "B"
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    return best;
+}
+
+
+function saveBookState(
+    best,
+    mask,
+    leftState,
+    rightState,
+    merged,
+    order
+){
+
+    const totalCost =
+        leftState.cost +
+        rightState.cost +
+        merged.cost;
+
+    const work =
+        merged.result.work;
+
+    const step = {
+
+        type:"book",
+
+        left:leftState.book,
+
+        right:rightState.book,
+
+        result:merged.result,
+
+        cost:merged.cost
+    };
+
+    const steps =
+        leftState.steps
+            .concat(rightState.steps)
+            .concat([step]);
+
+    const old =
+        best[mask].get(work);
+
+    if(
+        !old ||
+        totalCost < old.cost
+    ){
+
+        best[mask].set(
+            work,
+            {
+
+                book:merged.result,
+
+                cost:totalCost,
+
+                steps
+            }
+        );
+    }
+}
+
+
+/* =========================================================
+   FINAL ITEM OPTIMIZER
+========================================================= */
+
+function optimizeAll(){
+
+    const n =
+        books.length;
+
+    if(n===0){
+
+        return null;
+    }
+
+    if(n > 10){
+
+        alert(
+            "For performance, please use 10 books or fewer."
+        );
+
+        return null;
+    }
+
+    const bookStates =
+        optimizeBookSubset(books);
+
+    const totalMasks =
+        1 << n;
+
+    const dp =
+        Array(totalMasks)
+            .fill(null)
+            .map(()=>new Map());
+
+
+    const initialWork =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Number(
+                    document.getElementById(
+                        "priorUses"
+                    ).value
+                )
+            )
+        );
+
+    const initialItem = {
+
+        kind:"item",
+
+        enchants:{},
+
+        work:initialWork
+    };
+
+
+    dp[0].set(
+        initialWork,
+        {
+
+            item:initialItem,
+
+            cost:0,
+
+            steps:[]
+        }
+    );
+
+
+    /*
+      For every already-applied subset,
+      attach any remaining subset as one merged book.
+    */
+
+    for(let mask=0;mask<totalMasks;mask++){
+
+        const currentStates =
+            [...dp[mask].values()];
+
+        if(currentStates.length===0){
+            continue;
+        }
+
+        const remaining =
+            (totalMasks - 1) ^ mask;
+
+        if(remaining===0){
+            continue;
+        }
+
+        /*
+          Every non-empty subset of remaining.
+        */
+
+        for(
+            let sub=remaining;
+            sub>0;
+            sub=(sub-1)&remaining
+        ){
+
+            const possibleBooks =
+                bookStates[sub];
+
+            if(!possibleBooks ||
+               possibleBooks.size===0){
+                continue;
+            }
+
+            for(const bookState of possibleBooks.values()){
+
+                for(const current of currentStates){
+
+                    const merged =
+                        mergeStates(
+                            current.item,
+                            bookState.book,
+                            true
+                        );
+
+                    if(!merged){
+                        continue;
+                    }
+
+                    const newMask =
+                        mask | sub;
+
+                    const totalCost =
+                        current.cost +
+                        bookState.cost +
+                        merged.cost;
+
+                    const newItem =
+                        merged.result;
+
+                    const step = {
+
+                        type:"item",
+
+                        left:current.item,
+
+                        right:bookState.book,
+
+                        result:newItem,
+
+                        cost:merged.cost
+                    };
+
+                    const newSteps =
+                        current.steps
+                            .concat(bookState.steps)
+                            .concat([step]);
+
+                    const old =
+                        dp[newMask].get(
+                            newItem.work
+                        );
+
+                    if(
+                        !old ||
+                        totalCost < old.cost
+                    ){
+
+                        dp[newMask].set(
+                            newItem.work,
+                            {
+
+                                item:newItem,
+
+                                cost:totalCost,
+
+                                steps:newSteps
+                            }
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+
+    const finals =
+        [...dp[totalMasks-1].values()];
+
+    if(finals.length===0){
+
+        return null;
+    }
+
+    finals.sort(
+        (a,b)=>a.cost-b.cost
+    );
+
+    return finals[0];
+}
+
+
+/* =========================================================
+   DISPLAY HELPERS
+========================================================= */
+
+function roman(num){
+
+    const values = [
+        [10,"X"],
+        [9,"IX"],
+        [5,"V"],
+        [4,"IV"],
+        [1,"I"]
+    ];
+
+    let result="";
+
+    for(const [value,symbol] of values){
+
+        while(num>=value){
+
+            result += symbol;
+
+            num -= value;
+        }
+    }
+
+    return result;
+}
+
+
+function stateName(state){
+
+    if(state.kind==="book"){
+
+        return "Enchanted Book";
+    }
+
+    const item =
+        ITEMS[itemSelect.value];
+
+    const material =
+        materialSelect.options[
+            materialSelect.selectedIndex
+        ];
+
+    return (
+        (material ? material.textContent+" " : "") +
+        item.name
+    );
+}
+
+
+function stateImage(state){
+
+    if(state.kind==="book"){
+
+        return asset("enchanted_book");
+    }
+
+    return asset(
+        getItemFile()
+    );
+}
+
+
+function stateEnchantText(state){
+
+    const keys =
+        Object.keys(state.enchants);
+
+    if(keys.length===0){
+
+        return "No enchantments";
+    }
+
+    return keys.map(id => {
+
+        const data =
+            ENCHANTMENTS[id];
+
+        return (
+            data.name +
+            " " +
+            roman(state.enchants[id])
+        );
+
+    }).join(" • ");
+}
+
+
+function stateHTML(state){
+
+    return `
+
+        <div class="state">
+
+            <img
+                src="${stateImage(state)}"
+                alt="${stateName(state)}"
+                onerror="
+                    this.onerror=null;
+                    this.src='${asset("enchanted_book")}';
+                ">
+
+            <div class="state-name">
+                ${stateName(state)}
+            </div>
+
+            <div class="state-enchants">
+                ${stateEnchantText(state)}
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   RENDER PLAN
+========================================================= */
+
+function renderPlan(plan){
+
+    results.style.display = "block";
+
+    const stepCount =
+        plan.steps.length;
+
+    const total =
+        plan.cost;
+
+    resultSummary.innerHTML = `
+
+        <div class="result-summary">
+
+            <div class="stat">
+
+                <span>Total Levels</span>
+
+                <strong class="success">
+                    ${total}
+                </strong>
+
+            </div>
+
+            <div class="stat">
+
+                <span>Anvil Operations</span>
+
+                <strong>
+                    ${stepCount}
+                </strong>
+
+            </div>
+
+            <div class="stat">
+
+                <span>Final Prior Uses</span>
+
+                <strong>
+                    ${plan.item.work}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="plan-note">
+            This is the lowest-cost plan found by the optimizer
+            for the books you entered. Every individual operation
+            stays below the Survival 40-level rejection point.
+        </div>
+    `;
+
+
+    stepsElement.innerHTML = "";
+
+
+    plan.steps.forEach((step,index)=>{
+
+        const element =
+            document.createElement("div");
+
+        element.className =
+            "step";
+
+        element.innerHTML = `
+
+            <div class="step-head">
+
+                <div class="step-number">
+                    Step ${index+1}
+                </div>
+
+                <div class="step-cost">
+                    ${step.cost} levels
+                </div>
+
+            </div>
+
+            <div class="step-body">
+
+                ${stateHTML(step.left)}
+
+                <div class="anvil-arrow">
+                    +
+                </div>
+
+                ${stateHTML(step.right)}
+
+                <div class="anvil-arrow">
+                    →
+                </div>
+
+                ${stateHTML(step.result)}
+
+            </div>
+        `;
+
+        stepsElement.appendChild(element);
+    });
+
+
+    results.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+}
+
+
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+itemSelect.addEventListener(
+    "change",
+    updateItemPreview
+);
+
+materialSelect.addEventListener(
+    "change",
+    updateItemPreview
+);
+
+enchantSelect.addEventListener(
+    "change",
+    updateLevels
+);
+
+document
+    .getElementById("addBook")
+    .addEventListener(
+        "click",
+        addBook
+    );
+
+document
+    .getElementById("clearBooks")
+    .addEventListener(
+        "click",
+        ()=>{
+            books=[];
+            renderBooks();
+            results.style.display="none";
+        }
+    );
+
+document
+    .getElementById("addExample")
+    .addEventListener(
+        "click",
+        loadExample
+    );
+
+document
+    .getElementById("optimizeButton")
+    .addEventListener(
+        "click",
+        ()=>{
+
+            if(books.length===0){
+
+                alert(
+                    "Add at least one enchanted book first."
+                );
+
+                return;
+            }
+
+            const button =
+                document.getElementById(
+                    "optimizeButton"
+                );
+
+            button.textContent =
+                "SEARCHING...";
+
+            /*
+              Small timeout allows the browser
+              to update the button before
+              the calculation starts.
+            */
+
+            setTimeout(()=>{
+
+                const plan =
+                    optimizeAll();
+
+                button.textContent =
+                    "FIND CHEAPEST ORDER";
+
+                if(!plan){
+
+                    results.style.display =
+                        "block";
+
+                    resultSummary.innerHTML = `
+
+                        <div class="stat">
+
+                            <span>Result</span>
+
+                            <strong class="error">
+                                No valid plan
+                            </strong>
+
+                        </div>
+
+                        <div class="plan-note">
+                            The selected enchantments cannot be
+                            combined into a valid Survival setup,
+                            or every possible operation would be
+                            Too Expensive.
+                        </div>
+                    `;
+
+                    stepsElement.innerHTML = "";
+
+                    results.scrollIntoView({
+                        behavior:"smooth"
+                    });
+
+                    return;
+                }
+
+                renderPlan(plan);
+
+            },50);
+        }
+    );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+populateItems();
+
+itemSelect.value =
+    "sword";
+
+updateItemPreview();
+
+renderBooks();
+
+</script>
+
+</body>
+</html>
