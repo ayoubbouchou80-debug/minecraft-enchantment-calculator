@@ -9,29 +9,19 @@
 <meta name="description"
 content="Free Minecraft Enchantment Calculator. Check compatible and conflicting enchantments for swords, tools, armor, bows, tridents, maces and more.">
 
-<meta name="keywords"
-content="Minecraft enchantment calculator, Minecraft enchantments, enchantment compatibility, Minecraft Java, Minecraft Bedrock">
-
 <style>
+*{box-sizing:border-box}
 
-*{
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at top,#263b2c 0,#111614 35%,#090b0c 100%);
+    radial-gradient(circle at top,#263b2c 0,#111614 35%,#090b0c 100%);
     color:#fff;
     min-height:100vh;
 }
-
-/* TOP BAR */
 
 .topbar{
     position:sticky;
@@ -57,9 +47,7 @@ body{
     font-size:18px;
 }
 
-.logo span{
-    color:#65d96f;
-}
+.logo span{color:#65d96f}
 
 .nav-links{
     display:flex;
@@ -74,8 +62,6 @@ body{
     background:#182019;
     border:1px solid #304336;
 }
-
-/* HERO */
 
 .hero{
     text-align:center;
@@ -99,9 +85,7 @@ body{
     line-height:1.1;
 }
 
-.hero h1 span{
-    color:#67e271;
-}
+.hero h1 span{color:#67e271}
 
 .hero p{
     max-width:650px;
@@ -109,8 +93,6 @@ body{
     color:#aeb8b0;
     line-height:1.6;
 }
-
-/* MAIN */
 
 .container{
     width:92%;
@@ -149,8 +131,6 @@ body{
     font-size:12px;
 }
 
-/* CONTROLS */
-
 .grid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -164,8 +144,7 @@ body{
     color:#dce7de;
 }
 
-select,
-input[type="text"]{
+select,input[type="text"]{
     width:100%;
     padding:14px;
     border-radius:10px;
@@ -176,21 +155,16 @@ input[type="text"]{
     outline:none;
 }
 
-select:focus,
-input[type="text"]:focus{
+select:focus,input[type="text"]:focus{
     border-color:#67e271;
 }
 
-/* SEARCH */
-
 .search{
     position:relative;
-    margin-bottom:16px;
+    margin:20px 0 16px;
 }
 
-.search input{
-    padding-left:42px;
-}
+.search input{padding-left:42px}
 
 .search-icon{
     position:absolute;
@@ -199,8 +173,6 @@ input[type="text"]:focus{
     font-size:17px;
 }
 
-/* ENCHANTMENTS */
-
 .enchantments{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -208,7 +180,6 @@ input[type="text"]:focus{
 }
 
 .enchant{
-    position:relative;
     background:#101512;
     border:1px solid #2d3930;
     border-radius:12px;
@@ -241,9 +212,7 @@ input[type="text"]:focus{
     flex-shrink:0;
 }
 
-.enchant-name{
-    font-weight:bold;
-}
+.enchant-name{font-weight:bold}
 
 .enchant-info{
     display:block;
@@ -251,8 +220,6 @@ input[type="text"]:focus{
     font-size:12px;
     margin-top:4px;
 }
-
-/* BUTTONS */
 
 .buttons{
     display:grid;
@@ -288,15 +255,11 @@ button.danger{
     border:1px solid #673535;
 }
 
-/* COUNTER */
-
 .counter{
     color:#98a49b;
     font-size:13px;
     margin-top:12px;
 }
-
-/* RESULT */
 
 .result{
     display:none;
@@ -308,13 +271,8 @@ button.danger{
     line-height:1.6;
 }
 
-.result.success{
-    border-color:#397a43;
-}
-
-.result.error{
-    border-color:#8a3b3b;
-}
+.result.success{border-color:#397a43}
+.result.error{border-color:#8a3b3b}
 
 .result-title{
     font-size:19px;
@@ -322,17 +280,8 @@ button.danger{
     margin-bottom:8px;
 }
 
-.success-text{
-    color:#6ee879;
-}
-
-.warning-text{
-    color:#ff7777;
-}
-
-.conflict-list{
-    margin-top:10px;
-}
+.success-text{color:#6ee879}
+.warning-text{color:#ff7777}
 
 .conflict-item{
     background:#251414;
@@ -342,8 +291,6 @@ button.danger{
     margin-top:7px;
     color:#ffaaaa;
 }
-
-/* QUICK TOOLS */
 
 .tools{
     display:grid;
@@ -359,9 +306,7 @@ button.danger{
     border-radius:13px;
 }
 
-.tool-icon{
-    font-size:28px;
-}
+.tool-icon{font-size:28px}
 
 .tool h3{
     margin:9px 0 5px;
@@ -374,22 +319,13 @@ button.danger{
     font-size:12px;
 }
 
-/* INFO */
-
 .info{
     color:#b3bdb5;
     line-height:1.75;
 }
 
-.info h2{
-    color:#fff;
-}
-
-.info h3{
-    color:#8eea96;
-}
-
-/* FOOTER */
+.info h2{color:#fff}
+.info h3{color:#8eea96}
 
 footer{
     max-width:1050px;
@@ -397,13 +333,656 @@ footer{
     padding:30px 20px;
     border-top:1px solid #29342d;
     color:#727c74;
-    text-align:center
+    text-align:center;
+}
+
+@media(max-width:700px){
+    .grid{grid-template-columns:1fr}
+    .buttons{grid-template-columns:1fr}
+    .tools{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+}
+
+@media(max-width:400px){
+    .tools{grid-template-columns:1fr}
 }
 </style>
-
 </head>
 
 <body>
+
+<header class="topbar">
+    <nav class="nav">
+        <div class="logo">⚔️ Minecraft <span>EnchantCalc</span></div>
+
+        <div class="nav-links">
+            <button onclick="scrollToCalculator()">Calculator</button>
+            <button onclick="document.getElementById('info').scrollIntoView()">Guide</button>
+        </div>
+    </nav>
+</header>
+
+<section class="hero">
+
+    <div class="hero-badge">⛏️ Free Minecraft Tool</div>
+
+    <h1>Minecraft <span>Enchantment</span> Calculator</h1>
+
+    <p>
+        Check enchantment compatibility, find conflicts,
+        and build the perfect Minecraft gear.
+    </p>
+
+</section>
+
+<main class="container">
+
+    <section class="card" id="calculator">
+
+        <div class="card-title">
+            <h2>🧙 Enchantment Calculator</h2>
+            <span class="badge">FREE</span>
+        </div>
+
+        <div class="grid">
+
+            <div class="field">
+                <label for="item">Choose an item</label>
+
+                <select id="item" onchange="updateEnchantments()">
+                    <option value="sword">⚔️ Sword</option>
+                    <option value="axe">🪓 Axe</option>
+                    <option value="pickaxe">⛏️ Pickaxe</option>
+                    <option value="shovel">🛠️ Shovel</option>
+                    <option value="bow">🏹 Bow</option>
+                    <option value="crossbow">🏹 Crossbow</option>
+                    <option value="trident">🔱 Trident</option>
+                    <option value="mace">🔨 Mace</option>
+                    <option value="helmet">🪖 Helmet</option>
+                    <option value="chestplate">🛡️ Chestplate</option>
+                    <option value="leggings">👖 Leggings</option>
+                    <option value="boots">🥾 Boots</option>
+                    <option value="elytra">🪽 Elytra</option>
+                    <option value="fishing">🎣 Fishing Rod</option>
+                </select>
+
+            </div>
+
+            <div class="field">
+
+                <label for="version">Minecraft Edition</label>
+
+                <select id="version">
+                    <option>Java Edition</option>
+                    <option>Bedrock Edition</option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="search">
+
+            <span class="search-icon">🔎</span>
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search enchantments..."
+                oninput="filterEnchantments()"
+            >
+
+        </div>
+
+        <div id="enchantments" class="enchantments"></div>
+
+        <div class="counter">
+            Selected: <strong id="counter">0</strong>
+        </div>
+
+        <div class="buttons">
+
+            <button onclick="checkCompatibility()">
+                ⚡ Check Compatibility
+            </button>
+
+            <button class="secondary" onclick="selectAll()">
+                Select All
+            </button>
+
+            <button class="danger" onclick="clearAll()">
+                Clear
+            </button>
+
+        </div>
+
+        <div id="result" class="result"></div>
+
+    </section>
+
+
+    <section class="card">
+
+        <div class="card-title">
+            <h2>⚡ Quick Tools</h2>
+        </div>
+
+        <div class="tools">
+
+            <div class="tool">
+                <div class="tool-icon">⚔️</div>
+                <h3>Weapons</h3>
+                <p>Find sword & axe enchantments</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-icon">🛡️</div>
+                <h3>Armor</h3>
+                <p>Build powerful armor</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-icon">🏹</div>
+                <h3>Ranged</h3>
+                <p>Bow & crossbow combinations</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-icon">🔨</div>
+                <h3>Tools</h3>
+                <p>Pickaxes, axes and more</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card info" id="info">
+
+        <h2>📖 Minecraft Enchantment Guide</h2>
+
+        <p>
+            Minecraft enchantments give your weapons, armor and tools
+            special abilities. However, some enchantments cannot be used
+            together on the same item.
+        </p>
+
+        <h3>What does this calculator do?</h3>
+
+        <p>
+            Select your Minecraft item and choose the enchantments you want.
+            The calculator checks whether your selected enchantments can
+            coexist and shows conflicts.
+        </p>
+
+        <h3>Why are enchantment conflicts important?</h3>
+
+        <p>
+            Some enchantments are mutually exclusive. For example,
+            Sharpness, Smite and Bane of Arthropods cannot normally be
+            combined on the same weapon.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div>⚔️ Minecraft EnchantCalc</div>
+    <p>Free Minecraft Enchantment Calculator</p>
+    <small>Not affiliated with Mojang or Microsoft.</small>
+</footer>
+
+
+<script>
+
+const enchantmentData = {
+
+sword: [
+    ["Sharpness","Damage"],
+    ["Smite","Undead damage"],
+    ["Bane of Arthropods","Arthropod damage"],
+    ["Fire Aspect","Sets enemies on fire"],
+    ["Knockback","Knocks enemies away"],
+    ["Looting","More mob drops"],
+    ["Sweeping Edge","Stronger sweeping attacks"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"],
+    ["Curse of Vanishing","Disappears on death"]
+],
+
+axe: [
+    ["Sharpness","Damage"],
+    ["Smite","Undead damage"],
+    ["Bane of Arthropods","Arthropod damage"],
+    ["Efficiency","Faster mining"],
+    ["Fortune","More drops"],
+    ["Silk Touch","Drops the block itself"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+pickaxe: [
+    ["Efficiency","Faster mining"],
+    ["Fortune","More drops"],
+    ["Silk Touch","Drops the block itself"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"],
+    ["Curse of Vanishing","Disappears on death"]
+],
+
+shovel: [
+    ["Efficiency","Faster mining"],
+    ["Fortune","More drops"],
+    ["Silk Touch","Drops the block itself"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+bow: [
+    ["Power","More damage"],
+    ["Punch","Knockback"],
+    ["Flame","Burns arrows"],
+    ["Infinity","Infinite normal arrows"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+crossbow: [
+    ["Quick Charge","Faster loading"],
+    ["Multishot","Fires 3 projectiles"],
+    ["Piercing","Arrows pierce targets"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+trident: [
+    ["Impaling","More damage"],
+    ["Loyalty","Returns to player"],
+    ["Channeling","Lightning during storms"],
+    ["Riptide","Propels player in water/rain"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+mace: [
+    ["Density","More smash damage"],
+    ["Breach","Reduces armor effectiveness"],
+    ["Wind Burst","Launches player upward"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"],
+    ["Fire Aspect","Sets enemies on fire"]
+],
+
+helmet: [
+    ["Protection","General protection"],
+    ["Fire Protection","Fire protection"],
+    ["Blast Protection","Explosion protection"],
+    ["Projectile Protection","Projectile protection"],
+    ["Respiration","Breathe underwater"],
+    ["Aqua Affinity","Mine faster underwater"],
+    ["Thorns","Damages attackers"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+chestplate: [
+    ["Protection","General protection"],
+    ["Fire Protection","Fire protection"],
+    ["Blast Protection","Explosion protection"],
+    ["Projectile Protection","Projectile protection"],
+    ["Thorns","Damages attackers"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+leggings: [
+    ["Protection","General protection"],
+    ["Fire Protection","Fire protection"],
+    ["Blast Protection","Explosion protection"],
+    ["Projectile Protection","Projectile protection"],
+    ["Thorns","Damages attackers"],
+    ["Swift Sneak","Move faster while sneaking"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+boots: [
+    ["Protection","General protection"],
+    ["Fire Protection","Fire protection"],
+    ["Blast Protection","Explosion protection"],
+    ["Projectile Protection","Projectile protection"],
+    ["Feather Falling","Reduces fall damage"],
+    ["Depth Strider","Move faster underwater"],
+    ["Frost Walker","Walk on water"],
+    ["Soul Speed","Faster on soul blocks"],
+    ["Thorns","Damages attackers"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"]
+],
+
+elytra: [
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"],
+    ["Curse of Binding","Cannot remove normally"],
+    ["Curse of Vanishing","Disappears on death"]
+],
+
+fishing: [
+    ["Luck of the Sea","Better fishing loot"],
+    ["Lure","Faster catches"],
+    ["Unbreaking","Increases durability"],
+    ["Mending","Repairs with XP"],
+    ["Curse of Vanishing","Disappears on death"]
+]
+
+};
+
+
+/* ENCHANTMENT CONFLICTS */
+
+const conflicts = [
+
+["Sharpness","Smite"],
+["Sharpness","Bane of Arthropods"],
+
+["Smite","Bane of Arthropods"],
+
+["Fortune","Silk Touch"],
+
+["Infinity","Mending"],
+
+["Multishot","Piercing"],
+
+["Loyalty","Riptide"],
+
+["Channeling","Riptide"],
+
+["Depth Strider","Frost Walker"],
+
+["Protection","Fire Protection"],
+["Protection","Blast Protection"],
+["Protection","Projectile Protection"],
+
+["Fire Protection","Blast Protection"],
+["Fire Protection","Projectile Protection"],
+
+["Blast Protection","Projectile Protection"]
+
+];
+
+
+function updateEnchantments(){
+
+    const item = document.getElementById("item").value;
+
+    const container =
+        document.getElementById("enchantments");
+
+    container.innerHTML="";
+
+    enchantmentData[item].forEach((ench,index)=>{
+
+        const div=document.createElement("div");
+
+        div.className="enchant";
+
+        div.dataset.name=ench[0].toLowerCase();
+
+        div.innerHTML=`
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    value="${ench[0]}"
+                    onchange="updateCounter()"
+                >
+
+                <div>
+
+                    <div class="enchant-name">
+                        ${ench[0]}
+                    </div>
+
+                    <span class="enchant-info">
+                        ${ench[1]}
+                    </span>
+
+                </div>
+
+            </label>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+    updateCounter();
+
+}
+
+
+function updateCounter(){
+
+    const selected =
+        document.querySelectorAll(
+            "#enchantments input:checked"
+        ).length;
+
+    document.getElementById("counter").textContent=selected;
+
+}
+
+
+function filterEnchantments(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    document.querySelectorAll(".enchant").forEach(card=>{
+
+        const name=card.dataset.name;
+
+        card.style.display =
+            name.includes(search)
+            ? "block"
+            : "none";
+
+    });
+
+}
+
+
+function selectAll(){
+
+    document
+    .querySelectorAll("#enchantments input")
+    .forEach(input=>{
+        input.checked=true;
+    });
+
+    updateCounter();
+
+}
+
+
+function clearAll(){
+
+    document
+    .querySelectorAll("#enchantments input")
+    .forEach(input=>{
+        input.checked=false;
+    });
+
+    document
+    .querySelectorAll(".enchant")
+    .forEach(card=>{
+        card.classList.remove("conflict");
+    });
+
+    document.getElementById("result").style.display="none";
+
+    updateCounter();
+
+}
+
+
+function checkCompatibility(){
+
+    const selected =
+        [...document.querySelectorAll(
+            "#enchantments input:checked"
+        )].map(input=>input.value);
+
+    const result=document.getElementById("result");
+
+    if(selected.length<2){
+
+        result.style.display="block";
+
+        result.className="result";
+
+        result.innerHTML=`
+            <div class="result-title">
+                ⚠️ Select at least two enchantments
+            </div>
+
+            <div>
+                Choose two or more enchantments to check
+                compatibility.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    const found=[];
+
+
+    conflicts.forEach(pair=>{
+
+        if(
+            selected.includes(pair[0]) &&
+            selected.includes(pair[1])
+        ){
+
+            found.push(pair);
+
+        }
+
+    });
+
+
+    document
+    .querySelectorAll(".enchant")
+    .forEach(card=>{
+        card.classList.remove("conflict");
+    });
+
+
+    result.style.display="block";
+
+
+    if(found.length===0){
+
+        result.className="result success";
+
+        result.innerHTML=`
+
+            <div class="result-title success-text">
+                ✅ Compatible!
+            </div>
+
+            <div>
+                No conflicts were found between
+                your selected enchantments.
+            </div>
+
+        `;
+
+    }else{
+
+        result.className="result error";
+
+        let html=`
+
+            <div class="result-title warning-text">
+                ❌ Enchantment Conflict
+            </div>
+
+            <div>
+                These enchantments cannot normally
+                be combined:
+            </div>
+
+            <div class="conflict-list">
+
+        `;
+
+
+        found.forEach(pair=>{
+
+            html+=`
+
+                <div class="conflict-item">
+                    ❌ <strong>${pair[0]}</strong>
+                    + 
+                    <strong>${pair[1]}</strong>
+                </div>
+
+            `;
+
+            document
+            .querySelectorAll(".enchant")
+            .forEach(card=>{
+
+                const name =
+                    card.querySelector(
+                        ".enchant-name"
+                    ).textContent;
+
+                if(pair.includes(name)){
+                    card.classList.add("conflict");
+                }
+
+            });
+
+        });
+
+
+        html+="</div>";
+
+        result.innerHTML=html;
+
+    }
+
+}
+
+
+function scrollToCalculator(){
+
+    document
+    .getElementById("calculator")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* START */
+
+updateEnchantments();
+
+</script>
 
 </body>
 </html>
