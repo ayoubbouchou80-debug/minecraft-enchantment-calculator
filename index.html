@@ -7,9 +7,10 @@
 <title>Minecraft Anvil XP Optimizer</title>
 
 <meta name="description"
-content="Minecraft Anvil XP Optimizer - Find efficient enchantment book combinations and XP farming methods.">
+content="Minecraft Anvil XP Optimizer - Optimize enchantment books, anvil XP and XP farming methods.">
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -17,10 +18,16 @@ content="Minecraft Anvil XP Optimizer - Find efficient enchantment book combinat
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    color: white;
+
     background:
-        linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)),
-        url("https://mcasset.cloud/1.21.4/assets/minecraft/textures/block/stone.png");
-    color: #fff;
+        linear-gradient(
+            rgba(10,10,10,0.82),
+            rgba(10,10,10,0.95)
+        ),
+        url("https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/block/stone.png");
+
+    background-size: 128px;
 }
 
 header {
@@ -32,14 +39,14 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 32px;
     color: #55ff55;
+    font-size: 31px;
     text-shadow: 3px 3px #000;
 }
 
 header p {
-    color: #ccc;
-    margin: 10px 0 0;
+    color: #bbb;
+    margin-top: 10px;
 }
 
 .container {
@@ -48,28 +55,28 @@ header p {
 }
 
 .card {
-    background: rgba(20,20,20,.95);
+    background: rgba(18,18,18,0.97);
     border: 1px solid #444;
     border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.4);
+    margin-bottom: 22px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.45);
 }
 
 .card h2 {
-    margin-top: 0;
     color: #55ff55;
+    margin-top: 0;
 }
 
 label {
     display: block;
-    margin: 12px 0 6px;
+    margin-top: 13px;
+    margin-bottom: 7px;
     color: #ddd;
     font-weight: bold;
 }
 
 select,
-input,
 button {
     width: 100%;
     padding: 12px;
@@ -80,8 +87,7 @@ button {
     font-size: 15px;
 }
 
-select:focus,
-input:focus {
+select:focus {
     outline: none;
     border-color: #55ff55;
 }
@@ -89,36 +95,45 @@ input:focus {
 button {
     background: #238b23;
     border: none;
+    margin-top: 18px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 15px;
 }
 
 button:hover {
-    background: #2ead2e;
+    background: #31ad31;
 }
 
+/* ITEM PREVIEW */
+
 .item-preview {
+    margin-top: 18px;
+    padding: 18px;
+
     display: flex;
     align-items: center;
     gap: 20px;
+
     background: #151515;
     border: 1px solid #444;
-    padding: 15px;
     border-radius: 10px;
-    margin-top: 15px;
 }
 
 .item-preview img {
-    width: 80px;
-    height: 80px;
-    image-rendering: pixelated;
+    width: 90px;
+    height: 90px;
+
     object-fit: contain;
+
+    image-rendering: pixelated;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255,255,255,.15));
 }
 
 .item-info h3 {
-    margin: 0 0 7px;
-    color: #fff;
+    margin: 0 0 8px;
+    font-size: 22px;
 }
 
 .item-info p {
@@ -126,78 +141,130 @@ button:hover {
     color: #aaa;
 }
 
+/* BOOKS */
+
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
+    grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+
+    gap: 13px;
 }
 
 .book {
-    background: #1b1b1b;
+    background: #1a1a1a;
     border: 1px solid #444;
-    padding: 12px;
     border-radius: 8px;
+    padding: 13px;
 }
 
-.book input {
-    margin-top: 8px;
-}
+/* RESULT */
 
 .result {
     margin-top: 20px;
-    padding: 15px;
-    background: #101d10;
-    border: 1px solid #348f34;
+    padding: 17px;
+
+    background: #0d1b0d;
+    border: 1px solid #3d9d3d;
     border-radius: 8px;
+
+    line-height: 1.8;
 }
 
 .result strong {
     color: #55ff55;
 }
 
+/* XP METHODS */
+
 .xp-methods {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(270px, 1fr));
+
     gap: 18px;
 }
 
 .method {
-    background: #171717;
+    background: #151515;
+
     border: 1px solid #444;
-    border-radius: 10px;
+
+    border-radius: 11px;
+
     overflow: hidden;
+
+    transition:
+        transform .2s,
+        border-color .2s;
+}
+
+.method:hover {
+    transform: translateY(-4px);
+    border-color: #55ff55;
 }
 
 .method img {
     width: 100%;
-    height: 170px;
-    object-fit: cover;
+    height: 190px;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.2),
+            rgba(0,0,0,.5)
+        ),
+        #222;
+
     display: block;
 }
 
 .method-content {
-    padding: 15px;
+    padding: 16px;
 }
 
 .method h3 {
     color: #55ff55;
-    margin-top: 0;
+    margin: 10px 0;
+    font-size: 22px;
 }
 
 .method p {
     color: #ccc;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .badge {
     display: inline-block;
+
     background: #55ff55;
     color: #000;
-    padding: 4px 8px;
+
+    padding: 5px 9px;
+
     border-radius: 5px;
+
     font-size: 12px;
+
     font-weight: bold;
 }
+
+/* GUIDE */
+
+.guide-list {
+    color: #ddd;
+    line-height: 2;
+}
+
+.guide-list li::marker {
+    color: #55ff55;
+}
+
+/* FOOTER */
 
 footer {
     text-align: center;
@@ -205,7 +272,10 @@ footer {
     padding: 30px 10px;
 }
 
+/* MOBILE */
+
 @media(max-width:600px) {
+
     header h1 {
         font-size: 24px;
     }
@@ -214,466 +284,985 @@ footer {
         flex-direction: column;
         text-align: center;
     }
+
+    .item-preview img {
+        width: 100px;
+        height: 100px;
+    }
 }
+
 </style>
 </head>
 
+
 <body>
 
+
 <header>
-    <h1>⚒ Minecraft Anvil XP Optimizer</h1>
-    <p>Optimize enchantment books and find efficient XP methods</p>
+
+    <h1>
+        ⚒ Minecraft Anvil XP Optimizer
+    </h1>
+
+    <p>
+        Optimize enchantments, anvil XP and XP farms
+    </p>
+
 </header>
+
 
 <div class="container">
 
-<!-- ITEM SELECTOR -->
+
+<!-- =====================================================
+     ITEM SELECTOR
+===================================================== -->
 
 <section class="card">
 
-<h2>🛠 Choose Your Item</h2>
+    <h2>🛠 Choose Your Item</h2>
 
-<label for="itemType">Item</label>
 
-<select id="itemType">
-    <option value="sword">Sword</option>
-    <option value="pickaxe">Pickaxe</option>
-    <option value="axe">Axe</option>
-    <option value="shovel">Shovel</option>
-    <option value="hoe">Hoe</option>
-    <option value="helmet">Helmet</option>
-    <option value="chestplate">Chestplate</option>
-    <option value="leggings">Leggings</option>
-    <option value="boots">Boots</option>
-    <option value="bow">Bow</option>
-    <option value="crossbow">Crossbow</option>
-    <option value="trident">Trident</option>
-    <option value="mace">Mace</option>
-</select>
+    <label for="itemType">
+        Item
+    </label>
 
-<label for="material">Material</label>
+    <select id="itemType">
 
-<select id="material"></select>
+        <option value="sword">
+            Sword
+        </option>
 
-<div class="item-preview">
+        <option value="pickaxe">
+            Pickaxe
+        </option>
 
-    <img id="itemImage"
-         src=""
-         alt="Minecraft item"
-         onerror="this.src='https://mcasset.cloud/1.21.4/assets/minecraft/textures/item/diamond_sword.png'">
+        <option value="axe">
+            Axe
+        </option>
 
-    <div class="item-info">
+        <option value="shovel">
+            Shovel
+        </option>
 
-        <h3 id="itemName">Diamond Sword</h3>
+        <option value="hoe">
+            Hoe
+        </option>
 
-        <p id="itemDescription">
-            Select an item and material.
-        </p>
+        <option value="helmet">
+            Helmet
+        </option>
+
+        <option value="chestplate">
+            Chestplate
+        </option>
+
+        <option value="leggings">
+            Leggings
+        </option>
+
+        <option value="boots">
+            Boots
+        </option>
+
+        <option value="bow">
+            Bow
+        </option>
+
+        <option value="crossbow">
+            Crossbow
+        </option>
+
+        <option value="trident">
+            Trident
+        </option>
+
+        <option value="mace">
+            Mace
+        </option>
+
+    </select>
+
+
+    <label for="material">
+        Material
+    </label>
+
+    <select id="material"></select>
+
+
+    <div class="item-preview">
+
+        <img
+            id="itemImage"
+            alt="Minecraft item"
+        >
+
+        <div class="item-info">
+
+            <h3 id="itemName">
+                Diamond Sword
+            </h3>
+
+            <p id="itemDescription">
+                A melee weapon used for close combat.
+            </p>
+
+        </div>
 
     </div>
 
-</div>
-
 </section>
 
 
-<!-- ENCHANTMENTS -->
+
+<!-- =====================================================
+     ENCHANTMENTS
+===================================================== -->
 
 <section class="card">
 
-<h2>📚 Enchantment Books</h2>
+    <h2>📚 Enchantment Books</h2>
 
-<p style="color:#aaa">
-Add the enchantment books you want to apply to your item.
-</p>
+    <p style="color:#aaa;">
+        Select the enchantments you want to add.
+    </p>
 
-<div class="books-grid">
 
-<div class="book">
-    <label>Sharpness</label>
-    <select id="sharpness">
-        <option value="0">None</option>
-        <option value="1">Sharpness I</option>
-        <option value="2">Sharpness II</option>
-        <option value="3">Sharpness III</option>
-        <option value="4">Sharpness IV</option>
-        <option value="5">Sharpness V</option>
-    </select>
-</div>
+    <div class="books-grid">
 
-<div class="book">
-    <label>Unbreaking</label>
-    <select id="unbreaking">
-        <option value="0">None</option>
-        <option value="1">Unbreaking I</option>
-        <option value="2">Unbreaking II</option>
-        <option value="3">Unbreaking III</option>
-    </select>
-</div>
 
-<div class="book">
-    <label>Mending</label>
-    <select id="mending">
-        <option value="0">None</option>
-        <option value="1">Mending</option>
-    </select>
-</div>
+        <div class="book">
 
-<div class="book">
-    <label>Looting</label>
-    <select id="looting">
-        <option value="0">None</option>
-        <option value="1">Looting I</option>
-        <option value="2">Looting II</option>
-        <option value="3">Looting III</option>
-    </select>
-</div>
+            <label>
+                Sharpness
+            </label>
 
-<div class="book">
-    <label>Fire Aspect</label>
-    <select id="fire">
-        <option value="0">None</option>
-        <option value="1">Fire Aspect I</option>
-        <option value="2">Fire Aspect II</option>
-    </select>
-</div>
+            <select id="sharpness">
 
-<div class="book">
-    <label>Efficiency</label>
-    <select id="efficiency">
-        <option value="0">None</option>
-        <option value="1">Efficiency I</option>
-        <option value="2">Efficiency II</option>
-        <option value="3">Efficiency III</option>
-        <option value="4">Efficiency IV</option>
-        <option value="5">Efficiency V</option>
-    </select>
-</div>
+                <option value="0">
+                    None
+                </option>
 
-<div class="book">
-    <label>Fortune</label>
-    <select id="fortune">
-        <option value="0">None</option>
-        <option value="1">Fortune I</option>
-        <option value="2">Fortune II</option>
-        <option value="3">Fortune III</option>
-    </select>
-</div>
+                <option value="1">
+                    Sharpness I
+                </option>
 
-<div class="book">
-    <label>Protection</label>
-    <select id="protection">
-        <option value="0">None</option>
-        <option value="1">Protection I</option>
-        <option value="2">Protection II</option>
-        <option value="3">Protection III</option>
-        <option value="4">Protection IV</option>
-    </select>
-</div>
+                <option value="2">
+                    Sharpness II
+                </option>
 
-</div>
+                <option value="3">
+                    Sharpness III
+                </option>
 
-<button onclick="calculateXP()">
-    ⚒ Calculate XP
-</button>
+                <option value="4">
+                    Sharpness IV
+                </option>
 
-<div id="result" class="result" style="display:none"></div>
+                <option value="5">
+                    Sharpness V
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Unbreaking
+            </label>
+
+            <select id="unbreaking">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Unbreaking I
+                </option>
+
+                <option value="2">
+                    Unbreaking II
+                </option>
+
+                <option value="3">
+                    Unbreaking III
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Mending
+            </label>
+
+            <select id="mending">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Mending
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Looting
+            </label>
+
+            <select id="looting">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Looting I
+                </option>
+
+                <option value="2">
+                    Looting II
+                </option>
+
+                <option value="3">
+                    Looting III
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Fire Aspect
+            </label>
+
+            <select id="fire">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Fire Aspect I
+                </option>
+
+                <option value="2">
+                    Fire Aspect II
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Efficiency
+            </label>
+
+            <select id="efficiency">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Efficiency I
+                </option>
+
+                <option value="2">
+                    Efficiency II
+                </option>
+
+                <option value="3">
+                    Efficiency III
+                </option>
+
+                <option value="4">
+                    Efficiency IV
+                </option>
+
+                <option value="5">
+                    Efficiency V
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Fortune
+            </label>
+
+            <select id="fortune">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Fortune I
+                </option>
+
+                <option value="2">
+                    Fortune II
+                </option>
+
+                <option value="3">
+                    Fortune III
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="book">
+
+            <label>
+                Protection
+            </label>
+
+            <select id="protection">
+
+                <option value="0">
+                    None
+                </option>
+
+                <option value="1">
+                    Protection I
+                </option>
+
+                <option value="2">
+                    Protection II
+                </option>
+
+                <option value="3">
+                    Protection III
+                </option>
+
+                <option value="4">
+                    Protection IV
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <button onclick="calculateXP()">
+        ⚒ Calculate XP
+    </button>
+
+
+    <div
+        id="result"
+        class="result"
+        style="display:none;"
+    ></div>
 
 </section>
 
 
-<!-- XP METHODS -->
+
+<!-- =====================================================
+     XP METHODS
+===================================================== -->
 
 <section class="card">
 
-<h2>✨ Modern XP Methods</h2>
-
-<div class="xp-methods">
-
-<div class="method">
-
-<img
-src="https://minecraft.wiki/images/Trading.png"
-alt="Minecraft villager trading"
-onerror="this.style.display='none'">
-
-<div class="method-content">
-
-<span class="badge">TRADING</span>
-
-<h3>Villager Trading</h3>
-
-<p>
-Trading with villagers gives experience while also allowing you
-to obtain useful items. Librarians, farmers, masons and other
-profession villagers can be incorporated into an XP setup.
-</p>
-
-</div>
-</div>
+    <h2>
+        ✨ Modern XP Methods
+    </h2>
 
 
-<div class="method">
-
-<img
-src="https://minecraft.wiki/images/Glass_Pane.png"
-alt="Glass panes">
-
-<div class="method-content">
-
-<span class="badge">VILLAGERS</span>
-
-<h3>Glass Pane Trading</h3>
-
-<p>
-A useful trading setup can combine glass production with
-librarian or cartographer villagers. Sell glass panes through
-the appropriate villager trades and gain XP from the trades.
-</p>
-
-</div>
-</div>
+    <div class="xp-methods">
 
 
-<div class="method">
+        <!-- VILLAGER -->
 
-<img
-src="https://minecraft.wiki/images/Armadillo.png"
-alt="Armadillo Minecraft">
+        <div class="method">
 
-<div class="method-content">
+            <img
+                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/villager_spawn_egg.png"
+                alt="Villager"
+                loading="lazy"
+            >
 
-<span class="badge">FARM</span>
+            <div class="method-content">
 
-<h3>Armadillo / Scute Farming</h3>
+                <span class="badge">
+                    TRADING
+                </span>
 
-<p>
-Armadillos can be used in setups designed around obtaining
-armadillo scutes. Combine the drops with other resources
-depending on your server version and farm design.
-</p>
+                <h3>
+                    Villager Trading
+                </h3>
 
-</div>
-</div>
+                <p>
+                    Trading with villagers gives XP while
+                    also allowing you to obtain emeralds
+                    and useful items.
+                </p>
+
+            </div>
+
+        </div>
 
 
-<div class="method">
 
-<img
-src="https://minecraft.wiki/images/Spawner.png"
-alt="Minecraft spawner">
+        <!-- GLASS -->
 
-<div class="method-content">
+        <div class="method">
 
-<span class="badge">MOB FARM</span>
+            <img
+                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/glass_pane.png"
+                alt="Glass Pane"
+                loading="lazy"
+            >
 
-<h3>Mob XP Farm</h3>
+            <div class="method-content">
 
-<p>
-Spawner-based farms and general mob farms can provide XP
-together with useful mob drops.
-</p>
+                <span class="badge">
+                    VILLAGERS
+                </span>
 
-</div>
-</div>
+                <h3>
+                    Glass Pane Trading
+                </h3>
 
-</div>
+                <p>
+                    Produce glass panes and trade them
+                    with villagers to gain XP and
+                    emeralds.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ARMADILLO -->
+
+        <div class="method">
+
+            <img
+                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/armadillo_spawn_egg.png"
+                alt="Armadillo"
+                loading="lazy"
+            >
+
+            <div class="method-content">
+
+                <span class="badge">
+                    FARM
+                </span>
+
+                <h3>
+                    Armadillo Farm
+                </h3>
+
+                <p>
+                    Build an armadillo setup to obtain
+                    armadillo scutes and combine it
+                    with other survival farms.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SPAWNER -->
+
+        <div class="method">
+
+            <img
+                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/block/spawner.png"
+                alt="Mob Spawner"
+                loading="lazy"
+            >
+
+            <div class="method-content">
+
+                <span class="badge">
+                    MOB FARM
+                </span>
+
+                <h3>
+                    Spawner XP Farm
+                </h3>
+
+                <p>
+                    Convert a dungeon spawner into an
+                    XP farm and collect experience
+                    together with mob drops.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
 
 </section>
 
 
-<!-- ANVIL GUIDE -->
+
+<!-- =====================================================
+     ANVIL GUIDE
+===================================================== -->
 
 <section class="card">
 
-<h2>⚒ How to Reduce Anvil XP Cost</h2>
+    <h2>
+        ⚒ How to Reduce Anvil XP Cost
+    </h2>
 
-<ol style="line-height:2;color:#ddd">
 
-<li>Do not combine every book directly onto the item.</li>
+    <ol class="guide-list">
 
-<li>Combine books together strategically first.</li>
+        <li>
+            Combine books together strategically.
+        </li>
 
-<li>Prefer combining books of the same enchantment level when upgrading them.</li>
+        <li>
+            Avoid repeatedly applying individual books
+            directly to the item.
+        </li>
 
-<li>Keep track of previous-work penalties.</li>
+        <li>
+            Combine equal enchantment levels when
+            upgrading books.
+        </li>
 
-<li>Apply expensive combinations in an efficient order.</li>
+        <li>
+            Consider the previous-work penalty.
+        </li>
 
-<li>Avoid reaching the anvil's Too Expensive limit.</li>
+        <li>
+            Put expensive combinations in an efficient
+            order.
+        </li>
 
-</ol>
+        <li>
+            Avoid reaching the Too Expensive limit.
+        </li>
+
+    </ol>
 
 </section>
+
 
 </div>
 
 
 <footer>
-Minecraft Anvil XP Optimizer<br>
-Not affiliated with Mojang or Microsoft.
+
+    Minecraft Anvil XP Optimizer
+
+    <br>
+
+    Not affiliated with Mojang or Microsoft.
+
 </footer>
+
 
 
 <script>
 
-/* =========================================================
+/* =====================================================
+   MINECRAFT ASSET SERVER
+===================================================== */
+
+/*
+   We use the official extracted asset structure
+   mirrored in the public minecraft-assets repository.
+*/
+
+const IMAGE_BASE =
+"https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/";
+
+
+/* =====================================================
    ITEM DATABASE
-   ========================================================= */
+===================================================== */
 
 const items = {
 
-sword: {
-    materials: {
-        wooden: ["Wooden Sword", "wooden_sword"],
-        stone: ["Stone Sword", "stone_sword"],
-        iron: ["Iron Sword", "iron_sword"],
-        golden: ["Golden Sword", "golden_sword"],
-        diamond: ["Diamond Sword", "diamond_sword"],
-        netherite: ["Netherite Sword", "netherite_sword"]
-    },
-    description: "A melee weapon used for close combat."
-},
 
-pickaxe: {
-    materials: {
-        wooden: ["Wooden Pickaxe", "wooden_pickaxe"],
-        stone: ["Stone Pickaxe", "stone_pickaxe"],
-        iron: ["Iron Pickaxe", "iron_pickaxe"],
-        golden: ["Golden Pickaxe", "golden_pickaxe"],
-        diamond: ["Diamond Pickaxe", "diamond_pickaxe"],
-        netherite: ["Netherite Pickaxe", "netherite_pickaxe"]
-    },
-    description: "Used for mining blocks and ores."
-},
+    sword: {
 
-axe: {
-    materials: {
-        wooden: ["Wooden Axe", "wooden_axe"],
-        stone: ["Stone Axe", "stone_axe"],
-        iron: ["Iron Axe", "iron_axe"],
-        golden: ["Golden Axe", "golden_axe"],
-        diamond: ["Diamond Axe", "diamond_axe"],
-        netherite: ["Netherite Axe", "netherite_axe"]
-    },
-    description: "A tool mainly used for wood and combat."
-},
+        materials: {
 
-shovel: {
-    materials: {
-        wooden: ["Wooden Shovel", "wooden_shovel"],
-        stone: ["Stone Shovel", "stone_shovel"],
-        iron: ["Iron Shovel", "iron_shovel"],
-        golden: ["Golden Shovel", "golden_shovel"],
-        diamond: ["Diamond Shovel", "diamond_shovel"],
-        netherite: ["Netherite Shovel", "netherite_shovel"]
-    },
-    description: "Used for digging blocks such as dirt and sand."
-},
+            wooden:
+            ["Wooden Sword", "wooden_sword"],
 
-hoe: {
-    materials: {
-        wooden: ["Wooden Hoe", "wooden_hoe"],
-        stone: ["Stone Hoe", "stone_hoe"],
-        iron: ["Iron Hoe", "iron_hoe"],
-        golden: ["Golden Hoe", "golden_hoe"],
-        diamond: ["Diamond Hoe", "diamond_hoe"],
-        netherite: ["Netherite Hoe", "netherite_hoe"]
-    },
-    description: "Used for farming and certain block interactions."
-},
+            stone:
+            ["Stone Sword", "stone_sword"],
 
-helmet: {
-    materials: {
-        leather: ["Leather Cap", "leather_helmet"],
-        chainmail: ["Chainmail Helmet", "chainmail_helmet"],
-        iron: ["Iron Helmet", "iron_helmet"],
-        golden: ["Golden Helmet", "golden_helmet"],
-        diamond: ["Diamond Helmet", "diamond_helmet"],
-        netherite: ["Netherite Helmet", "netherite_helmet"],
-        turtle: ["Turtle Shell", "turtle_helmet"]
-    },
-    description: "Protects the player's head."
-},
+            iron:
+            ["Iron Sword", "iron_sword"],
 
-chestplate: {
-    materials: {
-        leather: ["Leather Chestplate", "leather_chestplate"],
-        chainmail: ["Chainmail Chestplate", "chainmail_chestplate"],
-        iron: ["Iron Chestplate", "iron_chestplate"],
-        golden: ["Golden Chestplate", "golden_chestplate"],
-        diamond: ["Diamond Chestplate", "diamond_chestplate"],
-        netherite: ["Netherite Chestplate", "netherite_chestplate"]
-    },
-    description: "Provides protection for the player's body."
-},
+            golden:
+            ["Golden Sword", "golden_sword"],
 
-leggings: {
-    materials: {
-        leather: ["Leather Leggings", "leather_leggings"],
-        chainmail: ["Chainmail Leggings", "chainmail_leggings"],
-        iron: ["Iron Leggings", "iron_leggings"],
-        golden: ["Golden Leggings", "golden_leggings"],
-        diamond: ["Diamond Leggings", "diamond_leggings"],
-        netherite: ["Netherite Leggings", "netherite_leggings"]
-    },
-    description: "Protects the player's legs."
-},
+            diamond:
+            ["Diamond Sword", "diamond_sword"],
 
-boots: {
-    materials: {
-        leather: ["Leather Boots", "leather_boots"],
-        chainmail: ["Chainmail Boots", "chainmail_boots"],
-        iron: ["Iron Boots", "iron_boots"],
-        golden: ["Golden Boots", "golden_boots"],
-        diamond: ["Diamond Boots", "diamond_boots"],
-        netherite: ["Netherite Boots", "netherite_boots"]
-    },
-    description: "Protects the player's feet."
-},
+            netherite:
+            ["Netherite Sword", "netherite_sword"]
 
-bow: {
-    materials: {
-        normal: ["Bow", "bow"]
-    },
-    description: "A ranged weapon."
-},
+        },
 
-crossbow: {
-    materials: {
-        normal: ["Crossbow", "crossbow"]
-    },
-    description: "A ranged weapon that can fire arrows and fireworks."
-},
+        description:
+        "A melee weapon used for close combat."
 
-trident: {
-    materials: {
-        normal: ["Trident", "trident"]
     },
-    description: "A powerful weapon that can be thrown or used in melee."
-},
 
-mace: {
-    materials: {
-        normal: ["Mace", "mace"]
+
+    pickaxe: {
+
+        materials: {
+
+            wooden:
+            ["Wooden Pickaxe", "wooden_pickaxe"],
+
+            stone:
+            ["Stone Pickaxe", "stone_pickaxe"],
+
+            iron:
+            ["Iron Pickaxe", "iron_pickaxe"],
+
+            golden:
+            ["Golden Pickaxe", "golden_pickaxe"],
+
+            diamond:
+            ["Diamond Pickaxe", "diamond_pickaxe"],
+
+            netherite:
+            ["Netherite Pickaxe", "netherite_pickaxe"]
+
+        },
+
+        description:
+        "Used for mining blocks and ores."
+
     },
-    description: "A heavy weapon with powerful smash attacks."
-}
+
+
+    axe: {
+
+        materials: {
+
+            wooden:
+            ["Wooden Axe", "wooden_axe"],
+
+            stone:
+            ["Stone Axe", "stone_axe"],
+
+            iron:
+            ["Iron Axe", "iron_axe"],
+
+            golden:
+            ["Golden Axe", "golden_axe"],
+
+            diamond:
+            ["Diamond Axe", "diamond_axe"],
+
+            netherite:
+            ["Netherite Axe", "netherite_axe"]
+
+        },
+
+        description:
+        "A tool mainly used for wood and combat."
+
+    },
+
+
+    shovel: {
+
+        materials: {
+
+            wooden:
+            ["Wooden Shovel", "wooden_shovel"],
+
+            stone:
+            ["Stone Shovel", "stone_shovel"],
+
+            iron:
+            ["Iron Shovel", "iron_shovel"],
+
+            golden:
+            ["Golden Shovel", "golden_shovel"],
+
+            diamond:
+            ["Diamond Shovel", "diamond_shovel"],
+
+            netherite:
+            ["Netherite Shovel", "netherite_shovel"]
+
+        },
+
+        description:
+        "Used for digging blocks such as dirt and sand."
+
+    },
+
+
+    hoe: {
+
+        materials: {
+
+            wooden:
+            ["Wooden Hoe", "wooden_hoe"],
+
+            stone:
+            ["Stone Hoe", "stone_hoe"],
+
+            iron:
+            ["Iron Hoe", "iron_hoe"],
+
+            golden:
+            ["Golden Hoe", "golden_hoe"],
+
+            diamond:
+            ["Diamond Hoe", "diamond_hoe"],
+
+            netherite:
+            ["Netherite Hoe", "netherite_hoe"]
+
+        },
+
+        description:
+        "Used for farming and certain block interactions."
+
+    },
+
+
+    helmet: {
+
+        materials: {
+
+            leather:
+            ["Leather Cap", "leather_helmet"],
+
+            chainmail:
+            ["Chainmail Helmet", "chainmail_helmet"],
+
+            iron:
+            ["Iron Helmet", "iron_helmet"],
+
+            golden:
+            ["Golden Helmet", "golden_helmet"],
+
+            diamond:
+            ["Diamond Helmet", "diamond_helmet"],
+
+            netherite:
+            ["Netherite Helmet", "netherite_helmet"],
+
+            turtle:
+            ["Turtle Shell", "turtle_helmet"]
+
+        },
+
+        description:
+        "Protects the player's head."
+
+    },
+
+
+    chestplate: {
+
+        materials: {
+
+            leather:
+            ["Leather Chestplate", "leather_chestplate"],
+
+            chainmail:
+            ["Chainmail Chestplate", "chainmail_chestplate"],
+
+            iron:
+            ["Iron Chestplate", "iron_chestplate"],
+
+            golden:
+            ["Golden Chestplate", "golden_chestplate"],
+
+            diamond:
+            ["Diamond Chestplate", "diamond_chestplate"],
+
+            netherite:
+            ["Netherite Chestplate", "netherite_chestplate"]
+
+        },
+
+        description:
+        "Provides protection for the player's body."
+
+    },
+
+
+    leggings: {
+
+        materials: {
+
+            leather:
+            ["Leather Leggings", "leather_leggings"],
+
+            chainmail:
+            ["Chainmail Leggings", "chainmail_leggings"],
+
+            iron:
+            ["Iron Leggings", "iron_leggings"],
+
+            golden:
+            ["Golden Leggings", "golden_leggings"],
+
+            diamond:
+            ["Diamond Leggings", "diamond_leggings"],
+
+            netherite:
+            ["Netherite Leggings", "netherite_leggings"]
+
+        },
+
+        description:
+        "Protects the player's legs."
+
+    },
+
+
+    boots: {
+
+        materials: {
+
+            leather:
+            ["Leather Boots", "leather_boots"],
+
+            chainmail:
+            ["Chainmail Boots", "chainmail_boots"],
+
+            iron:
+            ["Iron Boots", "iron_boots"],
+
+            golden:
+            ["Golden Boots", "golden_boots"],
+
+            diamond:
+            ["Diamond Boots", "diamond_boots"],
+
+            netherite:
+            ["Netherite Boots", "netherite_boots"]
+
+        },
+
+        description:
+        "Protects the player's feet."
+
+    },
+
+
+    bow: {
+
+        materials: {
+
+            normal:
+            ["Bow", "bow"]
+
+        },
+
+        description:
+        "A ranged weapon."
+
+    },
+
+
+    crossbow: {
+
+        materials: {
+
+            normal:
+            ["Crossbow", "crossbow"]
+
+        },
+
+        description:
+        "A ranged weapon that fires arrows and fireworks."
+
+    },
+
+
+    trident: {
+
+        materials: {
+
+            normal:
+            ["Trident", "trident"]
+
+        },
+
+        description:
+        "A powerful weapon that can be thrown or used in melee."
+
+    },
+
+
+    mace: {
+
+        materials: {
+
+            normal:
+            ["Mace", "mace"]
+
+        },
+
+        description:
+        "A heavy weapon with powerful smash attacks."
+
+    }
 
 };
 
 
-/* =========================================================
-   IMAGE BASE
-   ========================================================= */
-
-const IMAGE_BASE =
-"https://mcasset.cloud/1.21.4/assets/minecraft/textures/item/";
-
-
-/* =========================================================
+/* =====================================================
    ELEMENTS
-   ========================================================= */
+===================================================== */
 
 const itemType =
 document.getElementById("itemType");
@@ -691,157 +1280,231 @@ const itemDescription =
 document.getElementById("itemDescription");
 
 
-/* =========================================================
+/* =====================================================
    UPDATE MATERIALS
-   ========================================================= */
+===================================================== */
 
 function updateMaterials() {
 
-    const type = itemType.value;
+    const type =
+    itemType.value;
 
-    const data = items[type];
+    const data =
+    items[type];
 
     material.innerHTML = "";
 
-    Object.keys(data.materials).forEach(key => {
 
-        const option = document.createElement("option");
+    Object.keys(data.materials)
+    .forEach(key => {
 
-        option.value = key;
+        const option =
+        document.createElement("option");
 
-        option.textContent = data.materials[key][0];
+        option.value =
+        key;
+
+        option.textContent =
+        data.materials[key][0];
 
         material.appendChild(option);
 
     });
 
-    updateItem();
 
+    updateItem();
 }
 
 
-/* =========================================================
+/* =====================================================
    UPDATE ITEM
-   ========================================================= */
+===================================================== */
 
 function updateItem() {
 
-    const type = itemType.value;
+    const type =
+    itemType.value;
 
-    const mat = material.value;
+    const mat =
+    material.value;
 
-    const data = items[type];
+    const data =
+    items[type];
 
-    if (!data || !data.materials[mat]) {
+
+    if (
+        !data ||
+        !data.materials[mat]
+    ) {
         return;
     }
 
-    const itemData = data.materials[mat];
 
-    const name = itemData[0];
+    const itemData =
+    data.materials[mat];
 
-    const texture = itemData[1];
+
+    const name =
+    itemData[0];
+
+    const texture =
+    itemData[1];
+
 
     /*
-       IMPORTANT FIX:
+       IMPORTANT:
 
-       The name and image are both updated every time
-       the material changes.
-
-       This fixes the old bug where:
-       Diamond Sword
-       still displayed
-       Wooden Sword.
+       Every time the material changes,
+       the name AND image are changed.
     */
 
-    itemName.textContent = name;
+    itemName.textContent =
+    name;
 
-    itemDescription.textContent = data.description;
 
-    itemImage.src = IMAGE_BASE + texture + ".png";
+    itemDescription.textContent =
+    data.description;
 
-    itemImage.alt = name;
+
+    itemImage.alt =
+    name;
+
+
+    itemImage.src =
+    IMAGE_BASE +
+    texture +
+    ".png";
+
+
+    /*
+       Reset opacity in case
+       a previous image failed.
+    */
+
+    itemImage.style.opacity =
+    "1";
 
 }
 
 
-/* =========================================================
-   IMAGE FALLBACK
-   ========================================================= */
+/* =====================================================
+   IMAGE ERROR HANDLING
+===================================================== */
 
-itemImage.addEventListener("error", function() {
+itemImage.addEventListener(
+    "error",
+    function() {
 
-    /*
-       Try the Minecraft texture URL through mcasset.cloud.
-       If the requested texture does not exist, hide the broken
-       image instead of showing a broken-image icon.
-    */
+        /*
+           Hide the broken-image icon instead
+           of showing a giant broken image.
+        */
 
-    if (!this.dataset.failed) {
-
-        this.dataset.failed = "true";
-
-        this.style.opacity = "0.3";
+        this.style.opacity =
+        "0.25";
 
     }
+);
 
-});
 
-
-/* =========================================================
+/* =====================================================
    EVENT LISTENERS
-   ========================================================= */
+===================================================== */
 
-itemType.addEventListener("change", updateMaterials);
+itemType.addEventListener(
+    "change",
+    updateMaterials
+);
 
-material.addEventListener("change", updateItem);
+
+material.addEventListener(
+    "change",
+    updateItem
+);
 
 
-/* =========================================================
+/* =====================================================
    XP CALCULATOR
-   ========================================================= */
+===================================================== */
 
 function calculateXP() {
+
 
     const levels = {
 
         sharpness:
-        Number(document.getElementById("sharpness").value),
+        Number(
+            document.getElementById(
+                "sharpness"
+            ).value
+        ),
 
         unbreaking:
-        Number(document.getElementById("unbreaking").value),
+        Number(
+            document.getElementById(
+                "unbreaking"
+            ).value
+        ),
 
         mending:
-        Number(document.getElementById("mending").value),
+        Number(
+            document.getElementById(
+                "mending"
+            ).value
+        ),
 
         looting:
-        Number(document.getElementById("looting").value),
+        Number(
+            document.getElementById(
+                "looting"
+            ).value
+        ),
 
         fire:
-        Number(document.getElementById("fire").value),
+        Number(
+            document.getElementById(
+                "fire"
+            ).value
+        ),
 
         efficiency:
-        Number(document.getElementById("efficiency").value),
+        Number(
+            document.getElementById(
+                "efficiency"
+            ).value
+        ),
 
         fortune:
-        Number(document.getElementById("fortune").value),
+        Number(
+            document.getElementById(
+                "fortune"
+            ).value
+        ),
 
         protection:
-        Number(document.getElementById("protection").value)
+        Number(
+            document.getElementById(
+                "protection"
+            ).value
+        )
 
     };
+
 
     let enchantments = 0;
 
     let totalLevels = 0;
 
-    Object.values(levels).forEach(level => {
+
+    Object.values(levels)
+    .forEach(level => {
 
         if (level > 0) {
 
             enchantments++;
 
-            totalLevels += level;
+            totalLevels +=
+            level;
 
         }
 
@@ -849,70 +1512,95 @@ function calculateXP() {
 
 
     const result =
-    document.getElementById("result");
+    document.getElementById(
+        "result"
+    );
 
 
     if (enchantments === 0) {
 
-        result.style.display = "block";
+        result.style.display =
+        "block";
 
         result.innerHTML = `
-            <strong>No enchantments selected.</strong>
+
+            <strong>
+                No enchantments selected.
+            </strong>
+
             <br><br>
-            Select at least one enchantment book.
+
+            Select at least one
+            enchantment book.
+
         `;
 
         return;
-
     }
 
 
     /*
-       This is a planning estimate rather than a claim
-       of exact vanilla anvil costs.
-
-       The full optimizer can later simulate each individual
-       anvil operation and prior-work penalty.
+       This is currently an estimate.
+       The next upgrade can turn this into
+       a full vanilla anvil optimizer.
     */
 
     const estimatedXP =
-        Math.max(
-            1,
-            Math.round(
-                totalLevels * 2 +
-                enchantments * 2
-            )
-        );
+    Math.max(
+        1,
+        Math.round(
+            totalLevels * 2 +
+            enchantments * 2
+        )
+    );
 
 
-    result.style.display = "block";
+    result.style.display =
+    "block";
+
 
     result.innerHTML = `
 
-        <strong>Selected Item:</strong>
+        <strong>
+            Selected Item:
+        </strong>
+
         ${itemName.textContent}
 
-        <br><br>
+        <br>
 
-        <strong>Enchantments:</strong>
+        <strong>
+            Enchantments:
+        </strong>
+
         ${enchantments}
 
         <br>
 
-        <strong>Total enchantment levels:</strong>
+        <strong>
+            Total enchantment levels:
+        </strong>
+
         ${totalLevels}
 
         <br><br>
 
-        <strong>Estimated starting cost:</strong>
-        ${estimatedXP} XP levels
+        <strong>
+            Estimated starting cost:
+        </strong>
+
+        ${estimatedXP}
+        XP levels
 
         <br><br>
 
         <span style="color:#aaa">
-        Tip: combine compatible books together first
-        to reduce repeated anvil operations and
-        previous-work penalties.
+
+            Tip: combine compatible books
+            strategically to reduce repeated
+            anvil operations and previous-work
+            penalties.
+
         </span>
 
     `;
@@ -920,9 +1608,9 @@ function calculateXP() {
 }
 
 
-/* =========================================================
+/* =====================================================
    INITIALIZE
-   ========================================================= */
+===================================================== */
 
 updateMaterials();
 
