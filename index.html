@@ -4,309 +4,339 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Minecraft Anvil XP Optimizer</title>
+<title>Minecraft Enchantment & Anvil XP Optimizer</title>
 
 <meta name="description"
-content="Minecraft Anvil XP Optimizer - Optimize enchantment books, anvil XP and XP farming methods.">
+content="Minecraft Java enchantment compatibility and anvil XP optimizer for swords, tools, armor, bows, tridents, maces and spears.">
 
 <style>
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
     background:
-        linear-gradient(
-            rgba(10,10,10,0.82),
-            rgba(10,10,10,0.95)
-        ),
-        url("https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/block/stone.png");
-
-    background-size: 128px;
+        radial-gradient(circle at top,#182318,#080808 55%);
 }
 
-header {
-    background: #111;
-    border-bottom: 3px solid #55ff55;
-    padding: 25px 15px;
-    text-align: center;
+header{
+    text-align:center;
+    padding:28px 15px;
+    background:#101010;
+    border-bottom:3px solid #48ff48;
 }
 
-header h1 {
-    margin: 0;
-    color: #55ff55;
-    font-size: 31px;
-    text-shadow: 3px 3px #000;
+header h1{
+    margin:0;
+    color:#48ff48;
+    font-size:31px;
+    text-shadow:3px 3px #000;
 }
 
-header p {
-    color: #bbb;
-    margin-top: 10px;
+header p{
+    color:#aaa;
+    margin:10px 0 0;
 }
 
-.container {
-    width: min(1100px, 94%);
-    margin: 25px auto;
+.container{
+    width:min(1100px,94%);
+    margin:25px auto;
 }
 
-.card {
-    background: rgba(18,18,18,0.97);
-    border: 1px solid #444;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 22px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.45);
+.card{
+    background:rgba(18,18,18,.97);
+    border:1px solid #444;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:22px;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
 }
 
-.card h2 {
-    color: #55ff55;
-    margin-top: 0;
+.card h2{
+    color:#48ff48;
+    margin-top:0;
 }
 
-label {
-    display: block;
-    margin-top: 13px;
-    margin-bottom: 7px;
-    color: #ddd;
-    font-weight: bold;
+label{
+    display:block;
+    margin:13px 0 7px;
+    color:#ddd;
+    font-weight:bold;
 }
 
 select,
-button {
-    width: 100%;
-    padding: 12px;
-    border-radius: 7px;
-    border: 1px solid #555;
-    background: #222;
-    color: white;
-    font-size: 15px;
+input[type="number"],
+button{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #555;
+    background:#222;
+    color:white;
+    font-size:15px;
 }
 
-select:focus {
-    outline: none;
-    border-color: #55ff55;
+select:focus,
+input:focus{
+    outline:none;
+    border-color:#48ff48;
 }
 
-button {
-    background: #238b23;
-    border: none;
-    margin-top: 18px;
-    cursor: pointer;
-    font-weight: bold;
+button{
+    background:#1e9b1e;
+    border:0;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:15px;
 }
 
-button:hover {
-    background: #31ad31;
+button:hover{
+    background:#2ab82a;
 }
 
-/* ITEM PREVIEW */
-
-.item-preview {
-    margin-top: 18px;
-    padding: 18px;
-
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    background: #151515;
-    border: 1px solid #444;
-    border-radius: 10px;
+.secondary{
+    background:#292929;
 }
 
-.item-preview img {
-    width: 90px;
-    height: 90px;
-
-    object-fit: contain;
-
-    image-rendering: pixelated;
-
-    filter:
-        drop-shadow(0 0 8px rgba(255,255,255,.15));
+.danger{
+    background:#7b2020;
 }
 
-.item-info h3 {
-    margin: 0 0 8px;
-    font-size: 22px;
+/* ITEM */
+
+.item-preview{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-top:18px;
+    padding:18px;
+    background:#151515;
+    border:1px solid #444;
+    border-radius:10px;
 }
 
-.item-info p {
-    margin: 0;
-    color: #aaa;
+.item-preview img{
+    width:95px;
+    height:95px;
+    object-fit:contain;
+    image-rendering:pixelated;
 }
 
-/* BOOKS */
-
-.books-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(210px, 1fr));
-
-    gap: 13px;
+.item-info h3{
+    margin:0 0 8px;
+    font-size:23px;
 }
 
-.book {
-    background: #1a1a1a;
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 13px;
+.item-info p{
+    color:#aaa;
+    margin:0;
 }
 
-/* RESULT */
+/* ENCHANTMENTS */
 
-.result {
-    margin-top: 20px;
-    padding: 17px;
-
-    background: #0d1b0d;
-    border: 1px solid #3d9d3d;
-    border-radius: 8px;
-
-    line-height: 1.8;
+.enchant-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:12px;
+    margin-top:15px;
 }
 
-.result strong {
-    color: #55ff55;
+.enchant-card{
+    background:#171717;
+    border:1px solid #444;
+    border-radius:9px;
+    padding:13px;
 }
 
-/* XP METHODS */
-
-.xp-methods {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(270px, 1fr));
-
-    gap: 18px;
+.enchant-card.conflict{
+    opacity:.45;
 }
 
-.method {
-    background: #151515;
-
-    border: 1px solid #444;
-
-    border-radius: 11px;
-
-    overflow: hidden;
-
-    transition:
-        transform .2s,
-        border-color .2s;
+.enchant-name{
+    color:#fff;
+    font-weight:bold;
+    margin-bottom:7px;
 }
 
-.method:hover {
-    transform: translateY(-4px);
-    border-color: #55ff55;
+.enchant-meta{
+    font-size:12px;
+    color:#888;
+    margin-bottom:8px;
 }
 
-.method img {
-    width: 100%;
-    height: 190px;
-
-    object-fit: contain;
-
-    image-rendering: pixelated;
-
-    background:
-        linear-gradient(
-            rgba(0,0,0,.2),
-            rgba(0,0,0,.5)
-        ),
-        #222;
-
-    display: block;
+.enchant-card select{
+    margin-top:5px;
 }
 
-.method-content {
-    padding: 16px;
+/* RESULTS */
+
+.result{
+    margin-top:20px;
+    padding:18px;
+    background:#091709;
+    border:1px solid #45c745;
+    border-radius:10px;
+    line-height:1.8;
 }
 
-.method h3 {
-    color: #55ff55;
-    margin: 10px 0;
-    font-size: 22px;
+.result strong{
+    color:#48ff48;
 }
 
-.method p {
-    color: #ccc;
-    line-height: 1.7;
+.warning{
+    background:#241b08;
+    border-color:#a98728;
 }
 
-.badge {
-    display: inline-block;
+.error{
+    background:#250d0d;
+    border-color:#c33;
+}
 
-    background: #55ff55;
-    color: #000;
+/* PLAN */
 
-    padding: 5px 9px;
+.plan{
+    margin-top:18px;
+}
 
-    border-radius: 5px;
+.step{
+    display:flex;
+    gap:12px;
+    margin:10px 0;
+    padding:13px;
+    background:#171717;
+    border:1px solid #444;
+    border-radius:9px;
+}
 
-    font-size: 12px;
+.step-number{
+    min-width:34px;
+    height:34px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#48ff48;
+    color:#000;
+    font-weight:bold;
+    border-radius:50%;
+}
 
-    font-weight: bold;
+.step-text{
+    line-height:1.6;
+}
+
+.step-cost{
+    color:#48ff48;
+    font-weight:bold;
+}
+
+.too-expensive{
+    color:#ff5555;
+    font-weight:bold;
+}
+
+/* XP FARMS */
+
+.xp-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:18px;
+}
+
+.farm{
+    background:#151515;
+    border:1px solid #444;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.farm-art{
+    height:210px;
+    background:#101010;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.farm-art svg{
+    width:100%;
+    height:100%;
+}
+
+.farm-content{
+    padding:16px;
+}
+
+.farm-content h3{
+    color:#48ff48;
+    font-size:21px;
+    margin:10px 0;
+}
+
+.farm-content p{
+    color:#ccc;
+    line-height:1.7;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:5px;
+    background:#48ff48;
+    color:#000;
+    font-weight:bold;
+    font-size:12px;
 }
 
 /* GUIDE */
 
-.guide-list {
-    color: #ddd;
-    line-height: 2;
+.guide{
+    line-height:1.9;
+    color:#ddd;
 }
 
-.guide-list li::marker {
-    color: #55ff55;
+.guide li::marker{
+    color:#48ff48;
 }
 
-/* FOOTER */
-
-footer {
-    text-align: center;
-    color: #888;
-    padding: 30px 10px;
+footer{
+    text-align:center;
+    color:#777;
+    padding:30px 10px;
 }
 
-/* MOBILE */
+@media(max-width:600px){
 
-@media(max-width:600px) {
-
-    header h1 {
-        font-size: 24px;
+    header h1{
+        font-size:24px;
     }
 
-    .item-preview {
-        flex-direction: column;
-        text-align: center;
+    .item-preview{
+        flex-direction:column;
+        text-align:center;
     }
 
-    .item-preview img {
-        width: 100px;
-        height: 100px;
+    .step{
+        align-items:flex-start;
     }
 }
 
 </style>
 </head>
 
-
 <body>
-
 
 <header>
 
-    <h1>
-        ⚒ Minecraft Anvil XP Optimizer
-    </h1>
+<h1>⚒ Minecraft Enchantment & Anvil Optimizer</h1>
 
-    <p>
-        Optimize enchantments, anvil XP and XP farms
-    </p>
+<p>
+Java Edition — Enchantments, compatibility, XP and merge order
+</p>
 
 </header>
 
@@ -314,576 +344,435 @@ footer {
 <div class="container">
 
 
-<!-- =====================================================
-     ITEM SELECTOR
-===================================================== -->
+<!-- ======================================================
+ITEM
+====================================================== -->
 
 <section class="card">
 
-    <h2>🛠 Choose Your Item</h2>
+<h2>🛠 Choose Your Item</h2>
 
+<label>Item Type</label>
 
-    <label for="itemType">
-        Item
-    </label>
+<select id="itemType"></select>
 
-    <select id="itemType">
+<label>Material</label>
 
-        <option value="sword">
-            Sword
-        </option>
+<select id="material"></select>
 
-        <option value="pickaxe">
-            Pickaxe
-        </option>
+<div class="item-preview">
 
-        <option value="axe">
-            Axe
-        </option>
+<img id="itemImage" alt="Minecraft item">
 
-        <option value="shovel">
-            Shovel
-        </option>
+<div class="item-info">
 
-        <option value="hoe">
-            Hoe
-        </option>
+<h3 id="itemName">Diamond Sword</h3>
 
-        <option value="helmet">
-            Helmet
-        </option>
+<p id="itemDescription">
+Choose an item.
+</p>
 
-        <option value="chestplate">
-            Chestplate
-        </option>
+</div>
 
-        <option value="leggings">
-            Leggings
-        </option>
-
-        <option value="boots">
-            Boots
-        </option>
-
-        <option value="bow">
-            Bow
-        </option>
-
-        <option value="crossbow">
-            Crossbow
-        </option>
-
-        <option value="trident">
-            Trident
-        </option>
-
-        <option value="mace">
-            Mace
-        </option>
-
-    </select>
-
-
-    <label for="material">
-        Material
-    </label>
-
-    <select id="material"></select>
-
-
-    <div class="item-preview">
-
-        <img
-            id="itemImage"
-            alt="Minecraft item"
-        >
-
-        <div class="item-info">
-
-            <h3 id="itemName">
-                Diamond Sword
-            </h3>
-
-            <p id="itemDescription">
-                A melee weapon used for close combat.
-            </p>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-
-<!-- =====================================================
-     ENCHANTMENTS
-===================================================== -->
+<!-- ======================================================
+ENCHANTMENTS
+====================================================== -->
 
 <section class="card">
 
-    <h2>📚 Enchantment Books</h2>
-
-    <p style="color:#aaa;">
-        Select the enchantments you want to add.
-    </p>
-
-
-    <div class="books-grid">
-
-
-        <div class="book">
-
-            <label>
-                Sharpness
-            </label>
-
-            <select id="sharpness">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Sharpness I
-                </option>
-
-                <option value="2">
-                    Sharpness II
-                </option>
-
-                <option value="3">
-                    Sharpness III
-                </option>
-
-                <option value="4">
-                    Sharpness IV
-                </option>
-
-                <option value="5">
-                    Sharpness V
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Unbreaking
-            </label>
-
-            <select id="unbreaking">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Unbreaking I
-                </option>
-
-                <option value="2">
-                    Unbreaking II
-                </option>
-
-                <option value="3">
-                    Unbreaking III
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Mending
-            </label>
-
-            <select id="mending">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Mending
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Looting
-            </label>
-
-            <select id="looting">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Looting I
-                </option>
-
-                <option value="2">
-                    Looting II
-                </option>
-
-                <option value="3">
-                    Looting III
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Fire Aspect
-            </label>
-
-            <select id="fire">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Fire Aspect I
-                </option>
-
-                <option value="2">
-                    Fire Aspect II
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Efficiency
-            </label>
-
-            <select id="efficiency">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Efficiency I
-                </option>
-
-                <option value="2">
-                    Efficiency II
-                </option>
-
-                <option value="3">
-                    Efficiency III
-                </option>
-
-                <option value="4">
-                    Efficiency IV
-                </option>
-
-                <option value="5">
-                    Efficiency V
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Fortune
-            </label>
-
-            <select id="fortune">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Fortune I
-                </option>
-
-                <option value="2">
-                    Fortune II
-                </option>
-
-                <option value="3">
-                    Fortune III
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="book">
-
-            <label>
-                Protection
-            </label>
-
-            <select id="protection">
-
-                <option value="0">
-                    None
-                </option>
-
-                <option value="1">
-                    Protection I
-                </option>
-
-                <option value="2">
-                    Protection II
-                </option>
-
-                <option value="3">
-                    Protection III
-                </option>
-
-                <option value="4">
-                    Protection IV
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <button onclick="calculateXP()">
-        ⚒ Calculate XP
-    </button>
-
-
-    <div
-        id="result"
-        class="result"
-        style="display:none;"
-    ></div>
+<h2>📚 Enchantments</h2>
+
+<p style="color:#aaa">
+Every enchantment applicable to the selected item is shown here.
+Choose the level of each book.
+</p>
+
+<div id="enchantments"
+class="enchant-grid">
+</div>
+
+<button onclick="generatePlan()">
+⚒ Generate Cheapest Merge Plan
+</button>
+
+<button
+class="secondary"
+onclick="clearEnchantments()">
+Clear All
+</button>
+
+<div
+id="result"
+class="result"
+style="display:none">
+</div>
 
 </section>
 
 
-
-<!-- =====================================================
-     XP METHODS
-===================================================== -->
+<!-- ======================================================
+XP FARMS
+====================================================== -->
 
 <section class="card">
 
-    <h2>
-        ✨ Modern XP Methods
-    </h2>
+<h2>✨ XP Farm Methods</h2>
+
+<div class="xp-grid">
 
 
-    <div class="xp-methods">
+<!-- VILLAGER -->
+
+<div class="farm">
+
+<div class="farm-art">
+
+<svg viewBox="0 0 400 210">
+
+<rect width="400" height="210" fill="#172117"/>
+
+<rect y="155" width="400" height="55" fill="#59452b"/>
+
+<!-- glass -->
+<rect x="60" y="55" width="280" height="100"
+fill="#7ddcff"
+opacity=".25"
+stroke="#b9f2ff"
+stroke-width="3"/>
+
+<!-- villagers -->
+
+<rect x="130" y="85" width="35" height="50" fill="#8b5a3c"/>
+<rect x="135" y="65" width="25" height="25" fill="#b87955"/>
+<rect x="138" y="70" width="6" height="6" fill="#111"/>
+<rect x="152" y="70" width="6" height="6" fill="#111"/>
+
+<rect x="220" y="85" width="35" height="50" fill="#4c7a3c"/>
+<rect x="225" y="65" width="25" height="25" fill="#b87955"/>
+<rect x="228" y="70" width="6" height="6" fill="#111"/>
+<rect x="242" y="70" width="6" height="6" fill="#111"/>
+
+<!-- lecterns -->
+<rect x="115" y="135" width="65" height="20" fill="#8b5a2b"/>
+<rect x="205" y="135" width="65" height="20" fill="#8b5a2b"/>
+
+<text x="200"
+y="30"
+text-anchor="middle"
+fill="#48ff48"
+font-size="18"
+font-weight="bold">
+TRADING HALL
+</text>
+
+</svg>
+
+</div>
+
+<div class="farm-content">
+
+<span class="badge">TRADING</span>
+
+<h3>Villager Trading</h3>
+
+<p>
+Trade with villagers to receive XP while also
+generating emeralds and useful resources.
+</p>
+
+</div>
+
+</div>
 
 
-        <!-- VILLAGER -->
+<!-- GLASS -->
 
-        <div class="method">
+<div class="farm">
 
-            <img
-                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/villager_spawn_egg.png"
-                alt="Villager"
-                loading="lazy"
-            >
+<div class="farm-art">
 
-            <div class="method-content">
+<svg viewBox="0 0 400 210">
 
-                <span class="badge">
-                    TRADING
-                </span>
+<rect width="400" height="210" fill="#172117"/>
 
-                <h3>
-                    Villager Trading
-                </h3>
+<rect y="160" width="400" height="50" fill="#57452c"/>
 
-                <p>
-                    Trading with villagers gives XP while
-                    also allowing you to obtain emeralds
-                    and useful items.
-                </p>
+<!-- furnace -->
+<rect x="55" y="90" width="70" height="70"
+fill="#777"
+stroke="#aaa"
+stroke-width="3"/>
 
-            </div>
+<rect x="72" y="108" width="36" height="36"
+fill="#222"/>
 
-        </div>
+<!-- glass blocks -->
 
+<rect x="160" y="95" width="55" height="55"
+fill="#9be8ff"
+opacity=".55"
+stroke="#fff"/>
 
+<rect x="220" y="95" width="55" height="55"
+fill="#9be8ff"
+opacity=".55"
+stroke="#fff"/>
 
-        <!-- GLASS -->
+<!-- villager -->
 
-        <div class="method">
+<rect x="315" y="95" width="35" height="55"
+fill="#8b5a3c"/>
 
-            <img
-                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/glass_pane.png"
-                alt="Glass Pane"
-                loading="lazy"
-            >
+<rect x="320" y="72" width="25" height="28"
+fill="#b87955"/>
 
-            <div class="method-content">
+<circle cx="326" cy="83" r="3" fill="#111"/>
+<circle cx="340" cy="83" r="3" fill="#111"/>
 
-                <span class="badge">
-                    VILLAGERS
-                </span>
+<text x="200"
+y="30"
+text-anchor="middle"
+fill="#48ff48"
+font-size="18"
+font-weight="bold">
+GLASS → TRADES → XP
+</text>
 
-                <h3>
-                    Glass Pane Trading
-                </h3>
+</svg>
 
-                <p>
-                    Produce glass panes and trade them
-                    with villagers to gain XP and
-                    emeralds.
-                </p>
+</div>
 
-            </div>
+<div class="farm-content">
 
-        </div>
+<span class="badge">TRADING</span>
 
+<h3>Glass Pane Trading</h3>
 
+<p>
+Produce glass, craft glass panes and trade them
+with villagers. Trading gives XP while generating
+emeralds.
+</p>
 
-        <!-- ARMADILLO -->
+</div>
 
-        <div class="method">
-
-            <img
-                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/armadillo_spawn_egg.png"
-                alt="Armadillo"
-                loading="lazy"
-            >
-
-            <div class="method-content">
-
-                <span class="badge">
-                    FARM
-                </span>
-
-                <h3>
-                    Armadillo Farm
-                </h3>
-
-                <p>
-                    Build an armadillo setup to obtain
-                    armadillo scutes and combine it
-                    with other survival farms.
-                </p>
-
-            </div>
-
-        </div>
+</div>
 
 
+<!-- ARMADILLO -->
 
-        <!-- SPAWNER -->
+<div class="farm">
 
-        <div class="method">
+<div class="farm-art">
 
-            <img
-                src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/block/spawner.png"
-                alt="Mob Spawner"
-                loading="lazy"
-            >
+<svg viewBox="0 0 400 210">
 
-            <div class="method-content">
+<rect width="400" height="210" fill="#172117"/>
 
-                <span class="badge">
-                    MOB FARM
-                </span>
+<rect y="165" width="400" height="45" fill="#5a4328"/>
 
-                <h3>
-                    Spawner XP Farm
-                </h3>
+<!-- enclosure -->
 
-                <p>
-                    Convert a dungeon spawner into an
-                    XP farm and collect experience
-                    together with mob drops.
-                </p>
+<rect x="45" y="70" width="310" height="95"
+fill="none"
+stroke="#b98b54"
+stroke-width="7"/>
 
-            </div>
+<!-- armadillo -->
 
-        </div>
+<ellipse cx="200"
+cy="120"
+rx="48"
+ry="35"
+fill="#8d7561"/>
+
+<circle cx="240"
+cy="108"
+r="22"
+fill="#a48970"/>
+
+<circle cx="247"
+cy="104"
+r="4"
+fill="#111"/>
+
+<!-- brush -->
+
+<line x1="285"
+y1="65"
+x2="255"
+y2="95"
+stroke="#ddd"
+stroke-width="7"/>
+
+<!-- scutes -->
+
+<circle cx="145" cy="115" r="7" fill="#d0a36d"/>
+<circle cx="160" cy="100" r="7" fill="#d0a36d"/>
+<circle cx="180" cy="95" r="7" fill="#d0a36d"/>
+
+<text x="200"
+y="35"
+text-anchor="middle"
+fill="#48ff48"
+font-size="18"
+font-weight="bold">
+ARMADILLO FARM
+</text>
+
+</svg>
+
+</div>
+
+<div class="farm-content">
+
+<span class="badge">FARM</span>
+
+<h3>Armadillo / Scute Farm</h3>
+
+<p>
+Use an armadillo setup to obtain scutes. Armadillos
+can also provide XP when bred or killed under the
+appropriate conditions.
+</p>
+
+</div>
+
+</div>
 
 
-    </div>
+<!-- SPAWNER -->
+
+<div class="farm">
+
+<div class="farm-art">
+
+<svg viewBox="0 0 400 210">
+
+<rect width="400" height="210" fill="#172117"/>
+
+<rect x="50" y="55"
+width="300"
+height="110"
+fill="#303030"
+stroke="#777"
+stroke-width="4"/>
+
+<!-- spawner -->
+
+<rect x="145" y="70"
+width="110"
+height="90"
+fill="#171717"
+stroke="#777"
+stroke-width="4"/>
+
+<rect x="165" y="90"
+width="70"
+height="50"
+fill="#050505"
+stroke="#48ff48"
+stroke-width="3"/>
+
+<!-- mob -->
+
+<circle cx="200"
+cy="112"
+r="15"
+fill="#61a85b"/>
+
+<rect x="188"
+y="127"
+width="24"
+height="20"
+fill="#4f8e4a"/>
+
+<!-- water -->
+
+<path d="M55 160 L345 160 L345 180 L55 180 Z"
+fill="#398fd1"
+opacity=".7"/>
+
+<text x="200"
+y="32"
+text-anchor="middle"
+fill="#48ff48"
+font-size="18"
+font-weight="bold">
+SPAWNER XP FARM
+</text>
+
+</svg>
+
+</div>
+
+<div class="farm-content">
+
+<span class="badge">MOB FARM</span>
+
+<h3>Spawner XP Farm</h3>
+
+<p>
+Turn a dungeon spawner into a controlled mob farm
+and collect XP together with mob drops.
+</p>
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
 
-
-<!-- =====================================================
-     ANVIL GUIDE
-===================================================== -->
+<!-- ======================================================
+ANVIL GUIDE
+====================================================== -->
 
 <section class="card">
 
-    <h2>
-        ⚒ How to Reduce Anvil XP Cost
-    </h2>
+<h2>⚒ How the Optimizer Works</h2>
 
+<ol class="guide">
 
-    <ol class="guide-list">
+<li>
+Select your exact item.
+</li>
 
-        <li>
-            Combine books together strategically.
-        </li>
+<li>
+Choose the enchantment level for every book you own.
+</li>
 
-        <li>
-            Avoid repeatedly applying individual books
-            directly to the item.
-        </li>
+<li>
+The website checks incompatible enchantments.
+</li>
 
-        <li>
-            Combine equal enchantment levels when
-            upgrading books.
-        </li>
+<li>
+The optimizer combines books before applying them
+where that reduces the work penalty.
+</li>
 
-        <li>
-            Consider the previous-work penalty.
-        </li>
+<li>
+It displays the exact sequence:
+<strong>LEFT + RIGHT → RESULT</strong>.
+</li>
 
-        <li>
-            Put expensive combinations in an efficient
-            order.
-        </li>
+<li>
+Every operation is checked against the
+<strong>39-level Survival limit</strong>.
+</li>
 
-        <li>
-            Avoid reaching the Too Expensive limit.
-        </li>
+<li>
+The plan also tracks prior-work penalties.
+</li>
 
-    </ol>
+</ol>
 
 </section>
 
@@ -893,11 +782,11 @@ footer {
 
 <footer>
 
-    Minecraft Anvil XP Optimizer
+Minecraft Enchantment & Anvil XP Optimizer
 
-    <br>
+<br><br>
 
-    Not affiliated with Mojang or Microsoft.
+Not affiliated with Mojang Studios or Microsoft.
 
 </footer>
 
@@ -905,364 +794,593 @@ footer {
 
 <script>
 
-/* =====================================================
-   MINECRAFT ASSET SERVER
-===================================================== */
-
-/*
-   We use the official extracted asset structure
-   mirrored in the public minecraft-assets repository.
-*/
-
-const IMAGE_BASE =
-"https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/";
-
-
-/* =====================================================
-   ITEM DATABASE
-===================================================== */
-
-const items = {
-
-
-    sword: {
-
-        materials: {
-
-            wooden:
-            ["Wooden Sword", "wooden_sword"],
-
-            stone:
-            ["Stone Sword", "stone_sword"],
-
-            iron:
-            ["Iron Sword", "iron_sword"],
-
-            golden:
-            ["Golden Sword", "golden_sword"],
-
-            diamond:
-            ["Diamond Sword", "diamond_sword"],
-
-            netherite:
-            ["Netherite Sword", "netherite_sword"]
-
-        },
-
-        description:
-        "A melee weapon used for close combat."
-
-    },
-
-
-    pickaxe: {
-
-        materials: {
-
-            wooden:
-            ["Wooden Pickaxe", "wooden_pickaxe"],
-
-            stone:
-            ["Stone Pickaxe", "stone_pickaxe"],
-
-            iron:
-            ["Iron Pickaxe", "iron_pickaxe"],
-
-            golden:
-            ["Golden Pickaxe", "golden_pickaxe"],
-
-            diamond:
-            ["Diamond Pickaxe", "diamond_pickaxe"],
-
-            netherite:
-            ["Netherite Pickaxe", "netherite_pickaxe"]
-
-        },
-
-        description:
-        "Used for mining blocks and ores."
-
-    },
-
-
-    axe: {
-
-        materials: {
-
-            wooden:
-            ["Wooden Axe", "wooden_axe"],
-
-            stone:
-            ["Stone Axe", "stone_axe"],
-
-            iron:
-            ["Iron Axe", "iron_axe"],
-
-            golden:
-            ["Golden Axe", "golden_axe"],
-
-            diamond:
-            ["Diamond Axe", "diamond_axe"],
-
-            netherite:
-            ["Netherite Axe", "netherite_axe"]
-
-        },
-
-        description:
-        "A tool mainly used for wood and combat."
-
-    },
-
-
-    shovel: {
-
-        materials: {
-
-            wooden:
-            ["Wooden Shovel", "wooden_shovel"],
-
-            stone:
-            ["Stone Shovel", "stone_shovel"],
-
-            iron:
-            ["Iron Shovel", "iron_shovel"],
-
-            golden:
-            ["Golden Shovel", "golden_shovel"],
-
-            diamond:
-            ["Diamond Shovel", "diamond_shovel"],
-
-            netherite:
-            ["Netherite Shovel", "netherite_shovel"]
-
-        },
-
-        description:
-        "Used for digging blocks such as dirt and sand."
-
-    },
-
-
-    hoe: {
-
-        materials: {
-
-            wooden:
-            ["Wooden Hoe", "wooden_hoe"],
-
-            stone:
-            ["Stone Hoe", "stone_hoe"],
-
-            iron:
-            ["Iron Hoe", "iron_hoe"],
-
-            golden:
-            ["Golden Hoe", "golden_hoe"],
-
-            diamond:
-            ["Diamond Hoe", "diamond_hoe"],
-
-            netherite:
-            ["Netherite Hoe", "netherite_hoe"]
-
-        },
-
-        description:
-        "Used for farming and certain block interactions."
-
-    },
-
-
-    helmet: {
-
-        materials: {
-
-            leather:
-            ["Leather Cap", "leather_helmet"],
-
-            chainmail:
-            ["Chainmail Helmet", "chainmail_helmet"],
-
-            iron:
-            ["Iron Helmet", "iron_helmet"],
-
-            golden:
-            ["Golden Helmet", "golden_helmet"],
-
-            diamond:
-            ["Diamond Helmet", "diamond_helmet"],
-
-            netherite:
-            ["Netherite Helmet", "netherite_helmet"],
-
-            turtle:
-            ["Turtle Shell", "turtle_helmet"]
-
-        },
-
-        description:
-        "Protects the player's head."
-
-    },
-
-
-    chestplate: {
-
-        materials: {
-
-            leather:
-            ["Leather Chestplate", "leather_chestplate"],
-
-            chainmail:
-            ["Chainmail Chestplate", "chainmail_chestplate"],
-
-            iron:
-            ["Iron Chestplate", "iron_chestplate"],
-
-            golden:
-            ["Golden Chestplate", "golden_chestplate"],
-
-            diamond:
-            ["Diamond Chestplate", "diamond_chestplate"],
-
-            netherite:
-            ["Netherite Chestplate", "netherite_chestplate"]
-
-        },
-
-        description:
-        "Provides protection for the player's body."
-
-    },
-
-
-    leggings: {
-
-        materials: {
-
-            leather:
-            ["Leather Leggings", "leather_leggings"],
-
-            chainmail:
-            ["Chainmail Leggings", "chainmail_leggings"],
-
-            iron:
-            ["Iron Leggings", "iron_leggings"],
-
-            golden:
-            ["Golden Leggings", "golden_leggings"],
-
-            diamond:
-            ["Diamond Leggings", "diamond_leggings"],
-
-            netherite:
-            ["Netherite Leggings", "netherite_leggings"]
-
-        },
-
-        description:
-        "Protects the player's legs."
-
-    },
-
-
-    boots: {
-
-        materials: {
-
-            leather:
-            ["Leather Boots", "leather_boots"],
-
-            chainmail:
-            ["Chainmail Boots", "chainmail_boots"],
-
-            iron:
-            ["Iron Boots", "iron_boots"],
-
-            golden:
-            ["Golden Boots", "golden_boots"],
-
-            diamond:
-            ["Diamond Boots", "diamond_boots"],
-
-            netherite:
-            ["Netherite Boots", "netherite_boots"]
-
-        },
-
-        description:
-        "Protects the player's feet."
-
-    },
-
-
-    bow: {
-
-        materials: {
-
-            normal:
-            ["Bow", "bow"]
-
-        },
-
-        description:
-        "A ranged weapon."
-
-    },
-
-
-    crossbow: {
-
-        materials: {
-
-            normal:
-            ["Crossbow", "crossbow"]
-
-        },
-
-        description:
-        "A ranged weapon that fires arrows and fireworks."
-
-    },
-
-
-    trident: {
-
-        materials: {
-
-            normal:
-            ["Trident", "trident"]
-
-        },
-
-        description:
-        "A powerful weapon that can be thrown or used in melee."
-
-    },
-
-
-    mace: {
-
-        materials: {
-
-            normal:
-            ["Mace", "mace"]
-
-        },
-
-        description:
-        "A heavy weapon with powerful smash attacks."
-
-    }
+/* =========================================================
+   ITEM DATA
+========================================================= */
+
+const ITEM_TYPES = {
+
+sword:{
+name:"Sword",
+materials:{
+wooden:["Wooden Sword","wooden_sword"],
+stone:["Stone Sword","stone_sword"],
+copper:["Copper Sword","copper_sword"],
+iron:["Iron Sword","iron_sword"],
+golden:["Golden Sword","golden_sword"],
+diamond:["Diamond Sword","diamond_sword"],
+netherite:["Netherite Sword","netherite_sword"]
+}
+},
+
+pickaxe:{
+name:"Pickaxe",
+materials:{
+wooden:["Wooden Pickaxe","wooden_pickaxe"],
+stone:["Stone Pickaxe","stone_pickaxe"],
+copper:["Copper Pickaxe","copper_pickaxe"],
+iron:["Iron Pickaxe","iron_pickaxe"],
+golden:["Golden Pickaxe","golden_pickaxe"],
+diamond:["Diamond Pickaxe","diamond_pickaxe"],
+netherite:["Netherite Pickaxe","netherite_pickaxe"]
+}
+},
+
+axe:{
+name:"Axe",
+materials:{
+wooden:["Wooden Axe","wooden_axe"],
+stone:["Stone Axe","stone_axe"],
+copper:["Copper Axe","copper_axe"],
+iron:["Iron Axe","iron_axe"],
+golden:["Golden Axe","golden_axe"],
+diamond:["Diamond Axe","diamond_axe"],
+netherite:["Netherite Axe","netherite_axe"]
+}
+},
+
+shovel:{
+name:"Shovel",
+materials:{
+wooden:["Wooden Shovel","wooden_shovel"],
+stone:["Stone Shovel","stone_shovel"],
+copper:["Copper Shovel","copper_shovel"],
+iron:["Iron Shovel","iron_shovel"],
+golden:["Golden Shovel","golden_shovel"],
+diamond:["Diamond Shovel","diamond_shovel"],
+netherite:["Netherite Shovel","netherite_shovel"]
+}
+},
+
+hoe:{
+name:"Hoe",
+materials:{
+wooden:["Wooden Hoe","wooden_hoe"],
+stone:["Stone Hoe","stone_hoe"],
+copper:["Copper Hoe","copper_hoe"],
+iron:["Iron Hoe","iron_hoe"],
+golden:["Golden Hoe","golden_hoe"],
+diamond:["Diamond Hoe","diamond_hoe"],
+netherite:["Netherite Hoe","netherite_hoe"]
+}
+},
+
+helmet:{
+name:"Helmet",
+materials:{
+leather:["Leather Cap","leather_helmet"],
+chainmail:["Chainmail Helmet","chainmail_helmet"],
+copper:["Copper Helmet","copper_helmet"],
+iron:["Iron Helmet","iron_helmet"],
+golden:["Golden Helmet","golden_helmet"],
+diamond:["Diamond Helmet","diamond_helmet"],
+netherite:["Netherite Helmet","netherite_helmet"],
+turtle:["Turtle Shell","turtle_helmet"]
+}
+},
+
+chestplate:{
+name:"Chestplate",
+materials:{
+leather:["Leather Chestplate","leather_chestplate"],
+chainmail:["Chainmail Chestplate","chainmail_chestplate"],
+copper:["Copper Chestplate","copper_chestplate"],
+iron:["Iron Chestplate","iron_chestplate"],
+golden:["Golden Chestplate","golden_chestplate"],
+diamond:["Diamond Chestplate","diamond_chestplate"],
+netherite:["Netherite Chestplate","netherite_chestplate"]
+}
+},
+
+leggings:{
+name:"Leggings",
+materials:{
+leather:["Leather Leggings","leather_leggings"],
+chainmail:["Chainmail Leggings","chainmail_leggings"],
+copper:["Copper Leggings","copper_leggings"],
+iron:["Iron Leggings","iron_leggings"],
+golden:["Golden Leggings","golden_leggings"],
+diamond:["Diamond Leggings","diamond_leggings"],
+netherite:["Netherite Leggings","netherite_leggings"]
+}
+},
+
+boots:{
+name:"Boots",
+materials:{
+leather:["Leather Boots","leather_boots"],
+chainmail:["Chainmail Boots","chainmail_boots"],
+copper:["Copper Boots","copper_boots"],
+iron:["Iron Boots","iron_boots"],
+golden:["Golden Boots","golden_boots"],
+diamond:["Diamond Boots","diamond_boots"],
+netherite:["Netherite Boots","netherite_boots"]
+}
+},
+
+elytra:{
+name:"Elytra",
+materials:{
+normal:["Elytra","elytra"]
+}
+},
+
+bow:{
+name:"Bow",
+materials:{
+normal:["Bow","bow"]
+}
+},
+
+crossbow:{
+name:"Crossbow",
+materials:{
+normal:["Crossbow","crossbow"]
+}
+},
+
+trident:{
+name:"Trident",
+materials:{
+normal:["Trident","trident"]
+}
+},
+
+mace:{
+name:"Mace",
+materials:{
+normal:["Mace","mace"]
+}
+},
+
+spear:{
+name:"Spear",
+materials:{
+wooden:["Wooden Spear","wooden_spear"],
+stone:["Stone Spear","stone_spear"],
+copper:["Copper Spear","copper_spear"],
+iron:["Iron Spear","iron_spear"],
+golden:["Golden Spear","golden_spear"],
+diamond:["Diamond Spear","diamond_spear"],
+netherite:["Netherite Spear","netherite_spear"]
+}
+},
+
+fishing:{
+name:"Fishing Rod",
+materials:{
+normal:["Fishing Rod","fishing_rod"]
+}
+},
+
+shears:{
+name:"Shears",
+materials:{
+normal:["Shears","shears"]
+}
+},
+
+shield:{
+name:"Shield",
+materials:{
+normal:["Shield","shield"]
+}
+},
+
+flint:{
+name:"Flint and Steel",
+materials:{
+normal:["Flint and Steel","flint_and_steel"]
+}
+},
+
+brush:{
+name:"Brush",
+materials:{
+normal:["Brush","brush"]
+}
+},
+
+carrot:{
+name:"Carrot on a Stick",
+materials:{
+normal:["Carrot on a Stick","carrot_on_a_stick"]
+}
+},
+
+fungus:{
+name:"Warped Fungus on a Stick",
+materials:{
+normal:["Warped Fungus on a Stick","warped_fungus_on_a_stick"]
+}
+}
 
 };
 
 
-/* =====================================================
+/* =========================================================
+   ENCHANTMENT DATA
+   43 VANILLA JAVA ENCHANTMENTS
+========================================================= */
+
+const E = {
+
+aqua_affinity:{
+name:"Aqua Affinity",
+max:1,
+mult:2,
+items:["helmet"]
+},
+
+bane:{
+name:"Bane of Arthropods",
+max:5,
+mult:2,
+items:["sword","axe","mace","spear"],
+conf:["sharpness","smite","density","breach"]
+},
+
+blast:{
+name:"Blast Protection",
+max:4,
+mult:4,
+items:["helmet","chestplate","leggings","boots"],
+conf:["protection","fire","projectile"]
+},
+
+breach:{
+name:"Breach",
+max:4,
+mult:2,
+items:["mace"],
+conf:["density","smite","bane"]
+},
+
+channeling:{
+name:"Channeling",
+max:1,
+mult:4,
+items:["trident"],
+conf:["riptide"]
+},
+
+binding:{
+name:"Curse of Binding",
+max:1,
+mult:8,
+items:["helmet","chestplate","leggings","boots","elytra"]
+},
+
+vanishing:{
+name:"Curse of Vanishing",
+max:1,
+mult:8,
+items:[
+"sword","pickaxe","axe","shovel","hoe",
+"helmet","chestplate","leggings","boots",
+"elytra","bow","crossbow","trident","mace",
+"spear","fishing","shears","shield","flint",
+"brush","carrot","fungus"
+]
+},
+
+density:{
+name:"Density",
+max:5,
+mult:1,
+items:["mace"],
+conf:["breach","smite","bane"]
+},
+
+depth:{
+name:"Depth Strider",
+max:3,
+mult:4,
+items:["boots"],
+conf:["frost"]
+},
+
+efficiency:{
+name:"Efficiency",
+max:5,
+mult:1,
+items:["pickaxe","axe","shovel","hoe","shears"]
+},
+
+feather:{
+name:"Feather Falling",
+max:4,
+mult:4,
+items:["boots"]
+},
+
+fire:{
+name:"Fire Aspect",
+max:2,
+mult:2,
+items:["sword","mace","spear"]
+},
+
+fire_protection:{
+name:"Fire Protection",
+max:4,
+mult:4,
+items:["helmet","chestplate","leggings","boots"],
+conf:["protection","blast","projectile"]
+},
+
+flame:{
+name:"Flame",
+max:1,
+mult:4,
+items:["bow"]
+},
+
+fortune:{
+name:"Fortune",
+max:3,
+mult:4,
+items:["pickaxe","axe","shovel","hoe"],
+conf:["silk"]
+},
+
+frost:{
+name:"Frost Walker",
+max:2,
+mult:4,
+items:["boots"],
+conf:["depth"]
+},
+
+impaling:{
+name:"Impaling",
+max:5,
+mult:4,
+items:["trident"]
+},
+
+infinity:{
+name:"Infinity",
+max:1,
+mult:8,
+items:["bow"],
+conf:["mending"]
+},
+
+knockback:{
+name:"Knockback",
+max:2,
+mult:2,
+items:["sword","spear"]
+},
+
+looting:{
+name:"Looting",
+max:3,
+mult:4,
+items:["sword","spear"]
+},
+
+loyalty:{
+name:"Loyalty",
+max:3,
+mult:1,
+items:["trident"],
+conf:["riptide"]
+},
+
+luck:{
+name:"Luck of the Sea",
+max:3,
+mult:4,
+items:["fishing"]
+},
+
+lure:{
+name:"Lure",
+max:3,
+mult:2,
+items:["fishing"]
+},
+
+lunge:{
+name:"Lunge",
+max:3,
+mult:2,
+items:["spear"]
+},
+
+mending:{
+name:"Mending",
+max:1,
+mult:4,
+items:[
+"sword","pickaxe","axe","shovel","hoe",
+"helmet","chestplate","leggings","boots",
+"elytra","bow","crossbow","trident","mace",
+"spear","fishing","shears","shield","flint",
+"brush","carrot","fungus"
+],
+conf:["infinity"]
+},
+
+multishot:{
+name:"Multishot",
+max:1,
+mult:2,
+items:["crossbow"],
+conf:["piercing"]
+},
+
+piercing:{
+name:"Piercing",
+max:4,
+mult:1,
+items:["crossbow"],
+conf:["multishot"]
+},
+
+power:{
+name:"Power",
+max:5,
+mult:1,
+items:["bow"]
+},
+
+projectile:{
+name:"Projectile Protection",
+max:4,
+mult:4,
+items:["helmet","chestplate","leggings","boots"],
+conf:["protection","blast","fire"]
+},
+
+protection:{
+name:"Protection",
+max:4,
+mult:1,
+items:["helmet","chestplate","leggings","boots"],
+conf:["blast","fire","projectile"]
+},
+
+punch:{
+name:"Punch",
+max:2,
+mult:4,
+items:["bow"]
+},
+
+quick_charge:{
+name:"Quick Charge",
+max:3,
+mult:2,
+items:["crossbow"]
+},
+
+respiration:{
+name:"Respiration",
+max:3,
+mult:4,
+items:["helmet"]
+},
+
+riptide:{
+name:"Riptide",
+max:3,
+mult:2,
+items:["trident"],
+conf:["loyalty","channeling"]
+},
+
+sharpness:{
+name:"Sharpness",
+max:5,
+mult:1,
+items:["sword","axe","mace","spear"],
+conf:["smite","bane","density","breach"]
+},
+
+silk:{
+name:"Silk Touch",
+max:1,
+mult:8,
+items:["pickaxe","axe","shovel","hoe"],
+conf:["fortune"]
+},
+
+smite:{
+name:"Smite",
+max:5,
+mult:2,
+items:["sword","axe","mace","spear"],
+conf:["sharpness","bane","density","breach"]
+},
+
+soul_speed:{
+name:"Soul Speed",
+max:3,
+mult:4,
+items:["boots"]
+},
+
+sweeping:{
+name:"Sweeping Edge",
+max:3,
+mult:2,
+items:["sword"]
+},
+
+swift_sneak:{
+name:"Swift Sneak",
+max:3,
+mult:8,
+items:["leggings"]
+},
+
+thorns:{
+name:"Thorns",
+max:3,
+mult:8,
+items:["helmet","chestplate","leggings","boots"]
+},
+
+unbreaking:{
+name:"Unbreaking",
+max:3,
+mult:2,
+items:[
+"sword","pickaxe","axe","shovel","hoe",
+"helmet","chestplate","leggings","boots",
+"elytra","bow","crossbow","trident","mace",
+"spear","fishing","shears","shield","flint",
+"brush","carrot","fungus"
+]
+},
+
+wind_burst:{
+name:"Wind Burst",
+max:3,
+mult:8,
+items:["mace"]
+}
+
+};
+
+
+/* =========================================================
+   EXTRA COMPATIBILITY
+========================================================= */
+
+function canEnchant(id,type){
+
+    return E[id].items.includes(type);
+
+}
+
+
+/* =========================================================
    ELEMENTS
-===================================================== */
+========================================================= */
 
 const itemType =
 document.getElementById("itemType");
@@ -1279,340 +1397,1043 @@ document.getElementById("itemName");
 const itemDescription =
 document.getElementById("itemDescription");
 
+const enchantments =
+document.getElementById("enchantments");
 
-/* =====================================================
-   UPDATE MATERIALS
-===================================================== */
-
-function updateMaterials() {
-
-    const type =
-    itemType.value;
-
-    const data =
-    items[type];
-
-    material.innerHTML = "";
+const result =
+document.getElementById("result");
 
 
-    Object.keys(data.materials)
-    .forEach(key => {
+/* =========================================================
+   ITEM LIST
+========================================================= */
 
-        const option =
-        document.createElement("option");
+function loadItemTypes(){
 
-        option.value =
-        key;
+    itemType.innerHTML="";
 
-        option.textContent =
-        data.materials[key][0];
+    Object.entries(ITEM_TYPES)
+    .forEach(([id,data])=>{
 
-        material.appendChild(option);
+        const o=document.createElement("option");
+
+        o.value=id;
+        o.textContent=data.name;
+
+        itemType.appendChild(o);
 
     });
 
+}
+
+
+/* =========================================================
+   MATERIAL
+========================================================= */
+
+function updateMaterials(){
+
+    const type=itemType.value;
+
+    const data=ITEM_TYPES[type];
+
+    material.innerHTML="";
+
+    Object.entries(data.materials)
+    .forEach(([id,item])=>{
+
+        const o=document.createElement("option");
+
+        o.value=id;
+        o.textContent=item[0];
+
+        material.appendChild(o);
+
+    });
 
     updateItem();
+    renderEnchantments();
+
 }
 
 
-/* =====================================================
-   UPDATE ITEM
-===================================================== */
+/* =========================================================
+   REAL MINECRAFT ITEM TEXTURES
+========================================================= */
 
-function updateItem() {
+/*
+   The texture package provides Minecraft PNG/base64
+   assets for many Minecraft versions.
+*/
 
-    const type =
-    itemType.value;
+const TEXTURE_JSON_URL =
+"https://cdn.jsdelivr.net/npm/minecraft-textures@26.3.0/dist/textures/json/1.21.4.id.json";
 
-    const mat =
-    material.value;
+let textureData={};
 
-    const data =
-    items[type];
+async function loadTextures(){
 
+    try{
 
-    if (
-        !data ||
-        !data.materials[mat]
-    ) {
-        return;
+        const response=
+        await fetch(TEXTURE_JSON_URL);
+
+        if(!response.ok)
+            throw new Error("Texture request failed");
+
+        textureData=
+        await response.json();
+
+        updateItem();
+
+    }catch(error){
+
+        console.log(
+            "Texture database could not be loaded.",
+            error
+        );
+
     }
 
-
-    const itemData =
-    data.materials[mat];
+}
 
 
-    const name =
-    itemData[0];
+function setItemTexture(texture){
 
-    const texture =
-    itemData[1];
+    const key=
+    "minecraft:"+texture;
 
+    if(textureData[key]){
 
-    /*
-       IMPORTANT:
+        itemImage.src=
+        textureData[key].texture;
 
-       Every time the material changes,
-       the name AND image are changed.
-    */
+        return true;
 
-    itemName.textContent =
-    name;
+    }
 
-
-    itemDescription.textContent =
-    data.description;
-
-
-    itemImage.alt =
-    name;
-
-
-    itemImage.src =
-    IMAGE_BASE +
-    texture +
-    ".png";
-
-
-    /*
-       Reset opacity in case
-       a previous image failed.
-    */
-
-    itemImage.style.opacity =
-    "1";
+    return false;
 
 }
 
 
-/* =====================================================
-   IMAGE ERROR HANDLING
-===================================================== */
+/* =========================================================
+   ITEM UPDATE
+========================================================= */
 
-itemImage.addEventListener(
-    "error",
-    function() {
+function updateItem(){
+
+    const type=itemType.value;
+
+    const mat=material.value;
+
+    const data=ITEM_TYPES[type];
+
+    if(!data || !data.materials[mat])
+        return;
+
+    const item=data.materials[mat];
+
+    itemName.textContent=item[0];
+
+    itemDescription.textContent=
+    "Compatible enchantments are shown below.";
+
+    itemImage.alt=item[0];
+
+    if(!setItemTexture(item[1])){
 
         /*
-           Hide the broken-image icon instead
-           of showing a giant broken image.
+           Do not display a broken external image.
+           Keep a clean placeholder instead.
         */
 
-        this.style.opacity =
-        "0.25";
+        itemImage.removeAttribute("src");
 
     }
-);
+
+}
 
 
-/* =====================================================
-   EVENT LISTENERS
-===================================================== */
+/* =========================================================
+   ENCHANTMENT UI
+========================================================= */
 
-itemType.addEventListener(
-    "change",
-    updateMaterials
-);
+function renderEnchantments(){
 
+    const type=itemType.value;
 
-material.addEventListener(
-    "change",
-    updateItem
-);
+    enchantments.innerHTML="";
 
+    Object.entries(E)
+    .filter(([id])=>canEnchant(id,type))
+    .forEach(([id,data])=>{
 
-/* =====================================================
-   XP CALCULATOR
-===================================================== */
+        const card=
+        document.createElement("div");
 
-function calculateXP() {
+        card.className=
+        "enchant-card";
 
+        const title=
+        document.createElement("div");
 
-    const levels = {
+        title.className=
+        "enchant-name";
 
-        sharpness:
-        Number(
-            document.getElementById(
-                "sharpness"
-            ).value
-        ),
+        title.textContent=
+        data.name;
 
-        unbreaking:
-        Number(
-            document.getElementById(
-                "unbreaking"
-            ).value
-        ),
+        const meta=
+        document.createElement("div");
 
-        mending:
-        Number(
-            document.getElementById(
-                "mending"
-            ).value
-        ),
+        meta.className=
+        "enchant-meta";
 
-        looting:
-        Number(
-            document.getElementById(
-                "looting"
-            ).value
-        ),
+        meta.textContent=
+        "Max "+data.max+
+        " • Book cost ×"+data.mult;
 
-        fire:
-        Number(
-            document.getElementById(
-                "fire"
-            ).value
-        ),
+        const select=
+        document.createElement("select");
 
-        efficiency:
-        Number(
-            document.getElementById(
-                "efficiency"
-            ).value
-        ),
+        select.id=
+        "ench-"+id;
 
-        fortune:
-        Number(
-            document.getElementById(
-                "fortune"
-            ).value
-        ),
+        const none=
+        document.createElement("option");
 
-        protection:
-        Number(
-            document.getElementById(
-                "protection"
-            ).value
-        )
+        none.value="0";
+        none.textContent="None";
 
-    };
+        select.appendChild(none);
 
 
-    let enchantments = 0;
+        for(let i=1;i<=data.max;i++){
 
-    let totalLevels = 0;
+            const option=
+            document.createElement("option");
+
+            option.value=i;
+
+            option.textContent=
+            data.name+" "+roman(i);
+
+            select.appendChild(option);
+
+        }
 
 
-    Object.values(levels)
-    .forEach(level => {
+        select.addEventListener(
+        "change",
+        checkConflicts);
 
-        if (level > 0) {
 
-            enchantments++;
+        card.appendChild(title);
 
-            totalLevels +=
-            level;
+        card.appendChild(meta);
+
+        card.appendChild(select);
+
+        enchantments.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   ROMAN
+========================================================= */
+
+function roman(n){
+
+    const values=[
+        [10,"X"],
+        [9,"IX"],
+        [5,"V"],
+        [4,"IV"],
+        [1,"I"]
+    ];
+
+    let out="";
+
+    for(const [v,s] of values){
+
+        while(n>=v){
+
+            out+=s;
+            n-=v;
+
+        }
+
+    }
+
+    return out;
+
+}
+
+
+/* =========================================================
+   CONFLICT CHECK
+========================================================= */
+
+function checkConflicts(){
+
+    const type=itemType.value;
+
+    const selected=[];
+
+    Object.keys(E)
+    .forEach(id=>{
+
+        const el=
+        document.getElementById(
+            "ench-"+id
+        );
+
+        if(el && Number(el.value)>0){
+
+            selected.push(id);
 
         }
 
     });
 
 
-    const result =
-    document.getElementById(
-        "result"
+    const cards=
+    document.querySelectorAll(
+        ".enchant-card"
     );
 
+    cards.forEach(card=>{
 
-    if (enchantments === 0) {
+        card.classList.remove("conflict");
 
-        result.style.display =
-        "block";
-
-        result.innerHTML = `
-
-            <strong>
-                No enchantments selected.
-            </strong>
-
-            <br><br>
-
-            Select at least one
-            enchantment book.
-
-        `;
-
-        return;
-    }
+    });
 
 
-    /*
-       This is currently an estimate.
-       The next upgrade can turn this into
-       a full vanilla anvil optimizer.
-    */
+    selected.forEach(id=>{
 
-    const estimatedXP =
-    Math.max(
-        1,
-        Math.round(
-            totalLevels * 2 +
-            enchantments * 2
-        )
-    );
+        const conflicts=
+        E[id].conf || [];
 
+        conflicts.forEach(conf=>{
 
-    result.style.display =
-    "block";
+            const el=
+            document.getElementById(
+                "ench-"+conf
+            );
 
+            if(el && Number(el.value)>0){
 
-    result.innerHTML = `
+                el.parentElement
+                .classList.add("conflict");
 
-        <strong>
-            Selected Item:
-        </strong>
+            }
 
-        ${itemName.textContent}
+        });
 
-        <br>
-
-        <strong>
-            Enchantments:
-        </strong>
-
-        ${enchantments}
-
-        <br>
-
-        <strong>
-            Total enchantment levels:
-        </strong>
-
-        ${totalLevels}
-
-        <br><br>
-
-        <strong>
-            Estimated starting cost:
-        </strong>
-
-        ${estimatedXP}
-        XP levels
-
-        <br><br>
-
-        <span style="color:#aaa">
-
-            Tip: combine compatible books
-            strategically to reduce repeated
-            anvil operations and previous-work
-            penalties.
-
-        </span>
-
-    `;
+    });
 
 }
 
 
-/* =====================================================
-   INITIALIZE
-===================================================== */
+/* =========================================================
+   PRIOR WORK PENALTY
+========================================================= */
+
+function pwp(uses){
+
+    return Math.pow(2,uses)-1;
+
+}
+
+
+/* =========================================================
+   BOOK VALUE
+========================================================= */
+
+function bookValue(book){
+
+    let value=0;
+
+    for(const [id,level] of Object.entries(book)){
+
+        value +=
+        E[id].mult * level;
+
+    }
+
+    return value;
+
+}
+
+
+/* =========================================================
+   MERGE BOOKS
+========================================================= */
+
+function mergeBooks(a,b){
+
+    const result={...a};
+
+    let incompatible=0;
+
+
+    for(const [id,levelB] of Object.entries(b)){
+
+        const levelA=
+        result[id] || 0;
+
+
+        /*
+           Same enchantment:
+           equal level -> +1
+           otherwise keep higher.
+        */
+
+        if(levelA){
+
+            if(levelA===levelB){
+
+                result[id]=
+                Math.min(
+                    E[id].max,
+                    levelA+1
+                );
+
+            }else{
+
+                result[id]=
+                Math.max(
+                    levelA,
+                    levelB
+                );
+
+            }
+
+            continue;
+
+        }
+
+
+        /*
+           Check conflicts.
+        */
+
+        let conflict=false;
+
+
+        for(const [existing] of Object.entries(result)){
+
+            if(
+                (E[id].conf || []).includes(existing) ||
+                (E[existing].conf || []).includes(id)
+            ){
+
+                conflict=true;
+                break;
+
+            }
+
+        }
+
+
+        if(conflict){
+
+            incompatible++;
+
+            continue;
+
+        }
+
+
+        result[id]=levelB;
+
+    }
+
+
+    return {
+        enchants:result,
+        incompatible
+    };
+
+}
+
+
+/* =========================================================
+   SELECTED BOOKS
+========================================================= */
+
+function getSelectedBooks(){
+
+    const books=[];
+
+    Object.keys(E)
+    .forEach(id=>{
+
+        const el=
+        document.getElementById(
+            "ench-"+id
+        );
+
+        if(!el)
+            return;
+
+        const level=
+        Number(el.value);
+
+        if(level>0){
+
+            books.push({
+
+                name:E[id].name+
+                " "+roman(level),
+
+                enchants:{
+                    [id]:level
+                },
+
+                uses:0
+
+            });
+
+        }
+
+    });
+
+    return books;
+
+}
+
+
+/* =========================================================
+   VALIDATE CONFLICTS
+========================================================= */
+
+function findConflicts(books){
+
+    const conflicts=[];
+
+    for(let i=0;i<books.length;i++){
+
+        for(let j=i+1;j<books.length;j++){
+
+            const a=
+            Object.keys(books[i].enchants)[0];
+
+            const b=
+            Object.keys(books[j].enchants)[0];
+
+
+            if(
+                (E[a].conf||[]).includes(b) ||
+                (E[b].conf||[]).includes(a)
+            ){
+
+                conflicts.push(
+                    E[a].name+
+                    " ↔ "+
+                    E[b].name
+                );
+
+            }
+
+        }
+
+    }
+
+    return conflicts;
+
+}
+
+
+/* =========================================================
+   GREEDY LOW-COST BOOK MERGER
+========================================================= */
+
+function optimizeBooks(books){
+
+    const steps=[];
+
+    let total=0;
+
+    let maxStep=0;
+
+
+    while(books.length>1){
+
+        books.sort(
+            (a,b)=>
+            bookValue(a.enchants)+pwp(a.uses)
+            -
+            (
+                bookValue(b.enchants)+
+                pwp(b.uses)
+            )
+        );
+
+
+        const left=books.shift();
+
+        const right=books.shift();
+
+
+        const merged=
+        mergeBooks(
+            left.enchants,
+            right.enchants
+        );
+
+
+        const cost=
+        bookValue(right.enchants)
+        +
+        pwp(left.uses)
+        +
+        pwp(right.uses);
+
+
+        const newBook={
+
+            name:
+            "("+left.name+
+            " + "+
+            right.name+
+            ")",
+
+            enchants:
+            merged.enchants,
+
+            uses:
+            Math.max(
+                left.uses,
+                right.uses
+            )+1
+
+        };
+
+
+        steps.push({
+
+            type:"book",
+
+            left:left.name,
+
+            right:right.name,
+
+            result:
+            Object.entries(
+                merged.enchants
+            )
+            .map(([id,lvl])=>
+                E[id].name+
+                " "+roman(lvl)
+            )
+            .join(", "),
+
+            cost:cost
+
+        });
+
+
+        total+=cost;
+
+        maxStep=
+        Math.max(
+            maxStep,
+            cost
+        );
+
+
+        books.push(newBook);
+
+    }
+
+
+    return {
+        book:books[0],
+        steps,
+        total,
+        maxStep
+    };
+
+}
+
+
+/* =========================================================
+   APPLY FINAL BOOK TO ITEM
+========================================================= */
+
+function calculateItemApplication(book){
+
+    const cost=
+    bookValue(book.enchants)
+    +
+    pwp(book.uses);
+
+
+    return cost;
+
+}
+
+
+/* =========================================================
+   GENERATE PLAN
+========================================================= */
+
+function generatePlan(){
+
+    result.style.display="block";
+
+    const books=
+    getSelectedBooks();
+
+
+    if(!books.length){
+
+        result.className=
+        "result warning";
+
+        result.innerHTML=
+        "<strong>Select at least one enchantment.</strong>";
+
+        return;
+
+    }
+
+
+    const conflicts=
+    findConflicts(books);
+
+
+    if(conflicts.length){
+
+        result.className=
+        "result error";
+
+        result.innerHTML=`
+
+        <strong>
+        ❌ Conflicting enchantments
+        </strong>
+
+        <br><br>
+
+        ${conflicts.map(x=>
+            "• "+x
+        ).join("<br>")}
+
+        <br><br>
+
+        Remove one enchantment from
+        each conflicting pair.
+
+        `;
+
+        return;
+
+    }
+
+
+    result.className=
+    "result";
+
+
+    const optimized=
+    optimizeBooks(
+        books
+    );
+
+
+    const finalCost=
+    calculateItemApplication(
+        optimized.book
+    );
+
+
+    const total=
+    optimized.total+
+    finalCost;
+
+
+    const maxStep=
+    Math.max(
+        optimized.maxStep,
+        finalCost
+    );
+
+
+    let html=`
+
+    <h3 style="color:#48ff48">
+    ⚒ Recommended Merge Order
+    </h3>
+
+    <p>
+    <strong>Item:</strong>
+    ${itemName.textContent}
+    </p>
+
+    `;
+
+
+    optimized.steps.forEach(
+    (step,index)=>{
+
+        const bad=
+        step.cost>=40;
+
+
+        html+=`
+
+        <div class="step">
+
+            <div class="step-number">
+                ${index+1}
+            </div>
+
+            <div class="step-text">
+
+                <strong>
+                Combine:
+                </strong>
+
+                ${step.left}
+
+                <strong>
+                +
+                </strong>
+
+                ${step.right}
+
+                <br>
+
+                <strong>
+                Result:
+                </strong>
+
+                ${step.result}
+
+                <br>
+
+                <span class="step-cost">
+                Cost:
+                ${step.cost} levels
+                </span>
+
+                ${
+                    bad
+                    ?
+                    '<br><span class="too-expensive">❌ TOO EXPENSIVE</span>'
+                    :
+                    ''
+                }
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    const finalStep=
+    optimized.steps.length+1;
+
+
+    html+=`
+
+    <div class="step">
+
+        <div class="step-number">
+            ${finalStep}
+        </div>
+
+        <div class="step-text">
+
+            <strong>
+            Apply final book to:
+            </strong>
+
+            ${itemName.textContent}
+
+            <br>
+
+            <strong>
+            Book:
+            </strong>
+
+            ${Object.entries(
+                optimized.book.enchants
+            )
+            .map(([id,lvl])=>
+                E[id].name+
+                " "+roman(lvl)
+            )
+            .join(", ")}
+
+            <br>
+
+            <span class="step-cost">
+
+            Cost:
+            ${finalCost}
+            levels
+
+            </span>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    html+=`
+
+    <hr style="
+    border-color:#333;
+    margin:20px 0;
+    ">
+
+    <strong>
+    Total estimated anvil levels:
+    </strong>
+
+    ${total}
+
+    <br>
+
+    <strong>
+    Highest single operation:
+    </strong>
+
+    ${maxStep}
+
+    levels
+
+    <br><br>
+
+    `;
+
+
+    if(maxStep>=40){
+
+        html+=`
+
+        <div class="warning">
+
+        ⚠️
+        At least one operation reaches
+        ${maxStep} levels.
+
+        <br><br>
+
+        In Survival this would be
+        <strong>Too Expensive!</strong>
+
+        <br><br>
+
+        Try enchanting some books directly
+        onto the item earlier or use a different
+        book grouping.
+
+        </div>
+
+        `;
+
+    }else{
+
+        html+=`
+
+        <div style="
+        color:#48ff48;
+        font-weight:bold;
+        ">
+
+        ✅ Every planned operation is below
+        the 40-level Survival limit.
+
+        </div>
+
+        `;
+
+    }
+
+
+    html+=`
+
+    <br>
+
+    <span style="color:#999">
+
+    The planner tracks prior-work penalties.
+    The displayed sequence is a low-cost
+    book-merging strategy; exact in-game cost
+    can still differ if your item/books already
+    have prior anvil work.
+
+    </span>
+
+    `;
+
+
+    result.innerHTML=
+    html;
+
+}
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+function clearEnchantments(){
+
+    document.querySelectorAll(
+        "#enchantments select"
+    )
+    .forEach(select=>{
+
+        select.value="0";
+
+    });
+
+
+    checkConflicts();
+
+    result.style.display="none";
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+itemType.addEventListener(
+"change",
+updateMaterials
+);
+
+material.addEventListener(
+"change",
+updateItem
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadItemTypes();
 
 updateMaterials();
+
+loadTextures();
 
 </script>
 
