@@ -4,106 +4,246 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Minecraft XP & Enchantment Optimizer</title>
-<meta name="description" content="Minecraft Java 26.2 enchantment compatibility and anvil XP optimizer with item textures and XP farm tutorials.">
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;background:radial-gradient(circle at top,#172318,#070707 60%);
- color:#eee;font-family:Arial,sans-serif
+margin:0;
+background:radial-gradient(circle at top,#172318,#070707 65%);
+color:#eee;
+font-family:Arial,sans-serif;
 }
+
+.container{
+width:min(1100px,94%);
+margin:auto;
+}
+
 header{
- padding:28px 15px;text-align:center;background:#101010;
- border-bottom:3px solid #48ff48
+text-align:center;
+padding:35px 10px 20px;
 }
-h1{margin:0;color:#48ff48;text-shadow:3px 3px #000}
-header p{color:#aaa}
-.container{width:min(1100px,94%);margin:25px auto}
-.card{
- background:#121212;border:1px solid #444;border-radius:14px;
- padding:20px;margin-bottom:22px;box-shadow:0 8px 30px #0008
+
+h1{
+color:#55ff55;
+font-size:clamp(28px,6vw,48px);
+margin:0 0 10px;
+text-shadow:0 0 15px #20ff20;
 }
-h2{color:#48ff48;margin-top:0}
-label{display:block;margin:12px 0 6px;font-weight:bold}
-select,input,button{
- width:100%;padding:12px;border-radius:8px;
- border:1px solid #555;background:#222;color:white;font-size:15px
+
+.subtitle{
+color:#aaa;
+font-size:16px;
 }
-select:focus,input:focus{outline:none;border-color:#48ff48}
-button{
- background:#1d9d1d;border:0;margin-top:12px;
- cursor:pointer;font-weight:bold
+
+section{
+background:rgba(20,25,20,.95);
+border:1px solid #315531;
+border-radius:15px;
+padding:20px;
+margin:20px 0;
+box-shadow:0 0 20px #000;
 }
-button:hover{background:#2abe2a}
-.secondary{background:#292929}
-.item-preview{
- display:flex;align-items:center;gap:20px;margin-top:18px;
- padding:18px;background:#171717;border:1px solid #444;border-radius:10px
+
+h2{
+color:#6cff6c;
+margin-top:0;
 }
-.item-preview img{
- width:110px;height:110px;object-fit:contain;
- image-rendering:pixelated
+
+h3{
+color:#9cff9c;
 }
-.item-info h3{font-size:24px;margin:0 0 8px}
-.item-info p{color:#aaa}
+
 .grid{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
- gap:12px;margin-top:15px
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 }
-.enchant{
- background:#171717;border:1px solid #444;
- border-radius:9px;padding:13px
+
+.card{
+background:#111711;
+border:1px solid #294329;
+border-radius:12px;
+padding:15px;
 }
-.enchant.conflict{opacity:.45;border-color:#d44}
-.enchant b{display:block;margin-bottom:7px}
-.meta{font-size:12px;color:#888;margin-bottom:8px}
+
+label{
+display:block;
+margin:8px 0 5px;
+color:#aaa;
+}
+
+select,input{
+width:100%;
+padding:11px;
+background:#080b08;
+border:1px solid #416b41;
+border-radius:8px;
+color:#fff;
+font-size:15px;
+}
+
+button{
+border:0;
+border-radius:8px;
+padding:12px 18px;
+background:#25a525;
+color:white;
+font-weight:bold;
+cursor:pointer;
+margin:5px;
+}
+
+button:hover{
+background:#35c735;
+}
+
+.danger{
+background:#8b2222;
+}
+
 .result{
- margin-top:20px;padding:18px;background:#091709;
- border:1px solid #45c745;border-radius:10px;line-height:1.8
+background:#071407;
+border:1px solid #347034;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
 }
-.warning{background:#241b08;border-color:#a98728}
-.error{background:#250d0d;border-color:#c33}
-.step{
- display:flex;gap:12px;margin:10px 0;padding:13px;
- background:#171717;border:1px solid #444;border-radius:9px
+
+.big{
+font-size:28px;
+color:#55ff55;
+font-weight:bold;
 }
-.num{
- min-width:34px;height:34px;border-radius:50%;
- display:flex;align-items:center;justify-content:center;
- background:#48ff48;color:#000;font-weight:bold
+
+.xpbar{
+height:25px;
+background:#222;
+border-radius:20px;
+overflow:hidden;
+border:1px solid #555;
 }
-.cost{color:#48ff48;font-weight:bold}
-.bad{color:#ff5555;font-weight:bold}
-.farm-grid{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
- gap:18px
+
+.xpfill{
+height:100%;
+width:0%;
+background:#55ff55;
+transition:.4s;
 }
+
+.item-box{
+text-align:center;
+padding:20px;
+background:#0a0e0a;
+border:1px solid #315531;
+border-radius:12px;
+}
+
+.item-box img{
+width:100px;
+height:100px;
+image-rendering:auto;
+object-fit:contain;
+}
+
+.enchant-list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px;
+margin-top:10px;
+}
+
+.enchant{
+padding:12px;
+background:#101810;
+border:1px solid #315531;
+border-radius:9px;
+}
+
+.anvil{
+display:grid;
+grid-template-columns:1fr 100px 1fr;
+gap:15px;
+align-items:center;
+text-align:center;
+}
+
+.anvil-slot{
+height:150px;
+border:2px solid #555;
+border-radius:12px;
+background:#090909;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+}
+
+.anvil-slot img{
+width:100px;
+height:100px;
+object-fit:contain;
+}
+
+.plus{
+font-size:40px;
+color:#aaa;
+}
+
+.cost{
+font-size:24px;
+font-weight:bold;
+color:#55ff55;
+}
+
+.too-expensive{
+color:#ff3333;
+font-weight:bold;
+}
+
+.success{
+color:#55ff55;
+}
+
+.warning{
+color:#ffcc33;
+}
+
 .farm{
- overflow:hidden;background:#151515;border:1px solid #444;
- border-radius:12px
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+align-items:center;
 }
+
 .farm img{
- width:100%;height:190px;object-fit:cover;
- display:block;background:#222
+max-width:100%;
+border-radius:12px;
 }
-.farm-content{padding:16px}
-.farm h3{color:#48ff48;margin:8px 0}
-.farm p{color:#ccc;line-height:1.6}
-.badge{
- display:inline-block;padding:5px 9px;background:#48ff48;
- color:#000;border-radius:5px;font-size:12px;font-weight:bold
+
+footer{
+text-align:center;
+padding:30px;
+color:#777;
 }
-.yt{
- display:block;text-align:center;background:#e62117;
- color:white;text-decoration:none;padding:11px;
- border-radius:7px;font-weight:bold;margin-top:12px
+
+@media(max-width:650px){
+.anvil{
+grid-template-columns:1fr;
 }
-.guide{line-height:1.9;color:#ddd}
-.guide li::marker{color:#48ff48}
-small{color:#888}
-footer{text-align:center;color:#777;padding:30px}
-@media(max-width:600px){
- .item-preview{flex-direction:column;text-align:center}
+
+.plus{
+transform:rotate(90deg);
+}
+
+.farm{
+grid-template-columns:1fr;
+}
+
+section{
+padding:15px;
+}
 }
 </style>
 </head>
@@ -111,968 +251,840 @@ footer{text-align:center;color:#777;padding:30px}
 <body>
 
 <header>
-<h1>⚒ Minecraft XP & Enchantment Optimizer</h1>
-<p>Java Edition 26.2 • Enchantments • Anvil XP • Book Merge Order • XP Farms</p>
+<h1>⛏ Minecraft XP Optimizer</h1>
+<div class="subtitle">
+Advanced XP Calculator • Enchantment Optimizer • Anvil Simulator
+</div>
 </header>
 
 <div class="container">
 
-<section class="card">
+<!-- XP CALCULATOR -->
+<section>
+<h2>🟢 Advanced XP Calculator</h2>
 
-<h2>🛠 Choose Your Item</h2>
+<div class="grid">
 
+<div class="card">
+<h3>Levels → XP</h3>
+
+<label>Level</label>
+<input id="levelInput" type="number" value="30" min="0">
+
+<button onclick="calculateXP()">Calculate</button>
+
+<div class="result">
+Total XP required:
+<div id="xpResult" class="big">0</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Current → Target</h3>
+
+<label>Current Level</label>
+<input id="currentLevel" type="number" value="10" min="0">
+
+<label>Target Level</label>
+<input id="targetLevel" type="number" value="30" min="0">
+
+<button onclick="calculateTarget()">Calculate</button>
+
+<div class="result">
+XP Needed:
+<div id="targetResult" class="big">0</div>
+</div>
+</div>
+
+<div class="card">
+<h3>XP Progress</h3>
+
+<label>Current Level</label>
+<input id="progressLevel" type="number" value="20" min="0">
+
+<label>XP Progress in Level</label>
+<input id="progressXP" type="number" value="0" min="0">
+
+<button onclick="showProgress()">Show Progress</button>
+
+<div class="xpbar">
+<div id="xpFill" class="xpfill"></div>
+</div>
+
+<p id="progressText">0%</p>
+</div>
+
+</div>
+</section>
+
+
+<!-- ITEM SELECTOR -->
+<section>
+<h2>⚔️ Choose Your Item</h2>
+
+<div class="grid">
+
+<div class="card">
 <label>Item Type</label>
-<select id="type"></select>
+
+<select id="itemType" onchange="loadMaterials()">
+<option value="Sword">Sword</option>
+<option value="Axe">Axe</option>
+<option value="Pickaxe">Pickaxe</option>
+<option value="Shovel">Shovel</option>
+<option value="Hoe">Hoe</option>
+<option value="Helmet">Helmet</option>
+<option value="Chestplate">Chestplate</option>
+<option value="Leggings">Leggings</option>
+<option value="Boots">Boots</option>
+<option value="Bow">Bow</option>
+<option value="Crossbow">Crossbow</option>
+<option value="Trident">Trident</option>
+<option value="Mace">Mace</option>
+<option value="Spear">Spear</option>
+<option value="Elytra">Elytra</option>
+</select>
+</div>
+
+<div class="card">
+<label>Material</label>
+<select id="material" onchange="updateItemPreview()">
+</select>
+</div>
+
+<div class="item-box">
+<img id="itemPreview"
+src="https://blockrender.dev/texture/item/netherite_sword.png">
+<div id="itemName">Netherite Sword</div>
+</div>
+
+</div>
+</section>
+
+
+<!-- ENCHANTMENTS -->
+<section>
+<h2>✨ Enchantments</h2>
+
+<div class="grid">
+
+<div class="card">
+<label>Enchanting Item</label>
+<select id="enchType" onchange="loadEnchantments()">
+<option value="Sword">Sword</option>
+<option value="Axe">Axe</option>
+<option value="Pickaxe">Pickaxe</option>
+<option value="Shovel">Shovel</option>
+<option value="Helmet">Helmet</option>
+<option value="Chestplate">Chestplate</option>
+<option value="Leggings">Leggings</option>
+<option value="Boots">Boots</option>
+<option value="Bow">Bow</option>
+<option value="Crossbow">Crossbow</option>
+<option value="Trident">Trident</option>
+<option value="Mace">Mace</option>
+<option value="Spear">Spear</option>
+<option value="Elytra">Elytra</option>
+</select>
+</div>
+
+<div class="card">
+<label>Enchantment</label>
+<select id="enchantment">
+</select>
+</div>
+
+<div class="card">
+<label>Level</label>
+<select id="enchantmentLevel">
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+</select>
+</div>
+
+</div>
+
+<div class="result" id="enchInfo">
+Choose an enchantment.
+</div>
+</section>
+
+
+<!-- ANVIL SIMULATOR -->
+<section>
+<h2>🔨 Interactive Anvil Simulator</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Item</h3>
+
+<label>Type</label>
+<select id="simType" onchange="simLoadMaterials()">
+<option value="Sword">Sword</option>
+<option value="Axe">Axe</option>
+<option value="Pickaxe">Pickaxe</option>
+<option value="Helmet">Helmet</option>
+<option value="Chestplate">Chestplate</option>
+<option value="Leggings">Leggings</option>
+<option value="Boots">Boots</option>
+<option value="Bow">Bow</option>
+<option value="Trident">Trident</option>
+<option value="Mace">Mace</option>
+<option value="Spear">Spear</option>
+<option value="Elytra">Elytra</option>
+</select>
 
 <label>Material</label>
-<select id="material"></select>
+<select id="simMaterial"></select>
 
-<div class="item-preview">
-<img id="itemImage" alt="Minecraft item">
-<div class="item-info">
-<h3 id="itemName">Diamond Sword</h3>
-<p id="itemDesc">Select an item.</p>
+<label>Previous Anvil Uses</label>
+<input id="itemUses" type="number" value="0" min="0">
+
 </div>
+
+<div class="card">
+<h3>Book</h3>
+
+<label>Enchantment</label>
+<select id="simEnchant"></select>
+
+<label>Level</label>
+<select id="simLevel"></select>
+
+<label>Book Previous Uses</label>
+<input id="bookUses" type="number" value="0" min="0">
+
 </div>
+
+</div>
+
+<div class="anvil">
+
+<div class="anvil-slot">
+<img id="beforeImg"
+src="https://blockrender.dev/texture/item/netherite_sword.png">
+</div>
+
+<div class="plus">+</div>
+
+<div class="anvil-slot">
+<img id="bookImg"
+src="https://blockrender.dev/texture/item/enchanted_book.png">
+</div>
+
+</div>
+
+<div class="result">
+<h3>Result</h3>
+
+<div id="anvilResult">
+Press Preview Upgrade.
+</div>
+
+<div class="cost" id="anvilCost">0 XP</div>
+
+<div id="expensiveWarning"></div>
+</div>
+
+<button onclick="previewAnvil()">🔍 Preview Upgrade</button>
+
+<button onclick="performAnvil()">
+🔨 USE ANVIL — UPGRADE ITEM
+</button>
+
+<button class="danger" onclick="resetAnvil()">
+Reset Simulator
+</button>
 
 </section>
 
 
-<section class="card">
-
-<h2>📚 Enchantments</h2>
-
-<p style="color:#aaa">
-Choose the enchantments and levels from the books you want to apply.
-The optimizer will try to merge the books before applying the final book
-to your item, reducing repeated anvil penalties.
-</p>
-
-<div id="enchants" class="grid"></div>
-
-<label>🔨 Previous Anvil Uses on Item</label>
-<input id="itemUses" type="number" min="0" value="0">
-
-<button onclick="calculate()">⚒ Calculate Cheapest Merge Plan</button>
-<button class="secondary" onclick="clearAll()">Clear</button>
-
-<div id="result" class="result" style="display:none"></div>
-
-</section>
-
-
-<section class="card">
-
-<h2>✨ Modern XP Farm Tutorials</h2>
-
-<div class="farm-grid">
+<!-- GLASS FARM -->
+<section>
+<h2>🟩 Glass → Emeralds → XP</h2>
 
 <div class="farm">
-<img src="https://i.ytimg.com/vi/spXqIAQW55E/maxresdefault.jpg"
-alt="Minecraft 26.2 Villager Trading Hall">
-<div class="farm-content">
-<span class="badge">TRADING</span>
-<h3>🧑‍🌾 Villager Trading Hall</h3>
+
+<div>
+<h3>Villager Trading XP</h3>
+
 <p>
-Trading with villagers gives XP while also providing emeralds,
-enchanted books and useful resources. Cartographers can be used
-for glass-related trades.
-</p>
-<a class="yt"
-href="https://www.youtube.com/watch?v=spXqIAQW55E"
-target="_blank">
-▶ Watch 26.2 Tutorial
-</a>
-</div>
-</div>
-
-
-<div class="farm">
-<img src="https://i.ytimg.com/vi/KlR-TvgHh_4/maxresdefault.jpg"
-alt="Armadillo XP Farm Minecraft 26.2">
-<div class="farm-content">
-<span class="badge">XP FARM</span>
-<h3>🦔 Armadillo XP Farm</h3>
-<p>
-A simple Armadillo-based XP farm designed for Java 26.2.
-Useful when you want a compact survival XP source.
-</p>
-<a class="yt"
-href="https://www.youtube.com/watch?v=KlR-TvgHh_4"
-target="_blank">
-▶ Watch 26.2 Tutorial
-</a>
-</div>
-</div>
-
-
-<div class="farm">
-<img src="https://i.ytimg.com/vi/zH7WlTN-2Bs/maxresdefault.jpg"
-alt="Zombie Skeleton Spawner XP Farm">
-<div class="farm-content">
-<span class="badge">EARLY GAME</span>
-<h3>🧟 Zombie / Skeleton Spawner</h3>
-<p>
-If you find a dungeon spawner, you can turn it into a reliable
-XP and loot farm without needing a huge technical build.
-</p>
-<a class="yt"
-href="https://www.youtube.com/watch?v=zH7WlTN-2Bs"
-target="_blank">
-▶ Watch 26.2 Tutorial
-</a>
-</div>
-</div>
-
-
-<div class="farm">
-<img src="https://i.ytimg.com/vi/2FEhd8H_ckI/maxresdefault.jpg"
-alt="Minecraft Gold XP Farm 26.2">
-<div class="farm-content">
-<span class="badge">HIGH XP</span>
-<h3>🟨 Gold XP Farm</h3>
-<p>
-A larger XP source suitable for players who already have access
-to the Nether and want a high-output farm.
-</p>
-<a class="yt"
-href="https://www.youtube.com/watch?v=2FEhd8H_ckI"
-target="_blank">
-▶ Watch 26.2 Tutorial
-</a>
-</div>
-</div>
-
-</div>
-
-<p style="color:#888;margin-top:18px">
-Tutorial links point to YouTube videos specifically labelled for
-Minecraft 26.2 where available.
+Use librarians/cartographers and trade glass for emeralds.
+The emerald trades can then be used to gain XP efficiently.
 </p>
 
+<ul>
+<li>Smelt sand → glass</li>
+<li>Trade glass with villagers</li>
+<li>Get emeralds</li>
+<li>Continue trading for XP</li>
+<li>Use multiple villagers for better throughput</li>
+</ul>
+</div>
+
+<div>
+<img
+src="https://i.imgur.com/placeholder.jpg"
+alt="Minecraft villager trading farm">
+</div>
+
+</div>
 </section>
 
 
-<section class="card">
+<!-- XP FARM GUIDE -->
+<section>
+<h2>🔥 XP Farm Planner</h2>
 
-<h2>🧪 Glass → Emeralds → XP</h2>
+<div class="grid">
 
-<div style="
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-align-items:center;
-">
-
-<div style="text-align:center;background:#171717;padding:18px;border-radius:10px">
-<img src="https://blockrender.dev/render/item/glass_pane.png?size=256"
-style="width:100px;height:100px;image-rendering:pixelated">
-<h3>1. Craft Glass Panes</h3>
-<p style="color:#aaa">
-Turn glass blocks into glass panes.
-</p>
+<div class="card">
+<h3>Enderman Farm</h3>
+<p>Very high XP generation.</p>
+<p>Recommended for high-level enchanting.</p>
 </div>
 
-<div style="font-size:30px;text-align:center">➡️</div>
-
-<div style="text-align:center;background:#171717;padding:18px;border-radius:10px">
-<img src="https://blockrender.dev/render/item/emerald.png?size=256"
-style="width:100px;height:100px;image-rendering:pixelated">
-<h3>2. Sell to Cartographers</h3>
-<p style="color:#aaa">
-Trade glass panes with cartographer villagers
-when the trade is available.
-</p>
+<div class="card">
+<h3>Guardian Farm</h3>
+<p>Excellent XP and prismarine resources.</p>
 </div>
 
-<div style="font-size:30px;text-align:center">➡️</div>
+<div class="card">
+<h3>Gold Farm</h3>
+<p>Fast XP with large amounts of gold.</p>
+</div>
 
-<div style="text-align:center;background:#171717;padding:18px;border-radius:10px">
-<div style="font-size:65px">✨</div>
-<h3>3. Receive XP</h3>
-<p style="color:#aaa">
-Villager trading provides experience as well as emeralds.
-</p>
+<div class="card">
+<h3>Mob Farm</h3>
+<p>Simple early-game XP solution.</p>
 </div>
 
 </div>
-
 </section>
-
-
-<section class="card">
-
-<h2>⚒ How the XP Optimizer Works</h2>
-
-<ol class="guide">
-
-<li>Select the exact item you want to enchant.</li>
-
-<li>Select every book and its level.</li>
-
-<li>The website checks incompatible enchantments.</li>
-
-<li>Books are merged before the final application whenever possible.</li>
-
-<li>The calculator tracks the prior-work penalty of merged books.</li>
-
-<li>The final step applies the combined book to your item.</li>
-
-<li>If an operation reaches 40 levels or more, it is marked
-<strong class="bad">TOO EXPENSIVE</strong>.</li>
-
-</ol>
-
-</section>
-
-</div>
 
 <footer>
 Minecraft XP & Enchantment Optimizer
-<br><br>
-Not affiliated with Mojang Studios or Microsoft.
 </footer>
+
+</div>
 
 
 <script>
 
-/* =========================================================
-ITEM DATA
-========================================================= */
-
-const TYPES={
-
-Sword:{
- wooden:["Wooden Sword","wooden_sword"],
- stone:["Stone Sword","stone_sword"],
- copper:["Copper Sword","copper_sword"],
- iron:["Iron Sword","iron_sword"],
- golden:["Golden Sword","golden_sword"],
- diamond:["Diamond Sword","diamond_sword"],
- netherite:["Netherite Sword","netherite_sword"]
-},
-
-Pickaxe:{
- wooden:["Wooden Pickaxe","wooden_pickaxe"],
- stone:["Stone Pickaxe","stone_pickaxe"],
- copper:["Copper Pickaxe","copper_pickaxe"],
- iron:["Iron Pickaxe","iron_pickaxe"],
- golden:["Golden Pickaxe","golden_pickaxe"],
- diamond:["Diamond Pickaxe","diamond_pickaxe"],
- netherite:["Netherite Pickaxe","netherite_pickaxe"]
-},
-
-Axe:{
- wooden:["Wooden Axe","wooden_axe"],
- stone:["Stone Axe","stone_axe"],
- copper:["Copper Axe","copper_axe"],
- iron:["Iron Axe","iron_axe"],
- golden:["Golden Axe","golden_axe"],
- diamond:["Diamond Axe","diamond_axe"],
- netherite:["Netherite Axe","netherite_axe"]
-},
-
-Shovel:{
- wooden:["Wooden Shovel","wooden_shovel"],
- stone:["Stone Shovel","stone_shovel"],
- copper:["Copper Shovel","copper_shovel"],
- iron:["Iron Shovel","iron_shovel"],
- golden:["Golden Shovel","golden_shovel"],
- diamond:["Diamond Shovel","diamond_shovel"],
- netherite:["Netherite Shovel","netherite_shovel"]
-},
-
-Hoe:{
- wooden:["Wooden Hoe","wooden_hoe"],
- stone:["Stone Hoe","stone_hoe"],
- copper:["Copper Hoe","copper_hoe"],
- iron:["Iron Hoe","iron_hoe"],
- golden:["Golden Hoe","golden_hoe"],
- diamond:["Diamond Hoe","diamond_hoe"],
- netherite:["Netherite Hoe","netherite_hoe"]
-},
-
-Helmet:{
- leather:["Leather Helmet","leather_helmet"],
- chainmail:["Chainmail Helmet","chainmail_helmet"],
- copper:["Copper Helmet","copper_helmet"],
- iron:["Iron Helmet","iron_helmet"],
- golden:["Golden Helmet","golden_helmet"],
- diamond:["Diamond Helmet","diamond_helmet"],
- netherite:["Netherite Helmet","netherite_helmet"],
- turtle:["Turtle Shell","turtle_helmet"]
-},
-
-Chestplate:{
- leather:["Leather Chestplate","leather_chestplate"],
- chainmail:["Chainmail Chestplate","chainmail_chestplate"],
- copper:["Copper Chestplate","copper_chestplate"],
- iron:["Iron Chestplate","iron_chestplate"],
- golden:["Golden Chestplate","golden_chestplate"],
- diamond:["Diamond Chestplate","diamond_chestplate"],
- netherite:["Netherite Chestplate","netherite_chestplate"]
-},
-
-Leggings:{
- leather:["Leather Leggings","leather_leggings"],
- chainmail:["Chainmail Leggings","chainmail_leggings"],
- copper:["Copper Leggings","copper_leggings"],
- iron:["Iron Leggings","iron_leggings"],
- golden:["Golden Leggings","golden_leggings"],
- diamond:["Diamond Leggings","diamond_leggings"],
- netherite:["Netherite Leggings","netherite_leggings"]
-},
-
-Boots:{
- leather:["Leather Boots","leather_boots"],
- chainmail:["Chainmail Boots","chainmail_boots"],
- copper:["Copper Boots","copper_boots"],
- iron:["Iron Boots","iron_boots"],
- golden:["Golden Boots","golden_boots"],
- diamond:["Diamond Boots","diamond_boots"],
- netherite:["Netherite Boots","netherite_boots"]
-},
-
-Elytra:{normal:["Elytra","elytra"]},
-Bow:{normal:["Bow","bow"]},
-Crossbow:{normal:["Crossbow","crossbow"]},
-Trident:{normal:["Trident","trident"]},
-Mace:{normal:["Mace","mace"]},
-Spear:{
- wooden:["Wooden Spear","wooden_spear"],
- stone:["Stone Spear","stone_spear"],
- copper:["Copper Spear","copper_spear"],
- iron:["Iron Spear","iron_spear"],
- golden:["Golden Spear","golden_spear"],
- diamond:["Diamond Spear","diamond_spear"],
- netherite:["Netherite Spear","netherite_spear"]
-},
-FishingRod:{normal:["Fishing Rod","fishing_rod"]},
-Shears:{normal:["Shears","shears"]},
-Shield:{normal:["Shield","shield"]},
-Brush:{normal:["Brush","brush"]}
+const materials={
+Sword:["wooden","stone","iron","golden","diamond","netherite"],
+Axe:["wooden","stone","iron","golden","diamond","netherite"],
+Pickaxe:["wooden","stone","iron","golden","diamond","netherite"],
+Shovel:["wooden","stone","iron","golden","diamond","netherite"],
+Hoe:["wooden","stone","iron","golden","diamond","netherite"],
+Helmet:["leather","chainmail","iron","golden","diamond","netherite"],
+Chestplate:["leather","chainmail","iron","golden","diamond","netherite"],
+Leggings:["leather","chainmail","iron","golden","diamond","netherite"],
+Boots:["leather","chainmail","iron","golden","diamond","netherite"],
+Bow:["bow"],
+Crossbow:["crossbow"],
+Trident:["trident"],
+Mace:["mace"],
+Spear:["spear"],
+Elytra:["elytra"]
 };
 
+const enchantments={
+Sword:[
+["Sharpness",5,1],
+["Smite",5,1],
+["Bane of Arthropods",5,1],
+["Fire Aspect",2,2],
+["Looting",3,2],
+["Knockback",2,2],
+["Sweeping Edge",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
 
-/* =========================================================
-ENCHANTMENTS
-========================================================= */
+Axe:[
+["Sharpness",5,1],
+["Smite",5,1],
+["Bane of Arthropods",5,1],
+["Efficiency",5,1],
+["Fortune",3,2],
+["Silk Touch",1,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
 
-const E={
+Pickaxe:[
+["Efficiency",5,1],
+["Fortune",3,2],
+["Silk Touch",1,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
 
-aqua:["Aqua Affinity",1,2,"Helmet"],
-bane:["Bane of Arthropods",5,2,"Sword Axe Mace Spear","sharp smite density breach"],
-blast:["Blast Protection",4,4,"Helmet Chestplate Leggings Boots","protection fire projectile"],
-breach:["Breach",4,2,"Mace","density smite bane"],
-channeling:["Channeling",1,4,"Trident","riptide"],
-binding:["Curse of Binding",1,8,"Helmet Chestplate Leggings Boots Elytra"],
-vanish:["Curse of Vanishing",1,8,"all"],
-density:["Density",5,1,"Mace","breach smite bane"],
-depth:["Depth Strider",3,4,"Boots","frost"],
-efficiency:["Efficiency",5,1,"Pickaxe Axe Shovel Hoe Shears"],
-feather:["Feather Falling",4,4,"Boots"],
-fireaspect:["Fire Aspect",2,2,"Sword Mace Spear"],
-fireprot:["Fire Protection",4,4,"Helmet Chestplate Leggings Boots","protection blast projectile"],
-flame:["Flame",1,4,"Bow"],
-fortune:["Fortune",3,4,"Pickaxe Axe Shovel Hoe","silk"],
-frost:["Frost Walker",2,4,"Boots","depth"],
-impaling:["Impaling",5,4,"Trident"],
-infinity:["Infinity",1,8,"Bow","mending"],
-knockback:["Knockback",2,2,"Sword Spear"],
-looting:["Looting",3,4,"Sword Spear"],
-loyalty:["Loyalty",3,1,"Trident","riptide channeling"],
-luck:["Luck of the Sea",3,4,"FishingRod"],
-lure:["Lure",3,2,"FishingRod"],
-lunge:["Lunge",3,2,"Spear"],
-mending:["Mending",1,4,"all","infinity"],
-multishot:["Multishot",1,2,"Crossbow","piercing"],
-piercing:["Piercing",4,1,"Crossbow","multishot"],
-power:["Power",5,1,"Bow"],
-projectile:["Projectile Protection",4,4,"Helmet Chestplate Leggings Boots","protection blast fire"],
-protection:["Protection",4,1,"Helmet Chestplate Leggings Boots","blast fireprot projectile"],
-punch:["Punch",2,4,"Bow"],
-quick:["Quick Charge",3,2,"Crossbow"],
-respiration:["Respiration",3,4,"Helmet"],
-riptide:["Riptide",3,2,"Trident","loyalty channeling"],
-sharp:["Sharpness",5,1,"Sword Axe Mace Spear","smite bane density breach"],
-silk:["Silk Touch",1,8,"Pickaxe Axe Shovel Hoe","fortune"],
-smite:["Smite",5,2,"Sword Axe Mace Spear","sharp bane density breach"],
-soul:["Soul Speed",3,4,"Boots"],
-sweeping:["Sweeping Edge",3,2,"Sword"],
-swift:["Swift Sneak",3,8,"Leggings"],
-thorns:["Thorns",3,8,"Helmet Chestplate Leggings Boots"],
-unbreaking:["Unbreaking",3,2,"all"],
-wind:["Wind Burst",3,8,"Mace"]
+Shovel:[
+["Efficiency",5,1],
+["Fortune",3,2],
+["Silk Touch",1,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Hoe:[
+["Efficiency",5,1],
+["Fortune",3,2],
+["Silk Touch",1,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Helmet:[
+["Protection",4,1],
+["Respiration",3,2],
+["Aqua Affinity",1,2],
+["Thorns",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Chestplate:[
+["Protection",4,1],
+["Fire Protection",4,1],
+["Blast Protection",4,1],
+["Projectile Protection",4,1],
+["Thorns",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Leggings:[
+["Protection",4,1],
+["Fire Protection",4,1],
+["Blast Protection",4,1],
+["Projectile Protection",4,1],
+["Thorns",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Boots:[
+["Protection",4,1],
+["Feather Falling",4,2],
+["Depth Strider",3,2],
+["Frost Walker",2,2],
+["Soul Speed",3,2],
+["Thorns",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Bow:[
+["Power",5,1],
+["Punch",2,2],
+["Flame",1,2],
+["Infinity",1,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Crossbow:[
+["Quick Charge",3,2],
+["Multishot",1,2],
+["Piercing",4,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Trident:[
+["Impaling",5,1],
+["Loyalty",3,2],
+["Riptide",3,2],
+["Channeling",1,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Mace:[
+["Density",5,1],
+["Breach",4,2],
+["Wind Burst",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Spear:[
+["Sharpness",5,1],
+["Looting",3,2],
+["Unbreaking",3,1],
+["Mending",1,2]
+],
+
+Elytra:[
+["Unbreaking",3,1],
+["Mending",1,2]
+]
 };
 
+function xpToLevel(level){
 
-/* =========================================================
-HELPERS
-========================================================= */
+level=Number(level);
 
-const typeEl=document.getElementById("type");
-const matEl=document.getElementById("material");
-const img=document.getElementById("itemImage");
-const nameEl=document.getElementById("itemName");
-const descEl=document.getElementById("itemDesc");
-const enchEl=document.getElementById("enchants");
-const result=document.getElementById("result");
+if(level<=16)
+return level*level+6*level;
 
-function roman(n){
- return ["","I","II","III","IV","V"][n]||n;
+if(level<=31)
+return 2.5*level*level-40.5*level+360;
+
+return 4.5*level*level-162.5*level+2220;
 }
 
-function supports(data,type){
- return data[3]=="all" || data[3].split(" ").includes(type);
+function xpToNext(level){
+
+level=Number(level);
+
+if(level<16)
+return 2*level+7;
+
+if(level<31)
+return 5*level-38;
+
+return 9*level-158;
 }
 
-function texture(id){
- return "https://blockrender.dev/texture/item/"+id+".png";
+function calculateXP(){
+
+let level=Number(document.getElementById("levelInput").value);
+
+document.getElementById("xpResult").textContent=
+Math.floor(xpToLevel(level))+" XP";
 }
 
+function calculateTarget(){
 
-/* =========================================================
-LOAD ITEM TYPES
-========================================================= */
+let a=Number(document.getElementById("currentLevel").value);
+let b=Number(document.getElementById("targetLevel").value);
 
-Object.keys(TYPES).forEach(t=>{
- const o=document.createElement("option");
- o.value=t;o.textContent=t;
- typeEl.appendChild(o);
-});
+let xp=Math.max(0,xpToLevel(b)-xpToLevel(a));
+
+document.getElementById("targetResult").textContent=
+Math.floor(xp)+" XP";
+}
+
+function showProgress(){
+
+let level=Number(document.getElementById("progressLevel").value);
+let xp=Number(document.getElementById("progressXP").value);
+
+let next=xpToNext(level);
+let percent=Math.min(100,(xp/next)*100);
+
+document.getElementById("xpFill").style.width=
+percent+"%";
+
+document.getElementById("progressText").textContent=
+percent.toFixed(1)+"% — "+xp+" / "+next+" XP";
+}
 
 function loadMaterials(){
 
- matEl.innerHTML="";
+let type=document.getElementById("itemType").value;
+let select=document.getElementById("material");
 
- Object.entries(TYPES[typeEl.value]).forEach(([id,v])=>{
-  const o=document.createElement("option");
-  o.value=id;o.textContent=v[0];
-  matEl.appendChild(o);
- });
+select.innerHTML="";
 
- updateItem();
- renderEnchants();
+materials[type].forEach(m=>{
+let o=document.createElement("option");
+o.value=m;
+o.textContent=m.charAt(0).toUpperCase()+m.slice(1);
+select.appendChild(o);
+});
+
+updateItemPreview();
 }
 
-function updateItem(){
+function getTexture(type,material){
 
- const item=TYPES[typeEl.value][matEl.value];
+if(type==="Elytra") return "elytra";
 
- if(!item)return;
+if(type==="Bow") return "bow";
 
- nameEl.textContent=item[0];
- descEl.textContent="Compatible enchantments are shown below.";
- img.alt=item[0];
- img.src=texture(item[1]);
+if(type==="Crossbow") return "crossbow";
 
- img.onerror=()=>{
-   img.src="https://blockrender.dev/render/item/"+item[1]+".png?size=256";
- };
+if(type==="Trident") return "trident";
 
+if(type==="Mace") return "mace";
+
+if(type==="Spear") return "spear";
+
+let map={
+Helmet:"helmet",
+Chestplate:"chestplate",
+Leggings:"leggings",
+Boots:"boots",
+Sword:"sword",
+Axe:"axe",
+Pickaxe:"pickaxe",
+Shovel:"shovel",
+Hoe:"hoe"
+};
+
+return material+"_"+map[type];
 }
 
+function updateItemPreview(){
 
-/* =========================================================
-ENCHANTMENT UI
-========================================================= */
+let type=document.getElementById("itemType").value;
+let material=document.getElementById("material").value;
 
-function renderEnchants(){
+let texture=getTexture(type,material);
 
- enchEl.innerHTML="";
+let img=document.getElementById("itemPreview");
 
- Object.entries(E).forEach(([id,d])=>{
+img.src=
+"https://blockrender.dev/texture/item/"+texture+".png";
 
-  if(!supports(d,typeEl.value))
-   return;
-
-  const card=document.createElement("div");
-  card.className="enchant";
-
-  const title=document.createElement("b");
-  title.textContent=d[0];
-
-  const meta=document.createElement("div");
-  meta.className="meta";
-  meta.textContent="Max "+d[1]+" • Book cost ×"+d[2];
-
-  const select=document.createElement("select");
-  select.id="e_"+id;
-
-  let none=document.createElement("option");
-  none.value=0;
-  none.textContent="None";
-  select.appendChild(none);
-
-  for(let i=1;i<=d[1];i++){
-   let o=document.createElement("option");
-   o.value=i;
-   o.textContent=d[0]+" "+roman(i);
-   select.appendChild(o);
-  }
-
-  select.onchange=checkConflicts;
-
-  card.append(title,meta,select);
-  enchEl.appendChild(card);
- });
+document.getElementById("itemName").textContent=
+material.charAt(0).toUpperCase()+material.slice(1)+" "+type;
 }
 
+function loadEnchantments(){
 
-/* =========================================================
-CONFLICTS
-========================================================= */
+let type=document.getElementById("enchType").value;
 
-function checkConflicts(){
+let select=document.getElementById("enchantment");
 
- document.querySelectorAll(".enchant")
- .forEach(x=>x.classList.remove("conflict"));
+select.innerHTML="";
 
- const selected=[];
+(enchantments[type]||[]).forEach(e=>{
 
- Object.keys(E).forEach(id=>{
-  const x=document.getElementById("e_"+id);
-  if(x&&+x.value)selected.push(id);
- });
+let o=document.createElement("option");
 
- selected.forEach(a=>{
-  const conflicts=(E[a][4]||"").split(" ").filter(Boolean);
+o.value=e[0];
+o.textContent=e[0];
 
-  conflicts.forEach(b=>{
-   const el=document.getElementById("e_"+b);
-   if(el&&+el.value)
-    el.parentElement.classList.add("conflict");
-  });
- });
+select.appendChild(o);
+
+});
+
+loadEnchantmentLevels();
 }
 
+function loadEnchantmentLevels(){
 
-/* =========================================================
-BOOKS
-========================================================= */
+let type=document.getElementById("enchType").value;
+let name=document.getElementById("enchantment").value;
 
-function selectedBooks(){
+let data=(enchantments[type]||[]).find(e=>e[0]===name);
 
- const books=[];
+let select=document.getElementById("enchantmentLevel");
 
- Object.keys(E).forEach(id=>{
+select.innerHTML="";
 
-  const el=document.getElementById("e_"+id);
+if(!data)return;
 
-  if(!el||!+el.value)return;
+for(let i=1;i<=data[1];i++){
 
-  books.push({
-   id:id,
-   level:+el.value,
-   uses:0
-  });
+let o=document.createElement("option");
 
- });
+o.value=i;
+o.textContent="Level "+i;
 
- return books;
+select.appendChild(o);
 }
 
-function bookCost(book){
-
- return E[book.id][2]*book.level;
+document.getElementById("enchInfo").innerHTML=
+"<b>"+data[0]+"</b><br>Maximum Level: "+
+data[1]+"<br>Anvil Weight: "+data[2];
 }
 
-function conflicts(a,b){
+document.getElementById("enchantment")
+.addEventListener("change",loadEnchantmentLevels);
 
- const ca=E[a.id][4]||"";
- const cb=E[b.id][4]||"";
 
- return ca.split(" ").includes(b.id) ||
-        cb.split(" ").includes(a.id);
+/* SIMULATOR */
+
+function simLoadMaterials(){
+
+let type=document.getElementById("simType").value;
+let select=document.getElementById("simMaterial");
+
+select.innerHTML="";
+
+materials[type].forEach(m=>{
+
+let o=document.createElement("option");
+
+o.value=m;
+o.textContent=
+m.charAt(0).toUpperCase()+m.slice(1);
+
+select.appendChild(o);
+
+});
+
+simLoadEnchants();
 }
 
+function simLoadEnchants(){
 
-/* =========================================================
-MERGE TWO BOOKS
-========================================================= */
+let type=document.getElementById("simType").value;
+let select=document.getElementById("simEnchant");
 
-function merge(a,b){
+select.innerHTML="";
 
- if(conflicts(a,b))return null;
+(enchantments[type]||[]).forEach(e=>{
 
- const result=[];
+let o=document.createElement("option");
 
- const all={};
+o.value=e[0];
+o.textContent=e[0];
 
- all[a.id]=a.level;
- all[b.id]=b.level;
+select.appendChild(o);
 
- if(a.id===b.id){
+});
 
-  all[a.id]=
-   a.level===b.level
-   ?Math.min(E[a.id][1],a.level+1)
-   :Math.max(a.level,b.level);
-
- }
-
- return {
-  id:Object.keys(all).join("+"),
-  ench:all,
-  uses:Math.max(a.uses,b.uses)+1,
-  cost:bookCost(a)+bookCost(b)+
-       (Math.pow(2,a.uses)-1)+
-       (Math.pow(2,b.uses)-1)
- };
+simLoadLevels();
+simUpdateBefore();
 }
 
+function simLoadLevels(){
 
-/* =========================================================
-BOOK OBJECT WITH MULTIPLE ENCHANTMENTS
-========================================================= */
+let type=document.getElementById("simType").value;
+let name=document.getElementById("simEnchant").value;
 
-function compatible(A,B){
+let data=(enchantments[type]||[]).find(e=>e[0]===name);
 
- for(const a of Object.keys(A.ench)){
-  for(const b of Object.keys(B.ench)){
+let select=document.getElementById("simLevel");
 
-   if(a===b)continue;
+select.innerHTML="";
 
-   if((E[a][4]||"").split(" ").includes(b) ||
-      (E[b][4]||"").split(" ").includes(a))
-    return false;
-  }
- }
+if(!data)return;
 
- return true;
+for(let i=1;i<=data[1];i++){
+
+let o=document.createElement("option");
+
+o.value=i;
+o.textContent="Level "+i;
+
+select.appendChild(o);
+
+}
 }
 
-function value(book){
+document.getElementById("simEnchant")
+.addEventListener("change",simLoadLevels);
 
- return Object.entries(book.ench)
- .reduce((sum,[id,l])=>sum+E[id][2]*l,0);
+function simUpdateBefore(){
+
+let type=document.getElementById("simType").value;
+let material=document.getElementById("simMaterial").value;
+
+let texture=getTexture(type,material);
+
+document.getElementById("beforeImg").src=
+"https://blockrender.dev/texture/item/"+texture+".png";
 }
 
-function mergeFull(A,B){
+document.getElementById("simMaterial")
+.addEventListener("change",simUpdateBefore);
 
- if(!compatible(A,B))return null;
+function previewAnvil(){
 
- const ench={...A.ench};
+let type=document.getElementById("simType").value;
+let material=document.getElementById("simMaterial").value;
+let enchant=document.getElementById("simEnchant").value;
+let level=Number(document.getElementById("simLevel").value);
 
- for(const [id,l] of Object.entries(B.ench)){
+let itemUses=Number(document.getElementById("itemUses").value);
+let bookUses=Number(document.getElementById("bookUses").value);
 
-  if(ench[id]){
-   ench[id]=
-    ench[id]===l
-    ?Math.min(E[id][1],l+1)
-    :Math.max(ench[id],l);
-  }else{
-   ench[id]=l;
-  }
- }
+let data=(enchantments[type]||[]).find(e=>e[0]===enchant);
 
- return {
-  ench,
-  uses:Math.max(A.uses,B.uses)+1,
-  cost:
-   value(B)+
-   Math.pow(2,A.uses)-1+
-   Math.pow(2,B.uses)-1
- };
+if(!data)return;
+
+let cost=
+data[2]*level+
+(Math.pow(2,itemUses)-1)+
+(Math.pow(2,bookUses)-1);
+
+document.getElementById("anvilCost").textContent=
+cost+" XP Levels";
+
+document.getElementById("anvilResult").innerHTML=
+"<span class='success'>"+material+
+" "+type+" + "+enchant+
+" "+level+"</span>";
+
+if(cost>=40){
+
+document.getElementById("expensiveWarning").innerHTML=
+"<div class='too-expensive'>⚠ TOO EXPENSIVE!</div>";
+
+}else{
+
+document.getElementById("expensiveWarning").innerHTML=
+"<div class='success'>✓ Valid Anvil Operation</div>";
 }
 
+simUpdateBefore();
+}
 
-/* =========================================================
-OPTIMIZER
-========================================================= */
+function performAnvil(){
 
-function optimize(books){
+previewAnvil();
 
- let current=books.map(x=>({
-  ench:{[x.id]:x.level},
-  uses:0,
-  label:E[x.id][0]+" "+roman(x.level)
- }));
+let uses=
+Number(document.getElementById("itemUses").value);
 
- const steps=[];
- let total=0;
- let highest=0;
+document.getElementById("itemUses").value=
+uses+1;
 
- while(current.length>1){
+document.getElementById("anvilResult").innerHTML+=
+"<br><br><b>🔨 Upgrade applied!</b>";
+}
 
-  let best=null;
-  let bi=0,bj=1;
+function resetAnvil(){
 
-  for(let i=0;i<current.length;i++){
-   for(let j=i+1;j<current.length;j++){
+document.getElementById("simType").value="Sword";
 
-    const m=mergeFull(current[i],current[j]);
+simLoadMaterials();
 
-    if(!m)continue;
+document.getElementById("simMaterial").value="netherite";
 
-    /*
-      Prefer low immediate cost.
-      When costs are equal, prefer the pair
-      with lower future prior-work penalty.
-    */
+document.getElementById("itemUses").value=0;
+document.getElementById("bookUses").value=0;
 
-    const score=
-      m.cost+
-      m.uses*0.15+
-      value(m)*0.01;
+simLoadEnchants();
 
-    if(!best||score<best.score){
-      best={...m,score};
-      bi=i;bj=j;
-    }
-   }
-  }
+document.getElementById("simEnchant").value="Sharpness";
 
-  if(!best){
+simLoadLevels();
 
-   return {
-    error:true,
-    message:"Some selected enchantments cannot be merged together."
-   };
-  }
+document.getElementById("simLevel").value=5;
 
-  const A=current[bi];
-  const B=current[bj];
+simUpdateBefore();
 
-  steps.push({
-   left:Object.entries(A.ench)
-    .map(([id,l])=>E[id][0]+" "+roman(l)).join(", "),
-   right:Object.entries(B.ench)
-    .map(([id,l])=>E[id][0]+" "+roman(l)).join(", "),
-   result:Object.entries(best.ench)
-    .map(([id,l])=>E[id][0]+" "+roman(l)).join(", "),
-   cost:best.cost
-  });
+document.getElementById("anvilCost").textContent="0 XP";
 
-  total+=best.cost;
-  highest=Math.max(highest,best.cost);
+document.getElementById("anvilResult").textContent=
+"Press Preview Upgrade.";
 
-  current.splice(bj,1);
-  current.splice(bi,1);
-
-  current.push({
-   ench:best.ench,
-   uses:best.uses,
-   label:Object.entries(best.ench)
-    .map(([id,l])=>E[id][0]+" "+roman(l)).join(", ")
-  });
- }
-
- return {
-  book:current[0],
-  steps,
-  total,
-  highest
- };
+document.getElementById("expensiveWarning").innerHTML="";
 }
 
 
-/* =========================================================
-CALCULATE
-========================================================= */
-
-function calculate(){
-
- result.style.display="block";
-
- const books=selectedBooks();
-
- if(!books.length){
-
-  result.className="result warning";
-  result.innerHTML="<strong>Select at least one enchantment.</strong>";
-  return;
- }
-
- const opt=optimize(books);
-
- if(opt.error){
-
-  result.className="result error";
-  result.innerHTML=
-   "<strong>❌ Cannot create a valid merge plan.</strong><br><br>"+
-   opt.message;
-  return;
- }
-
- const itemUses=Math.max(
-   0,
-   Number(document.getElementById("itemUses").value)||0
- );
-
- /*
-   Final application cost.
-   The item's existing prior-work penalty is included.
- */
-
- const finalCost=
-   value(opt.book)+
-   Math.pow(2,itemUses)-1+
-   Math.pow(2,opt.book.uses)-1;
-
- const total=opt.total+finalCost;
-
- const highest=Math.max(opt.highest,finalCost);
-
- let html=`
- <h3 style="color:#48ff48">⚒ Optimized Book Merge Plan</h3>
-
- <p>
- <strong>Item:</strong>
- ${nameEl.textContent}
- </p>
-
- <p>
- <strong>Book merges:</strong>
- ${opt.steps.length}
- </p>
- `;
-
- opt.steps.forEach((s,i)=>{
-
-  html+=`
-  <div class="step">
-
-   <div class="num">${i+1}</div>
-
-   <div>
-    <strong>Combine:</strong><br>
-    ${s.left}
-    <strong> + </strong>
-    ${s.right}
-
-    <br>
-
-    <strong>Result:</strong><br>
-    ${s.result}
-
-    <br>
-
-    <span class="cost">
-    Cost: ${s.cost} levels
-    </span>
-
-    ${
-     s.cost>=40
-     ?'<br><span class="bad">❌ TOO EXPENSIVE</span>'
-     :''
-    }
-
-   </div>
-  </div>
-  `;
- });
-
- html+=`
-
- <div class="step">
-
-  <div class="num">${opt.steps.length+1}</div>
-
-  <div>
-
-   <strong>Apply final book to:</strong>
-   ${nameEl.textContent}
-
-   <br>
-
-   <strong>Book:</strong><br>
-   ${Object.entries(opt.book.ench)
-    .map(([id,l])=>E[id][0]+" "+roman(l))
-    .join(", ")}
-
-   <br>
-
-   <span class="cost">
-   Final cost: ${finalCost} levels
-   </span>
-
-   ${
-    finalCost>=40
-    ?'<br><span class="bad">❌ TOO EXPENSIVE</span>'
-    :''
-   }
-
-  </div>
-
- </div>
-
- <hr style="border-color:#333">
-
- <strong>Total estimated XP levels:</strong>
- ${total}
-
- <br>
-
- <strong>Highest single operation:</strong>
- ${highest}
-
- levels
-
- <br><br>
-
- ${
-  highest>=40
-  ?`
-   <div class="warning">
-   ⚠️ At least one operation is 40+ levels and would be
-   <strong>Too Expensive</strong> in Survival.
-   Try changing the book order or applying some books
-   directly to the item.
-   </div>
-  `
-  :`
-   <div style="color:#48ff48;font-weight:bold">
-   ✅ All planned operations are below the 40-level limit.
-   </div>
-  `
- }
-
- <br>
-
- <small>
- The exact Minecraft anvil cost can also depend on the
- previous-work history of the actual item and books.
- </small>
- `;
-
- result.className=
-  highest>=40?"result warning":"result";
-
- result.innerHTML=html;
-}
-
-
-/* =========================================================
-CLEAR
-========================================================= */
-
-function clearAll(){
-
- document.querySelectorAll("#enchants select")
- .forEach(x=>x.value=0);
-
- document.getElementById("itemUses").value=0;
-
- checkConflicts();
-
- result.style.display="none";
-}
-
-
-/* =========================================================
-EVENTS
-========================================================= */
-
-typeEl.onchange=loadMaterials;
-matEl.onchange=updateItem;
-
-
-/* =========================================================
-START
-========================================================= */
+/* INITIALIZE */
 
 loadMaterials();
+loadEnchantments();
+simLoadMaterials();
+calculateXP();
+calculateTarget();
+showProgress();
 
 </script>
 
