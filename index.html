@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Minecraft XP & Anvil Optimizer</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
@@ -27,40 +29,44 @@ body{
     margin:auto;
 }
 
+/* ================= HEADER ================= */
+
 header{
     text-align:center;
-    padding:35px 10px 25px;
+    padding:32px 10px 22px;
 }
 
 .logo{
-    font-size:42px;
-    margin-bottom:8px;
+    font-size:40px;
+    margin-bottom:5px;
 }
 
 h1{
     margin:0;
     color:#63ff63;
-    font-size:clamp(30px,8vw,48px);
+    font-size:clamp(30px,8vw,46px);
 }
 
 .subtitle{
-    color:#999;
-    margin-top:10px;
-    font-size:15px;
+    color:#888;
+    margin-top:9px;
+    font-size:14px;
 }
+
+/* ================= SECTIONS ================= */
 
 section{
     background:#111811;
     border:1px solid #29452c;
-    border-radius:18px;
-    padding:20px;
-    margin:18px 0;
+    border-radius:16px;
+    padding:18px;
+    margin:16px 0;
 }
 
 h2{
     color:#65ff70;
     margin-top:0;
-    font-size:26px;
+    font-size:24px;
 }
 
 h3{
@@ -70,60 +76,60 @@ h3{
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
+    gap:14px;
 }
 
 .card{
     background:#0b110c;
     border:1px solid #29452c;
-    border-radius:14px;
-    padding:17px;
+    border-radius:13px;
+    padding:16px;
 }
 
 label{
     display:block;
     color:#aaa;
-    margin:12px 0 7px;
+    margin:11px 0 6px;
     font-weight:bold;
 }
 
 input,
 select{
     width:100%;
-    padding:14px;
-    border-radius:10px;
+    padding:12px;
+    border-radius:9px;
     border:1px solid #416d46;
     background:#070b08;
     color:white;
-    font-size:16px;
+    font-size:15px;
     outline:none;
 }
 
 input:focus,
 select:focus{
     border-color:#58ff65;
-    box-shadow:0 0 8px rgba(70,255,90,.2);
+    box-shadow:0 0 7px rgba(70,255,90,.15);
 }
 
 button{
     border:0;
-    border-radius:10px;
-    padding:13px 18px;
-    margin-top:12px;
+    border-radius:9px;
+    padding:12px 17px;
+    margin-top:11px;
     background:#2bc638;
     color:white;
-    font-size:15px;
+    font-size:14px;
     font-weight:bold;
     cursor:pointer;
     transition:.2s;
 }
 
-button:active{
-    transform:scale(.96);
-}
-
 button:hover{
     background:#3ee84b;
+}
+
+button:active{
+    transform:scale(.96);
 }
 
 .red{
@@ -135,23 +141,35 @@ button:hover{
 }
 
 .result{
-    margin-top:15px;
-    padding:16px;
-    border-radius:12px;
+    margin-top:13px;
+    padding:14px;
+    border-radius:11px;
     background:#071007;
     border:1px solid #315e35;
 }
 
 .big{
     color:#55ff65;
-    font-size:30px;
+    font-size:28px;
     font-weight:bold;
 }
 
+.valid{
+    color:#65ff65;
+    font-weight:bold;
+}
+
+.expensive{
+    color:#ff4040;
+    font-weight:bold;
+}
+
+/* ================= XP BAR ================= */
+
 .xpbar{
     width:100%;
-    height:22px;
-    margin-top:15px;
+    height:20px;
+    margin-top:13px;
     background:#222;
     border-radius:20px;
     overflow:hidden;
@@ -164,7 +182,7 @@ button:hover{
     transition:width .6s ease;
 }
 
-/* ITEM */
+/* ================= ITEM PREVIEW ================= */
 
 .item-preview{
     text-align:center;
@@ -172,47 +190,70 @@ button:hover{
 }
 
 .item-preview img{
-    width:160px;
-    height:160px;
+    width:145px;
+    height:145px;
     object-fit:contain;
-    image-rendering:auto;
     filter:drop-shadow(0 8px 12px #000);
     transition:.3s;
 }
 
 .item-preview img:hover{
-    transform:scale(1.08) rotate(-3deg);
+    transform:scale(1.06) rotate(-2deg);
 }
 
 .item-name{
     color:#8cff8c;
-    font-size:19px;
+    font-size:18px;
     font-weight:bold;
 }
 
-/* ANVIL */
+/* ================= ENCHANTMENT ================= */
+
+.enchant-info{
+    margin-top:12px;
+    padding:14px;
+    background:#0a100a;
+    border-radius:10px;
+    border:1px solid #29452c;
+    line-height:1.6;
+}
+
+.enchant-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:12px;
+}
+
+.enchant-box{
+    padding:11px;
+    background:#0a0f0a;
+    border:1px solid #263f29;
+    border-radius:9px;
+}
+
+/* ================= ANVIL ================= */
 
 .anvil-area{
-    margin-top:20px;
-    padding:20px 10px;
+    margin-top:18px;
+    padding:18px 10px;
     background:#090d09;
-    border-radius:15px;
+    border-radius:14px;
     border:1px solid #263b28;
 }
 
 .anvil-slots{
     display:grid;
-    grid-template-columns:1fr 60px 1fr;
+    grid-template-columns:1fr 55px 1fr;
     align-items:center;
     gap:10px;
 }
 
 .slot{
-    min-height:190px;
+    min-height:175px;
     border:2px solid #444;
-    border-radius:15px;
-    background:
-        linear-gradient(145deg,#171717,#080808);
+    border-radius:13px;
+    background:linear-gradient(145deg,#171717,#080808);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -221,30 +262,32 @@ button:hover{
 }
 
 .slot img{
-    width:155px;
-    height:155px;
+    width:145px;
+    height:145px;
     object-fit:contain;
-    filter:drop-shadow(0 10px 10px #000);
+    filter:drop-shadow(0 8px 9px #000);
 }
 
 .slot-label{
     position:absolute;
-    bottom:8px;
+    bottom:7px;
     left:0;
     right:0;
     text-align:center;
-    color:#aaa;
-    font-size:13px;
+    color:#999;
+    font-size:12px;
 }
 
 .plus{
     text-align:center;
-    font-size:38px;
+    font-size:34px;
     color:#777;
 }
 
+/* ================= ANVIL MACHINE ================= */
+
 .anvil-machine{
-    margin:25px auto 10px;
+    margin:25px auto 8px;
     width:230px;
     height:115px;
     position:relative;
@@ -256,8 +299,7 @@ button:hover{
     left:15px;
     width:200px;
     height:55px;
-    background:
-        linear-gradient(#777,#454545);
+    background:linear-gradient(#777,#454545);
     border:3px solid #292929;
     border-radius:8px 8px 18px 18px;
     box-shadow:0 10px 20px #000;
@@ -269,8 +311,7 @@ button:hover{
     left:5px;
     width:220px;
     height:35px;
-    background:
-        linear-gradient(#999,#555);
+    background:linear-gradient(#999,#555);
     clip-path:polygon(
         12% 0,
         88% 0,
@@ -286,7 +327,7 @@ button:hover{
     position:absolute;
     right:10px;
     top:-5px;
-    font-size:60px;
+    font-size:58px;
     transform-origin:bottom right;
     z-index:5;
 }
@@ -296,38 +337,47 @@ button:hover{
 }
 
 @keyframes hammerStrike{
+
     0%{
         transform:rotate(0deg);
     }
+
     35%{
         transform:rotate(-35deg);
     }
+
     55%{
         transform:rotate(45deg);
     }
+
     75%{
         transform:rotate(-10deg);
     }
+
     100%{
         transform:rotate(0deg);
     }
+
 }
+
+/* ================= RESULT ITEM ================= */
 
 .result-item{
     text-align:center;
-    margin-top:20px;
-    padding:20px;
+    margin-top:18px;
+    padding:18px;
     background:#071007;
     border:1px solid #355f39;
-    border-radius:15px;
+    border-radius:13px;
 }
 
 .result-item img{
-    width:190px;
-    height:190px;
+    width:175px;
+    height:175px;
     object-fit:contain;
-    opacity:.3;
-    transform:scale(.8);
+    opacity:.25;
+    transform:scale(.85);
+    transition:.3s;
 }
 
 .result-item.ready img{
@@ -336,22 +386,28 @@ button:hover{
     animation:resultPop .55s ease;
     filter:
         drop-shadow(0 0 10px #4dff58)
-        drop-shadow(0 0 25px rgba(70,255,80,.5));
+        drop-shadow(0 0 20px rgba(70,255,80,.4));
 }
 
 @keyframes resultPop{
+
     0%{
-        transform:scale(.5) rotate(-10deg);
+        transform:scale(.5) rotate(-8deg);
         opacity:0;
     }
+
     60%{
-        transform:scale(1.15) rotate(5deg);
+        transform:scale(1.1) rotate(4deg);
     }
+
     100%{
         transform:scale(1);
         opacity:1;
     }
+
 }
+
+/* ================= SPARKS ================= */
 
 .sparks{
     position:absolute;
@@ -361,92 +417,104 @@ button:hover{
 
 .spark{
     position:absolute;
-    width:7px;
-    height:7px;
+    width:6px;
+    height:6px;
     background:#63ff63;
-    box-shadow:0 0 10px #63ff63;
+    box-shadow:0 0 9px #63ff63;
     animation:spark .65s ease-out forwards;
 }
 
 @keyframes spark{
+
     from{
         transform:translate(0,0) scale(1);
         opacity:1;
     }
+
     to{
-        transform:translate(
-            var(--x),
-            var(--y)
-        ) scale(0);
+        transform:translate(var(--x),var(--y)) scale(0);
         opacity:0;
     }
+
 }
 
-.cost{
-    margin-top:15px;
-    color:#61ff69;
-    font-size:27px;
-    font-weight:bold;
-}
-
-.valid{
-    color:#65ff65;
-    font-weight:bold;
-}
-
-.expensive{
-    color:#ff4040;
-    font-weight:bold;
-}
-
-/* ENCHANTMENT */
-
-.enchant-info{
-    margin-top:15px;
-    padding:15px;
-    background:#0a100a;
-    border-radius:10px;
-    border:1px solid #29452c;
-}
-
-.enchant-list{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:10px;
-    margin-top:15px;
-}
-
-.enchant-box{
-    padding:12px;
-    background:#0a0f0a;
-    border:1px solid #263f29;
-    border-radius:10px;
-}
-
-/* FARM */
+/* ================= FARM ================= */
 
 .farm-card{
-    padding:18px;
+    padding:17px;
     background:#0b110c;
-    border-radius:13px;
+    border-radius:12px;
     border:1px solid #29452c;
+    transition:.25s ease;
+}
+
+.farm-card:hover{
+    transform:translateY(-3px);
+    border-color:#55ff65;
 }
 
 .farm-icon{
-    font-size:42px;
+    font-size:40px;
 }
 
-/* MOBILE */
+.farm-image{
+    width:100%;
+    max-height:330px;
+    object-fit:contain;
+    display:block;
+    margin-bottom:14px;
+    border-radius:9px;
+    filter:drop-shadow(0 6px 10px #000);
+}
+
+.glass-farm{
+    grid-column:1/-1;
+}
+
+.farm-steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:15px;
+}
+
+.farm-steps div{
+    background:#071007;
+    border:1px solid #29452c;
+    border-radius:9px;
+    padding:10px;
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+}
+
+.farm-steps b{
+    display:block;
+    color:#63ff63;
+    font-size:20px;
+    margin-bottom:4px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    color:#666;
+    padding:25px 0 35px;
+    font-size:13px;
+}
+
+/* ================= MOBILE ================= */
 
 @media(max-width:650px){
 
     section{
-        padding:15px;
-        border-radius:14px;
+        padding:14px;
+        border-radius:13px;
     }
 
     h2{
-        font-size:23px;
+        font-size:22px;
     }
 
     .anvil-slots{
@@ -455,21 +523,21 @@ button:hover{
 
     .plus{
         transform:rotate(90deg);
-        height:35px;
+        height:30px;
     }
 
     .slot{
-        min-height:175px;
+        min-height:165px;
     }
 
     .slot img{
-        width:145px;
-        height:145px;
+        width:135px;
+        height:135px;
     }
 
     .item-preview img{
-        width:135px;
-        height:135px;
+        width:130px;
+        height:130px;
     }
 
     .result-item img{
@@ -479,26 +547,42 @@ button:hover{
 
     button{
         width:100%;
-        margin-left:0;
-        margin-right:0;
     }
+
+    .farm-steps{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .glass-farm{
+        grid-column:auto;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">⛏️</div>
-    <h1>Minecraft XP Optimizer</h1>
-    <div class="subtitle">
-        XP Calculator • Enchantments • Anvil Simulator
-    </div>
+
+<div class="logo">⛏️</div>
+
+<h1>Minecraft XP Optimizer</h1>
+
+<div class="subtitle">
+XP Calculator • Enchantments • Anvil Simulator
+</div>
+
 </header>
+
 
 <div class="container">
 
-<!-- ================= XP CALCULATOR ================= -->
+
+<!-- ======================================================
+     XP CALCULATOR
+====================================================== -->
 
 <section>
 
@@ -506,18 +590,32 @@ button:hover{
 
 <div class="grid">
 
+
 <div class="card">
 
 <h3>Levels → XP</h3>
 
 <label>Level</label>
-<input id="levelInput" type="number" value="30" min="0">
 
-<button onclick="calculateXP()">Calculate XP</button>
+<input
+id="levelInput"
+type="number"
+value="30"
+min="0"
+>
+
+<button onclick="calculateXP()">
+Calculate XP
+</button>
 
 <div class="result">
+
 Total XP:
-<div id="xpResult" class="big">1395 XP</div>
+
+<div id="xpResult" class="big">
+1395 XP
+</div>
+
 </div>
 
 </div>
@@ -528,16 +626,35 @@ Total XP:
 <h3>Current → Target</h3>
 
 <label>Current Level</label>
-<input id="currentLevel" type="number" value="10" min="0">
+
+<input
+id="currentLevel"
+type="number"
+value="10"
+min="0"
+>
 
 <label>Target Level</label>
-<input id="targetLevel" type="number" value="30" min="0">
 
-<button onclick="calculateTarget()">Calculate</button>
+<input
+id="targetLevel"
+type="number"
+value="30"
+min="0"
+>
+
+<button onclick="calculateTarget()">
+Calculate
+</button>
 
 <div class="result">
+
 XP Needed:
-<div id="targetResult" class="big">1235 XP</div>
+
+<div id="targetResult" class="big">
+1235 XP
+</div>
+
 </div>
 
 </div>
@@ -548,18 +665,39 @@ XP Needed:
 <h3>XP Progress</h3>
 
 <label>Current Level</label>
-<input id="progressLevel" type="number" value="30" min="0">
+
+<input
+id="progressLevel"
+type="number"
+value="30"
+min="0"
+>
 
 <label>XP inside this level</label>
-<input id="progressXP" type="number" value="0" min="0">
 
-<button onclick="calculateProgress()">Show Progress</button>
+<input
+id="progressXP"
+type="number"
+value="0"
+min="0"
+>
+
+<button onclick="calculateProgress()">
+Show Progress
+</button>
 
 <div class="xpbar">
-<div id="xpFill" class="xpfill"></div>
+
+<div
+id="xpFill"
+class="xpfill">
 </div>
 
-<p id="progressText">0%</p>
+</div>
+
+<p id="progressText">
+0%
+</p>
 
 </div>
 
@@ -568,7 +706,9 @@ XP Needed:
 </section>
 
 
-<!-- ================= ITEM ================= -->
+<!-- ======================================================
+     ITEM SELECTOR
+====================================================== -->
 
 <section>
 
@@ -576,11 +716,15 @@ XP Needed:
 
 <div class="grid">
 
+
 <div class="card">
 
 <label>Item Type</label>
 
-<select id="itemType" onchange="loadItemMaterials()">
+<select
+id="itemType"
+onchange="loadItemMaterials()"
+>
 
 <option>Sword</option>
 <option>Axe</option>
@@ -600,9 +744,12 @@ XP Needed:
 
 </select>
 
+
 <label>Material</label>
 
-<select id="itemMaterial" onchange="updateItem()">
+<select
+id="itemMaterial"
+onchange="updateItem()">
 </select>
 
 </div>
@@ -610,9 +757,14 @@ XP Needed:
 
 <div class="card item-preview">
 
-<img id="itemImage">
+<img
+id="itemImage"
+alt="Minecraft item"
+>
 
-<div id="itemName" class="item-name">
+<div
+id="itemName"
+class="item-name">
 Netherite Sword
 </div>
 
@@ -623,7 +775,9 @@ Netherite Sword
 </section>
 
 
-<!-- ================= ENCHANTMENTS ================= -->
+<!-- ======================================================
+     ENCHANTMENTS
+====================================================== -->
 
 <section>
 
@@ -631,11 +785,15 @@ Netherite Sword
 
 <div class="grid">
 
+
 <div class="card">
 
 <label>Item</label>
 
-<select id="enchType" onchange="loadEnchantments()">
+<select
+id="enchType"
+onchange="loadEnchantments()"
+>
 
 <option>Sword</option>
 <option>Axe</option>
@@ -655,14 +813,20 @@ Netherite Sword
 
 </select>
 
+
 <label>Enchantment</label>
 
-<select id="enchName" onchange="updateEnchantInfo">
+<select
+id="enchName"
+onchange="updateEnchantInfo()">
 </select>
+
 
 <label>Level</label>
 
-<select id="enchLevel">
+<select
+id="enchLevel"
+onchange="updateEnchantInfo()">
 </select>
 
 </div>
@@ -672,8 +836,12 @@ Netherite Sword
 
 <h3>Enchantment Info</h3>
 
-<div id="enchInfo" class="enchant-info">
+<div
+id="enchInfo"
+class="enchant-info">
+
 Choose an enchantment.
+
 </div>
 
 </div>
@@ -683,19 +851,24 @@ Choose an enchantment.
 </section>
 
 
-<!-- ================= ANVIL ================= -->
+<!-- ======================================================
+     ANVIL SIMULATOR
+====================================================== -->
 
 <section>
 
 <h2>🔨 Anvil Simulator</h2>
 
 <p style="color:#999">
-Put an item and an enchanted book into the virtual anvil.
-Then press the button to upgrade it.
+
+Choose an item and an enchanted book.
+The calculator estimates the anvil cost and shows the result.
+
 </p>
 
 
 <div class="grid">
+
 
 <div class="card">
 
@@ -703,7 +876,10 @@ Then press the button to upgrade it.
 
 <label>Item Type</label>
 
-<select id="simType" onchange="simMaterials()">
+<select
+id="simType"
+onchange="simMaterials()"
+>
 
 <option>Sword</option>
 <option>Axe</option>
@@ -726,7 +902,9 @@ Then press the button to upgrade it.
 
 <label>Material</label>
 
-<select id="simMaterial" onchange="simUpdateItem()">
+<select
+id="simMaterial"
+onchange="simUpdateItem()">
 </select>
 
 
@@ -748,13 +926,18 @@ value="0"
 
 <label>Enchantment</label>
 
-<select id="simEnchant" onchange="simLevels()">
+<select
+id="simEnchant"
+onchange="simLevels()">
 </select>
+
 
 <label>Level</label>
 
-<select id="simLevel">
+<select
+id="simLevel">
 </select>
+
 
 <label>Book Previous Uses</label>
 
@@ -770,15 +953,18 @@ value="0"
 </div>
 
 
-<!-- ANVIL VISUAL -->
-
 <div class="anvil-area">
+
 
 <div class="anvil-slots">
 
+
 <div class="slot">
 
-<img id="beforeImg">
+<img
+id="beforeImg"
+alt="Item"
+>
 
 <div class="slot-label">
 ITEM
@@ -794,8 +980,11 @@ ITEM
 
 <div class="slot">
 
-<img id="bookImg"
-src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
+<img
+id="bookImg"
+src="https://blockrender.dev/render/item/enchanted_book.png?size=512"
+alt="Enchanted Book"
+>
 
 <div class="slot-label">
 ENCHANTED BOOK
@@ -803,12 +992,15 @@ ENCHANTED BOOK
 
 </div>
 
+
 </div>
 
 
 <div class="anvil-machine">
 
-<div id="hammer" class="hammer">
+<div
+id="hammer"
+class="hammer">
 🔨
 </div>
 
@@ -816,14 +1008,22 @@ ENCHANTED BOOK
 
 <div class="anvil-base"></div>
 
-<div id="sparks" class="sparks"></div>
+<div
+id="sparks"
+class="sparks">
+</div>
 
 </div>
 
 
-<div id="resultItem" class="result-item">
+<div
+id="resultItem"
+class="result-item">
 
-<img id="afterImg">
+<img
+id="afterImg"
+alt="Result"
+>
 
 <div style="color:#777">
 Result will appear here
@@ -838,7 +1038,9 @@ Result will appear here
 Press Preview Upgrade.
 </div>
 
-<div id="anvilCost" class="cost">
+<div
+id="anvilCost"
+class="cost">
 0 XP Levels
 </div>
 
@@ -851,20 +1053,27 @@ Press Preview Upgrade.
 👁️ Preview Upgrade
 </button>
 
+
 <button onclick="upgradeItem()">
 🔨 USE ANVIL
 </button>
 
-<button class="red" onclick="resetAnvil()">
+
+<button
+class="red"
+onclick="resetAnvil()">
 ↩ Reset
 </button>
+
 
 </div>
 
 </section>
 
 
-<!-- ================= OPTIMIZER ================= -->
+<!-- ======================================================
+     OPTIMIZER
+====================================================== -->
 
 <section>
 
@@ -873,8 +1082,10 @@ Press Preview Upgrade.
 <div class="card">
 
 <p style="color:#aaa">
-Select the enchantments you want. The calculator will estimate the
-anvil levels needed to combine them.
+
+Select the enchantments you want.
+The calculator estimates the total anvil levels needed.
+
 </p>
 
 <div id="optimizerList"></div>
@@ -885,7 +1096,9 @@ Calculate Total Cost
 
 <div class="result">
 
-<div id="optimizerResult" class="big">
+<div
+id="optimizerResult"
+class="big">
 0 XP Levels
 </div>
 
@@ -896,7 +1109,9 @@ Calculate Total Cost
 </section>
 
 
-<!-- ================= XP FARMS ================= -->
+<!-- ======================================================
+     XP FARMS
+====================================================== -->
 
 <section>
 
@@ -904,14 +1119,20 @@ Calculate Total Cost
 
 <div class="grid">
 
+
 <div class="farm-card">
 
-<div class="farm-icon">👹</div>
+<div class="farm-icon">
+👹
+</div>
 
-<h3>Enderman Farm</h3>
+<h3>
+Enderman Farm
+</h3>
 
 <p>
-Very high XP generation. Great for quickly reaching high levels.
+Very high XP generation.
+Great for quickly reaching high levels.
 </p>
 
 </div>
@@ -919,9 +1140,13 @@ Very high XP generation. Great for quickly reaching high levels.
 
 <div class="farm-card">
 
-<div class="farm-icon">🐷</div>
+<div class="farm-icon">
+🐷
+</div>
 
-<h3>Gold Farm</h3>
+<h3>
+Gold Farm
+</h3>
 
 <p>
 Produces gold and a large amount of XP.
@@ -932,9 +1157,13 @@ Produces gold and a large amount of XP.
 
 <div class="farm-card">
 
-<div class="farm-icon">🐟</div>
+<div class="farm-icon">
+🐟
+</div>
 
-<h3>Guardian Farm</h3>
+<h3>
+Guardian Farm
+</h3>
 
 <p>
 Good XP together with prismarine resources.
@@ -945,13 +1174,66 @@ Good XP together with prismarine resources.
 
 <div class="farm-card">
 
-<div class="farm-icon">🧟</div>
+<div class="farm-icon">
+🧟
+</div>
 
-<h3>Mob Farm</h3>
+<h3>
+Mob Farm
+</h3>
 
 <p>
 Simple early-game XP source.
 </p>
+
+</div>
+
+
+<!-- GLASS TRADING -->
+
+<div class="farm-card glass-farm">
+
+<img
+src="farm-glass-trading.jpg"
+alt="Glass Trading XP Farm"
+class="farm-image"
+onerror="this.style.display='none'"
+>
+
+<h3>
+🟩 Glass Trading Farm
+</h3>
+
+<p>
+Craft glass panes, sell them to Cartographers
+for emeralds, then buy glass from Librarians
+and repeat the trades for XP.
+</p>
+
+
+<div class="farm-steps">
+
+<div>
+<b>1</b>
+Craft Glass Panes
+</div>
+
+<div>
+<b>2</b>
+Sell to Cartographers
+</div>
+
+<div>
+<b>3</b>
+Buy Glass from Librarians
+</div>
+
+<div>
+<b>4</b>
+Repeat for XP
+</div>
+
+</div>
 
 </div>
 
@@ -960,7 +1242,9 @@ Simple early-game XP source.
 </section>
 
 
-<!-- ================= TRADING ================= -->
+<!-- ======================================================
+     TRADING
+====================================================== -->
 
 <section>
 
@@ -968,32 +1252,57 @@ Simple early-game XP source.
 
 <div class="card">
 
-<h3>Villager Trading</h3>
+<h3>
+Villager Trading
+</h3>
 
 <p>
-A simple way to turn large amounts of glass into emeralds and XP.
+A simple way to turn glass into emeralds and XP.
 </p>
 
 <div class="grid">
 
 <div>
+
 <h3>1</h3>
-<p>Collect sand.</p>
+
+<p>
+Collect sand.
+</p>
+
 </div>
 
+
 <div>
+
 <h3>2</h3>
-<p>Smelt sand into glass.</p>
+
+<p>
+Smelt sand into glass.
+</p>
+
 </div>
 
+
 <div>
+
 <h3>3</h3>
-<p>Trade glass with villagers.</p>
+
+<p>
+Craft glass panes and trade them.
+</p>
+
 </div>
 
+
 <div>
+
 <h3>4</h3>
-<p>Repeat trades to gain XP.</p>
+
+<p>
+Repeat trades to gain XP.
+</p>
+
 </div>
 
 </div>
@@ -1004,7 +1313,9 @@ A simple way to turn large amounts of glass into emeralds and XP.
 
 
 <footer>
+
 Minecraft XP Optimizer • Java Edition
+
 </footer>
 
 </div>
@@ -1273,6 +1584,7 @@ function imageURL(id){
     return "https://blockrender.dev/render/item/"
         + id +
         ".png?size=512";
+
 }
 
 
@@ -1297,6 +1609,7 @@ function getItemID(type,material){
         return "spear";
 
     const names={
+
         Sword:"sword",
         Axe:"axe",
         Pickaxe:"pickaxe",
@@ -1306,14 +1619,28 @@ function getItemID(type,material){
         Chestplate:"chestplate",
         Leggings:"leggings",
         Boots:"boots"
+
     };
 
     return material+"_"+names[type];
+
+}
+
+
+function niceName(str){
+
+    return str
+        .split("_")
+        .map(word =>
+            word.charAt(0).toUpperCase()+word.slice(1)
+        )
+        .join(" ");
+
 }
 
 
 /* =========================================================
-   XP
+   XP SYSTEM
 ========================================================= */
 
 function xpToLevel(level){
@@ -1335,6 +1662,7 @@ function xpToLevel(level){
         -162.5*level
         +2220
     );
+
 }
 
 
@@ -1349,33 +1677,41 @@ function xpToNext(level){
         return 5*level-38;
 
     return 9*level-158;
+
 }
 
 
 function calculateXP(){
 
-    const level=
-        Number(
-            document.getElementById("levelInput").value
-        );
+    let level=Number(
+        document.getElementById("levelInput").value
+    );
+
+    if(level<0)
+        level=0;
 
     document.getElementById("xpResult")
         .textContent=
         xpToLevel(level)+" XP";
+
 }
 
 
 function calculateTarget(){
 
-    const current=
-        Number(
-            document.getElementById("currentLevel").value
-        );
+    let current=Number(
+        document.getElementById("currentLevel").value
+    );
 
-    const target=
-        Number(
-            document.getElementById("targetLevel").value
-        );
+    let target=Number(
+        document.getElementById("targetLevel").value
+    );
+
+    if(current<0)
+        current=0;
+
+    if(target<0)
+        target=0;
 
     const result=Math.max(
         0,
@@ -1384,40 +1720,48 @@ function calculateTarget(){
 
     document.getElementById("targetResult")
         .textContent=result+" XP";
+
 }
 
 
 function calculateProgress(){
 
-    const level=
+    const level=Math.max(
+        0,
         Number(
             document.getElementById("progressLevel").value
-        );
+        )
+    );
 
-    const xp=
+    let xp=Math.max(
+        0,
         Number(
             document.getElementById("progressXP").value
-        );
+        )
+    );
 
     const next=xpToNext(level);
 
-    const percent=Math.min(
-        100,
-        Math.max(0,(xp/next)*100)
-    );
+    if(xp>next)
+        xp=next;
+
+    const percent=
+        next===0
+        ? 100
+        : Math.round((xp/next)*100);
 
     document.getElementById("xpFill")
         .style.width=percent+"%";
 
     document.getElementById("progressText")
         .textContent=
-        percent.toFixed(1)+"% • "
-        +xp+" / "+next+" XP";
+        xp+" / "+next+" XP — "+percent+"%";
+
 }
 
 
 /* =========================================================
-   NORMAL ITEM SELECTOR
+   ITEM SELECTOR
 ========================================================= */
 
 function loadItemMaterials(){
@@ -1438,14 +1782,14 @@ function loadItemMaterials(){
         option.value=material;
 
         option.textContent=
-            material.charAt(0).toUpperCase()
-            +material.slice(1);
+            niceName(material);
 
         select.appendChild(option);
 
     });
 
     updateItem();
+
 }
 
 
@@ -1457,21 +1801,29 @@ function updateItem(){
     const material=
         document.getElementById("itemMaterial").value;
 
-    const id=getItemID(type,material);
+    const id=
+        getItemID(type,material);
 
-    document.getElementById("itemImage").src=
-        imageURL(id);
+    const img=
+        document.getElementById("itemImage");
+
+    img.src=imageURL(id);
+
+    img.onerror=function(){
+
+        this.style.opacity=".35";
+
+    };
 
     document.getElementById("itemName")
         .textContent=
-        material.charAt(0).toUpperCase()
-        +material.slice(1)
-        +" "+type;
+        niceName(id);
+
 }
 
 
 /* =========================================================
-   ENCHANTMENTS
+   ENCHANTMENT SELECTOR
 ========================================================= */
 
 function loadEnchantments(){
@@ -1479,25 +1831,28 @@ function loadEnchantments(){
     const type=
         document.getElementById("enchType").value;
 
-    const select=
+    const enchSelect=
         document.getElementById("enchName");
 
-    select.innerHTML="";
+    enchSelect.innerHTML="";
 
-    (enchantments[type]||[]).forEach(data=>{
+    enchantments[type].forEach((ench,index)=>{
 
         const option=
             document.createElement("option");
 
-        option.value=data[0];
+        option.value=index;
 
-        option.textContent=data[0];
+        option.textContent=ench[0];
 
-        select.appendChild(option);
+        enchSelect.appendChild(option);
 
     });
 
     loadEnchantLevels();
+
+    updateEnchantInfo();
+
 }
 
 
@@ -1506,21 +1861,20 @@ function loadEnchantLevels(){
     const type=
         document.getElementById("enchType").value;
 
-    const name=
-        document.getElementById("enchName").value;
+    const index=
+        Number(
+            document.getElementById("enchName").value
+        );
 
-    const data=
-        (enchantments[type]||[])
-        .find(x=>x[0]===name);
+    const ench=
+        enchantments[type][index];
 
-    const level=
+    const levelSelect=
         document.getElementById("enchLevel");
 
-    level.innerHTML="";
+    levelSelect.innerHTML="";
 
-    if(!data)return;
-
-    for(let i=1;i<=data[1];i++){
+    for(let i=1;i<=ench[1];i++){
 
         const option=
             document.createElement("option");
@@ -1530,21 +1884,55 @@ function loadEnchantLevels(){
         option.textContent=
             "Level "+i;
 
-        level.appendChild(option);
+        levelSelect.appendChild(option);
 
     }
 
-    document.getElementById("enchInfo")
-        .innerHTML=
-        "<b>"+data[0]+"</b><br>"
-        +"Maximum Level: "+data[1]
-        +"<br>"
-        +"Anvil Weight: "+data[2];
+}
+
+
+function updateEnchantInfo(){
+
+    const type=
+        document.getElementById("enchType").value;
+
+    const index=
+        Number(
+            document.getElementById("enchName").value
+        );
+
+    if(!enchantments[type] ||
+       !enchantments[type][index])
+        return;
+
+    const ench=
+        enchantments[type][index];
+
+    const level=
+        document.getElementById("enchLevel").value || 1;
+
+    const multiplier=ench[2];
+
+    document.getElementById("enchInfo").innerHTML=`
+
+        <strong>${ench[0]}</strong><br>
+
+        Maximum Level:
+        <strong>${ench[1]}</strong><br>
+
+        Selected Level:
+        <strong>${level}</strong><br>
+
+        Anvil weight:
+        <strong>${multiplier}</strong>
+
+    `;
+
 }
 
 
 /* =========================================================
-   SIMULATOR
+   ANVIL
 ========================================================= */
 
 function simMaterials(){
@@ -1552,10 +1940,10 @@ function simMaterials(){
     const type=
         document.getElementById("simType").value;
 
-    const select=
+    const materialSelect=
         document.getElementById("simMaterial");
 
-    select.innerHTML="";
+    materialSelect.innerHTML="";
 
     materials[type].forEach(material=>{
 
@@ -1565,77 +1953,14 @@ function simMaterials(){
         option.value=material;
 
         option.textContent=
-            material.charAt(0).toUpperCase()
-            +material.slice(1);
+            niceName(material);
 
-        select.appendChild(option);
+        materialSelect.appendChild(option);
 
     });
 
     simUpdateItem();
-    simEnchantments();
-}
 
-
-function simEnchantments(){
-
-    const type=
-        document.getElementById("simType").value;
-
-    const select=
-        document.getElementById("simEnchant");
-
-    select.innerHTML="";
-
-    (enchantments[type]||[]).forEach(data=>{
-
-        const option=
-            document.createElement("option");
-
-        option.value=data[0];
-
-        option.textContent=data[0];
-
-        select.appendChild(option);
-
-    });
-
-    simLevels();
-}
-
-
-function simLevels(){
-
-    const type=
-        document.getElementById("simType").value;
-
-    const name=
-        document.getElementById("simEnchant").value;
-
-    const data=
-        (enchantments[type]||[])
-        .find(x=>x[0]===name);
-
-    const select=
-        document.getElementById("simLevel");
-
-    select.innerHTML="";
-
-    if(!data)return;
-
-    for(let i=1;i<=data[1];i++){
-
-        const option=
-            document.createElement("option");
-
-        option.value=i;
-
-        option.textContent=
-            "Level "+i;
-
-        select.appendChild(option);
-
-    }
 }
 
 
@@ -1647,18 +1972,134 @@ function simUpdateItem(){
     const material=
         document.getElementById("simMaterial").value;
 
-    const id=getItemID(type,material);
+    const id=
+        getItemID(type,material);
 
-    document.getElementById("beforeImg").src=
-        imageURL(id);
+    document.getElementById("beforeImg")
+        .src=imageURL(id);
 
-    document.getElementById("afterImg").src=
-        imageURL(id);
+}
+
+
+function simLevels(){
+
+    const type=
+        document.getElementById("simType").value;
+
+    const ench=
+        document.getElementById("simEnchant").value;
+
+    const levelSelect=
+        document.getElementById("simLevel");
+
+    levelSelect.innerHTML="";
+
+    const found=
+        enchantments[type].find(
+            e=>e[0]===ench
+        );
+
+    if(!found)
+        return;
+
+    for(let i=1;i<=found[1];i++){
+
+        const option=
+            document.createElement("option");
+
+        option.value=i;
+
+        option.textContent=
+            "Level "+i;
+
+        levelSelect.appendChild(option);
+
+    }
+
 }
 
 
 /* =========================================================
-   ANVIL PREVIEW
+   ANVIL COST
+========================================================= */
+
+function getEnchantmentData(type,name){
+
+    return enchantments[type]
+        .find(e=>e[0]===name);
+
+}
+
+
+function calculateAnvilCost(){
+
+    const type=
+        document.getElementById("simType").value;
+
+    const enchant=
+        document.getElementById("simEnchant").value;
+
+    const level=
+        Number(
+            document.getElementById("simLevel").value
+        );
+
+    const itemUses=Math.max(
+        0,
+        Number(
+            document.getElementById("itemUses").value
+        )
+    );
+
+    const bookUses=Math.max(
+        0,
+        Number(
+            document.getElementById("bookUses").value
+        )
+    );
+
+    const data=
+        getEnchantmentData(type,enchant);
+
+    if(!data)
+        return 0;
+
+    const weight=data[2];
+
+    /*
+       Simplified Java-style estimate.
+
+       Higher enchantment levels and higher
+       enchantment weight cost more.
+
+       Prior Work Penalty:
+       2^uses - 1
+    */
+
+    const enchantCost=
+        level*weight;
+
+    const workPenalty=
+        Math.pow(2,itemUses)-1;
+
+    const bookPenalty=
+        Math.pow(2,bookUses)-1;
+
+    let cost=
+        enchantCost+
+        workPenalty+
+        bookPenalty;
+
+    if(cost<1)
+        cost=1;
+
+    return Math.floor(cost);
+
+}
+
+
+/* =========================================================
+   PREVIEW ANVIL
 ========================================================= */
 
 function previewAnvil(){
@@ -1677,108 +2118,73 @@ function previewAnvil(){
             document.getElementById("simLevel").value
         );
 
-    const itemUses=
-        Number(
-            document.getElementById("itemUses").value
-        );
-
-    const bookUses=
-        Number(
-            document.getElementById("bookUses").value
-        );
-
-    const data=
-        (enchantments[type]||[])
-        .find(x=>x[0]===enchant);
-
-    if(!data)return;
-
-
-    /*
-       Simplified anvil cost:
-
-       enchantment weight × level
-       + prior-work penalty item
-       + prior-work penalty book
-    */
-
     const cost=
-        data[2]*level
-        +(Math.pow(2,itemUses)-1)
-        +(Math.pow(2,bookUses)-1);
-
+        calculateAnvilCost();
 
     const id=
         getItemID(type,material);
 
+    const result=
+        document.getElementById("resultItem");
 
-    document.getElementById("beforeImg").src=
-        imageURL(id);
+    const after=
+        document.getElementById("afterImg");
 
-    document.getElementById("afterImg").src=
-        imageURL(id);
+    after.src=imageURL(id);
 
+    result.classList.add("ready");
+
+    document.getElementById("anvilResult")
+        .innerHTML=
+        `<span class="valid">
+        ${niceName(id)} + ${enchant} ${toRoman(level)}
+        </span>`;
 
     document.getElementById("anvilCost")
         .textContent=
         cost+" XP Levels";
 
-
-    document.getElementById("anvilResult")
-        .innerHTML=
-        "Upgrade: <b>"
-        +enchant+
-        " "+level+
-        "</b>";
-
-
     const warning=
         document.getElementById("anvilWarning");
-
 
     if(cost>=40){
 
         warning.innerHTML=
-            "<div class='expensive'>⚠️ TOO EXPENSIVE</div>";
+            `<p class="expensive">
+            ⚠️ Too Expensive! The anvil cost is
+            ${cost} levels.
+            </p>`;
 
     }else{
 
         warning.innerHTML=
-            "<div class='valid'>✓ Valid Anvil Operation</div>";
+            `<p class="valid">
+            ✓ Can be completed on the anvil.
+            </p>`;
 
     }
+
+    animateAnvil();
 
 }
 
 
 /* =========================================================
-   ANIMATION
+   ANVIL ANIMATION
 ========================================================= */
 
-function startAnvilAnimation(){
+function animateAnvil(){
 
     const hammer=
         document.getElementById("hammer");
 
-    const result=
-        document.getElementById("resultItem");
-
     hammer.classList.remove("strike");
-
-    result.classList.remove("ready");
 
     void hammer.offsetWidth;
 
     hammer.classList.add("strike");
 
-
-    setTimeout(()=>{
-
-        result.classList.add("ready");
-
-        createSparks();
-
-    },350);
+    createSparks();
 
 }
 
@@ -1798,19 +2204,25 @@ function createSparks(){
         spark.className="spark";
 
         spark.style.left=
-            (50+Math.random()*20-10)+"%";
+            (35+Math.random()*30)+"%";
 
         spark.style.top=
-            (55+Math.random()*20-10)+"%";
+            (35+Math.random()*25)+"%";
+
+        const x=
+            (Math.random()*160-80)+"px";
+
+        const y=
+            (Math.random()*-90-20)+"px";
 
         spark.style.setProperty(
             "--x",
-            (Math.random()*180-90)+"px"
+            x
         );
 
         spark.style.setProperty(
             "--y",
-            (Math.random()*120-60)+"px"
+            y
         );
 
         container.appendChild(spark);
@@ -1826,126 +2238,149 @@ function createSparks(){
 
 function upgradeItem(){
 
-    previewAnvil();
-
-    const costText=
-        document.getElementById("anvilCost")
-        .textContent;
-
     const cost=
-        parseInt(costText);
+        calculateAnvilCost();
 
     if(cost>=40){
 
         alert(
-            "This upgrade is too expensive!"
+            "Too Expensive! Reduce Previous Anvil Uses or optimize the enchantment order."
         );
 
         return;
+
     }
 
+    const uses=
+        document.getElementById("itemUses");
 
-    startAnvilAnimation();
+    uses.value=
+        Number(uses.value)+1;
 
-
-    setTimeout(()=>{
-
-        const uses=
-            Number(
-                document.getElementById("itemUses").value
-            );
-
-        document.getElementById("itemUses")
-            .value=uses+1;
-
-
-        document.getElementById("anvilResult")
-            .innerHTML=
-            "✓ <b>Upgrade applied!</b><br>"
-            +"Your item now has the selected enchantment.";
-
-    },650);
+    previewAnvil();
 
 }
 
 
 /* =========================================================
-   RESET
+   RESET ANVIL
 ========================================================= */
 
 function resetAnvil(){
 
-    document.getElementById("simType")
-        .value="Sword";
+    document.getElementById("itemUses").value=0;
 
-    simMaterials();
-
-    document.getElementById("simMaterial")
-        .value="netherite";
-
-    simUpdateItem();
-
-    document.getElementById("simEnchant")
-        .value="Sharpness";
-
-    simLevels();
-
-    document.getElementById("simLevel")
-        .value="5";
-
-    document.getElementById("itemUses")
-        .value="0";
-
-    document.getElementById("bookUses")
-        .value="0";
-
-    document.getElementById("anvilCost")
-        .textContent="0 XP Levels";
+    document.getElementById("bookUses").value=0;
 
     document.getElementById("anvilResult")
         .textContent=
         "Press Preview Upgrade.";
 
+    document.getElementById("anvilCost")
+        .textContent=
+        "0 XP Levels";
+
     document.getElementById("anvilWarning")
         .innerHTML="";
 
-    document.getElementById("resultItem")
-        .classList.remove("ready");
+    const result=
+        document.getElementById("resultItem");
+
+    result.classList.remove("ready");
+
+    document.getElementById("afterImg")
+        .removeAttribute("src");
+
+    document.getElementById("sparks")
+        .innerHTML="";
 
 }
 
 
 /* =========================================================
-   SIMPLE OPTIMIZER
+   ROMAN NUMBERS
 ========================================================= */
 
-function createOptimizer(){
+function toRoman(num){
 
-    const type=
-        document.getElementById("simType").value;
+    const values=[
+        [10,"X"],
+        [9,"IX"],
+        [5,"V"],
+        [4,"IV"],
+        [1,"I"]
+    ];
+
+    let result="";
+
+    for(const [value,symbol] of values){
+
+        while(num>=value){
+
+            result+=symbol;
+
+            num-=value;
+
+        }
+
+    }
+
+    return result;
+
+}
+
+
+/* =========================================================
+   OPTIMIZER
+========================================================= */
+
+function buildOptimizer(){
 
     const container=
         document.getElementById("optimizerList");
 
     container.innerHTML="";
 
-    (enchantments[type]||[]).forEach(data=>{
+    Object.keys(enchantments).forEach(type=>{
 
-        const div=
+        const title=
+            document.createElement("h3");
+
+        title.textContent=type;
+
+        const grid=
             document.createElement("div");
 
-        div.className="enchant-box";
+        grid.className="enchant-list";
 
-        div.innerHTML=
-            "<label>"
-            +"<input type='checkbox' "
-            +"class='optEnchant' "
-            +"data-weight='"+data[2]+"' "
-            +"value='"+data[0]+"'> "
-            +data[0]
-            +"</label>";
+        enchantments[type].forEach((ench,index)=>{
 
-        container.appendChild(div);
+            const box=
+                document.createElement("label");
+
+            box.className="enchant-box";
+
+            box.innerHTML=`
+
+                <input
+                    type="checkbox"
+                    class="optimizer-enchant"
+                    data-weight="${ench[2]}"
+                    data-max="${ench[1]}"
+                    data-name="${ench[0]}"
+                >
+
+                ${ench[0]}
+
+            `;
+
+            grid.appendChild(box);
+
+        });
+
+        container.appendChild(title);
+
+        container.appendChild(grid);
 
     });
 
@@ -1954,26 +2389,44 @@ function createOptimizer(){
 
 function calculateOptimizer(){
 
-    const boxes=
+    const selected=
         document.querySelectorAll(
-            ".optEnchant:checked"
+            ".optimizer-enchant:checked"
         );
 
     let total=0;
 
-    boxes.forEach(box=>{
+    selected.forEach(box=>{
 
-        total+=Number(
-            box.dataset.weight
-        );
+        const weight=
+            Number(box.dataset.weight);
+
+        const max=
+            Number(box.dataset.max);
+
+        /*
+           Estimate using maximum level.
+        */
+
+        total+=
+            weight*max;
 
     });
 
     /*
-       Approximate base enchantment cost.
+       Combining multiple books/items
+       adds additional work.
+
+       This keeps the optimizer simple
+       while giving a useful estimate.
     */
 
-    total=Math.max(0,total);
+    if(selected.length>1){
+
+        total+=
+            (selected.length-1)*2;
+
+    }
 
     document.getElementById("optimizerResult")
         .textContent=
@@ -1983,34 +2436,52 @@ function calculateOptimizer(){
 
 
 /* =========================================================
-   EVENTS
+   INITIALIZE
 ========================================================= */
 
-document
-.getElementById("enchName")
-.addEventListener(
-    "change",
-    loadEnchantLevels
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadItemMaterials();
+
+        loadEnchantments();
+
+        simMaterials();
+
+        const simType=
+            document.getElementById("simType").value;
+
+        const enchantSelect=
+            document.getElementById("simEnchant");
+
+        enchantSelect.innerHTML="";
+
+        enchantments[simType].forEach(ench=>{
+
+            const option=
+                document.createElement("option");
+
+            option.value=ench[0];
+
+            option.textContent=ench[0];
+
+            enchantSelect.appendChild(option);
+
+        });
+
+        simLevels();
+
+        buildOptimizer();
+
+        calculateXP();
+
+        calculateTarget();
+
+        calculateProgress();
+
+    }
 );
-
-
-/* =========================================================
-   START
-========================================================= */
-
-loadItemMaterials();
-
-loadEnchantments();
-
-simMaterials();
-
-createOptimizer();
-
-calculateXP();
-
-calculateTarget();
-
-calculateProgress();
 
 </script>
 
