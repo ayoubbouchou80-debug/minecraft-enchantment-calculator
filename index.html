@@ -1,106 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Minecraft XP & Anvil Optimizer</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html{
-    scroll-behavior:smooth;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    margin:0;
-    background:#090d0a;
-    color:#eee;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:Arial,sans-serif;
+    background:#111827;
+    color:#fff;
+    min-height:100vh;
 }
-
-.container{
-    width:min(900px,94%);
-    margin:auto;
-}
-
-/* ================= HEADER ================= */
 
 header{
     text-align:center;
-    padding:30px 10px 20px;
+    padding:35px 15px;
+    background:#0b1220;
+    border-bottom:2px solid #263247;
 }
 
-.logo{
-    font-size:40px;
-    margin-bottom:5px;
+header h1{
+    font-size:32px;
+    margin-bottom:8px;
 }
 
-h1{
-    margin:0;
-    color:#63ff63;
-    font-size:clamp(30px,8vw,46px);
+header p{
+    color:#9ca3af;
 }
 
-.subtitle{
-    color:#888;
+.container{
+    width:min(1000px,94%);
+    margin:25px auto;
+}
+
+.section{
+    background:#182235;
+    border:1px solid #2b3950;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.section h2{
+    margin-bottom:18px;
+    font-size:22px;
+}
+
+input,select,button{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #3b4a63;
+    background:#0f172a;
+    color:#fff;
     margin-top:8px;
-    font-size:14px;
 }
 
-/* ================= SECTIONS ================= */
-
-section{
-    background:#101610;
-    border:1px solid #263d29;
-    border-radius:15px;
-    padding:18px;
-    margin:16px 0;
+button{
+    background:#2563eb;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-h2{
-    color:#65ff70;
-    margin:0 0 16px;
-    font-size:24px;
+button:hover{
+    background:#1d4ed8;
 }
 
-h3{
-    color:#9cff9c;
-    margin-top:0;
+.result{
+    margin-top:15px;
+    padding:15px;
+    background:#0f172a;
+    border-radius:8px;
+    text-align:center;
+    font-size:18px;
 }
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:13px;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
 
-.card{
-    background:#0a100b;
-    border:1px solid #263d29;
-    border-radius:12px;
+@media(max-width:650px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+.item-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
     padding:15px;
+    background:#0f172a;
+    border-radius:10px;
+    margin-top:15px;
 }
 
-/* ================= INPUTS ================= */
+.item-box img{
+    width:70px;
+    height:70px;
+    image-rendering:pixelated;
+}
 
-label{
-    display:block;
-    color:#aaa;
-    margin:10px 0 6px;
-    font-weight:bold;
+.anvil{
+    text-align:center;
+    padding:20px;
+}
+
+.anvil-slots{
+    display:grid;
+    grid-template-columns:1fr 80px 1fr;
+    align-items:center;
+    gap:15px;
+}
+
+.slot{
+    height:100px;
+    background:#0b1220;
+    border:2px dashed #475569;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.slot img{
+    width:70px;
+    image-rendering:pixelated;
+}
+
+.hammer{
+    font-size:45px;
+    transition:.4s;
+}
+
+.hammer.hit{
+    animation:hammer .45s;
+}
+
+@keyframes hammer{
+    0%{transform:rotate(0)}
+    40%{transform:rotate(-35deg) translateY(5px)}
+    70%{transform:rotate(25deg)}
+    100%{transform:rotate(0)}
+}
+
+.spark{
+    position:absolute;
+    font-size:20px;
+    opacity:0;
+}
+
+.spark.active{
+    animation:spark .6s;
+}
+
+@keyframes spark{
+    0%{opacity:1;transform:scale(.5)}
+    100%{opacity:0;transform:scale(2) translateY(-25px)}
+}
+
+.farms{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+}
+
+.farm{
+    background:#0f172a;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid #2b3950;
+}
+
+.farm img{
+    width:100%;
+    height:140px;
+    object-fit:cover;
+}
+
+.farm-content{
+    padding:14px;
+}
+
+.farm h3{
+    margin-bottom:7px;
+}
+
+.farm p{
+    color:#9ca3af;
     font-size:14px;
 }
 
-input,
-select{
-    width:100%;
-    padding:12px;
-    border-radius:9px;
-    border:
+footer{
+    text-align:center;
+    color:#6b7280;
+    padding:25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>⛏ Minecraft XP & Anvil Optimizer</h1>
+    <p>XP Calculator • Enchantments • Anvil • XP Farms</p>
+</header>
+
+<div class="container">
+
+<!-- XP CALCULATOR -->
+<section class="section">
+    <h2>🟢 XP Calculator</h2>
+
+    <div class="grid">
+        <div>
+            <label>Current Level</label>
+            <input id="currentLevel" type="number" min="0" value="0">
+        </div>
+
+        <div>
+            <label>Target Level</label>
+            <input id="targetLevel" type="number" min="0" value="30">
+        </div>
+    </div>
+
+    <button onclick="calculateXP()">Calculate XP</button>
+
+    <div class="result" id="xpResult">
+        Required XP: 825
+    </div>
+</section>
+
+
+<!-- ITEM + ENCHANTMENT -->
+<section class="section">
+    <h2>🧰 Item & Enchantment</h2>
+
+    <div class="grid">
+
+        <div>
+            <label>Item</label>
+
+            <select id="itemSelect" onchange="updateItem()">
+                <option value="diamond_sword">Diamond Sword</option>
+                <option value="diamond_pickaxe">Diamond Pickaxe</option>
+                <option value="diamond_axe">Diamond Axe</option>
+                <option value="diamond_shovel">Diamond Shovel</option>
+                <option value="diamond_helmet">Diamond Helmet</option>
+                <option value="diamond_chestplate">Diamond Chestplate</option>
+                <option value="diamond_leggings">Diamond Leggings</option>
+                <option value="diamond_boots">Diamond Boots</option>
+                <option value="bow">Bow</option>
+                <option value="trident">Trident</option>
+                <option value="mace">Mace</option>
+                <option value="spear">Spear</option>
+                <option value="elytra">Elytra</option>
+            </select>
+
+            <div class="item-box">
+                <img id="itemImage"
+                     src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
+                <div>
+                    <b id="itemName">Diamond Sword</b>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label>Enchantment</label>
+
+            <select id="enchantSelect">
+                <option>Sharpness</option>
+                <option>Smite</option>
+                <option>Looting</option>
+                <option>Fire Aspect</option>
+                <option>Unbreaking</option>
+                <option>Mending</option>
+                <option>Efficiency</option>
+                <option>Fortune</option>
+                <option>Silk Touch</option>
+                <option>Protection</option>
+                <option>Feather Falling</option>
+                <option>Power</option>
+                <option>Infinity</option>
+            </select>
+
+            <button onclick="showEnchant()">
+                Show Enchantment
+            </button>
+
+            <div class="result" id="enchantResult">
+                Select an enchantment.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ANVIL -->
+<section class="section">
+    <h2>🔨 Anvil Optimizer</h2>
+
+    <div class="anvil">
+
+        <div class="anvil-slots">
+
+            <div class="slot">
+                <img id="leftItem"
+                     src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
+            </div>
+
+            <div>
+                <div class="hammer" id="hammer">🔨</div>
+                <div class="spark" id="spark">✦</div>
+            </div>
+
+            <div class="slot">
+                <img id="rightItem"
+                     src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
+            </div>
+
+        </div>
+
+        <div style="margin-top:20px">
+            <label>Estimated Anvil Cost</label>
+            <input id="anvilCost" type="number" min="0" value="8">
+        </div>
+
+        <button onclick="useAnvil()">Combine Items</button>
+
+        <div class="result" id="anvilResult">
+            Put your items together.
+        </div>
+
+    </div>
+</section>
+
+
+<!-- XP FARMS -->
+<section class="section">
+    <h2>🔥 XP Farms</h2>
+
+    <div class="farms">
+
+        <div class="farm">
+            <img src="farm-image.png" alt="XP Farm">
+            <div class="farm-content">
+                <h3>⭐ Your XP Farm</h3>
+                <p>Your uploaded farm image.</p>
+            </div>
+        </div>
+
+        <div class="farm">
+            <img src="https://minecraft.wiki/images/Enderman.png"
+                 alt="Enderman Farm">
+            <div class="farm-content">
+                <h3>Enderman Farm</h3>
+                <p>Very fast XP and Ender Pearls.</p>
+            </div>
+        </div>
+
+        <div class="farm">
+            <img src="https://minecraft.wiki/images/Zombie.png"
+                 alt="Mob Farm">
+            <div class="farm-content">
+                <h3>Mob Farm</h3>
+                <p>Simple early-game XP source.</p>
+            </div>
+        </div>
+
+        <div class="farm">
+            <img src="https://minecraft.wiki/images/Guardian.png"
+                 alt="Guardian Farm">
+            <div class="farm-content">
+                <h3>Guardian Farm</h3>
+                <p>Huge XP production in the late game.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+<footer>
+    Minecraft XP & Anvil Optimizer
+</footer>
+
+
+<script>
+
+/* =========================
+   XP CALCULATOR
+========================= */
+
+function totalXP(level){
+
+    if(level <= 16){
+        return level * level + 6 * level;
+    }
+
+    if(level <= 31){
+        return Math.floor(
+            2.5 * level * level -
+            40.5 * level +
+            360
+        );
+    }
+
+    return Math.floor(
+        4.5 * level * level -
+        162.5 * level +
+        2220
+    );
+}
+
+function calculateXP(){
+
+    let current =
+        Number(document.getElementById("currentLevel").value);
+
+    let target =
+        Number(document.getElementById("targetLevel").value);
+
+    if(target < current){
+        document.getElementById("xpResult").textContent =
+            "Target level must be higher.";
+        return;
+    }
+
+    let xp = totalXP(target) - totalXP(current);
+
+    document.getElementById("xpResult").textContent =
+        "Required XP: " + xp;
+}
+
+
+/* =========================
+   ITEMS
+========================= */
+
+const items = {
+
+    diamond_sword:{
+        name:"Diamond Sword",
+        image:"diamond_sword"
+    },
+
+    diamond_pickaxe:{
+        name:"Diamond Pickaxe",
+        image:"diamond_pickaxe"
+    },
+
+    diamond_axe:{
+        name:"Diamond Axe",
+        image:"diamond_axe"
+    },
+
+    diamond_shovel:{
+        name:"Diamond Shovel",
+        image:"diamond_shovel"
+    },
+
+    diamond_helmet:{
+        name:"Diamond Helmet",
+        image:"diamond_helmet"
+    },
+
+    diamond_chestplate:{
+        name:"Diamond Chestplate",
+        image:"diamond_chestplate"
+    },
+
+    diamond_leggings:{
+        name:"Diamond Leggings",
+        image:"diamond_leggings"
+    },
+
+    diamond_boots:{
+        name:"Diamond Boots",
+        image:"diamond_boots"
+    },
+
+    bow:{
+        name:"Bow",
+        image:"bow"
+    },
+
+    trident:{
+        name:"Trident",
+        image:"trident"
+    },
+
+    mace:{
+        name:"Mace",
+        image:"mace"
+    },
+
+    spear:{
+        name:"Spear",
+        image:"spear"
+    },
+
+    elytra:{
+        name:"Elytra",
+        image:"elytra"
+    }
+
+};
+
+
+function updateItem(){
+
+    const value =
+        document.getElementById("itemSelect").value;
+
+    const item = items[value];
+
+    document.getElementById("itemName").textContent =
+        item.name;
+
+    document.getElementById("itemImage").src =
+        "https://blockrender.dev/render/item/" +
+        item.image +
+        ".png?size=512";
+
+    document.getElementById("leftItem").src =
+        "https://blockrender.dev/render/item/" +
+        item.image +
+        ".png?size=512";
+}
+
+
+/* =========================
+   ENCHANTMENT
+========================= */
+
+function showEnchant(){
+
+    const enchant =
+        document.getElementById("enchantSelect").value;
+
+    document.getElementById("enchantResult").textContent =
+        enchant + " selected.";
+}
+
+
+/* =========================
+   ANVIL
+========================= */
+
+function useAnvil(){
+
+    const cost =
+        Number(document.getElementById("anvilCost").value);
+
+    const hammer =
+        document.getElementById("hammer");
+
+    const spark =
+        document.getElementById("spark");
+
+    hammer.classList.remove("hit");
+    spark.classList.remove("active");
+
+    void hammer.offsetWidth;
+    void spark.offsetWidth;
+
+    hammer.classList.add("hit");
+    spark.classList.add("active");
+
+    setTimeout(function(){
+
+        document.getElementById("anvilResult").textContent =
+            "Items combined! Cost: " + cost + " XP levels.";
+
+    },400);
+}
+
+</script>
+
+</body>
+</html>
