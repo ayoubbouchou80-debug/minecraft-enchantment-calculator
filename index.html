@@ -117,6 +117,7 @@ button:hover{
 .item-box img{
     width:50px;
     height:50px;
+    object-fit:contain;
     image-rendering:pixelated;
 }
 
@@ -144,6 +145,8 @@ button:hover{
 
 .slot img{
     width:60px;
+    height:60px;
+    object-fit:contain;
     image-rendering:pixelated;
 }
 
@@ -295,7 +298,7 @@ footer{
             </select>
 
             <div class="item-box">
-                <img id="itemImage" src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
+                <img id="itemImage" src="https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png">
                 <div>
                     <b id="itemName">Diamond Sword</b>
                 </div>
@@ -303,18 +306,9 @@ footer{
         </div>
 
         <div>
-            <label>اختر التطوير</label>
+            <label>التطويرات المتاحة لهذا العنصر</label>
             <select id="enchantSelect">
-                <option>Sharpness V</option>
-                <option>Smite V</option>
-                <option>Looting III</option>
-                <option>Fire Aspect II</option>
-                <option>Unbreaking III</option>
-                <option>Mending</option>
-                <option>Efficiency V</option>
-                <option>Fortune III</option>
-                <option>Silk Touch</option>
-                <option>Protection IV</option>
+                <!-- يتم تعبئة التطويرات تلقائياً برمجياً -->
             </select>
 
             <button onclick="showEnchant()">تأكيد التطوير</button>
@@ -334,7 +328,7 @@ footer{
     <div class="anvil">
         <div class="anvil-slots">
             <div class="slot">
-                <img id="leftItem" src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
+                <img id="leftItem" src="https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png">
             </div>
 
             <div class="hammer-wrapper">
@@ -343,7 +337,7 @@ footer{
             </div>
 
             <div class="slot">
-                <img id="rightItem" src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
+                <img id="rightItem" src="https://minecraft.wiki/images/Enchanted_Book.gif">
             </div>
         </div>
 
@@ -363,31 +357,3 @@ footer{
 
 <!-- XP FARMS -->
 <section class="section">
-    <h2>🔥 مزارع الـ XP (اضغط للمشاهدة على يوتيوب)</h2>
-
-    <div class="farms">
-
-        <!-- Armadillo Farm (الأبسط) -->
-        <a class="farm-card" href="https://www.youtube.com/results?search_query=minecraft+armadillo+xp+farm+tutorial" target="_blank">
-            <img src="https://minecraft.wiki/images/Armadillo_JE1_BE1.png" alt="Armadillo Farm">
-            <div class="farm-content">
-                <h3>🦔 Armadillo Farm (الأبسط)</h3>
-                <p>أسهل وأبسط مزرعة للحصول على XP وتصنيع دروع الذئاب.</p>
-            </div>
-        </a>
-
-        <!-- Mob Farm -->
-        <a class="farm-card" href="https://www.youtube.com/results?search_query=minecraft+simple+mob+farm+tutorial" target="_blank">
-            <img src="https://minecraft.wiki/images/Zombie.png" alt="Mob Farm">
-            <div class="farm-content">
-                <h3>🧟 Mob Farm بسيطة</h3>
-                <p>مزرعة ممتازة لبداية اللعبة للحصول على XP وموارد مختلفة.</p>
-            </div>
-        </a>
-
-        <!-- Enderman Farm -->
-        <a class="farm-card" href="https://www.youtube.com/results?search_query=minecraft+enderman+xp+farm+tutorial" target="_blank">
-            <img src="https://minecraft.wiki/images/Enderman.png" alt="Enderman Farm">
-            <div class="farm-content">
-                <h3>👁️ Enderman Farm</h3>
-                <p>من أسرع مزارع
