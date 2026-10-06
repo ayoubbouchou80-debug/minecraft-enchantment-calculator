@@ -16,7 +16,8 @@ header h1{font-size:28px}
 header p{color:var(--muted);margin-top:4px}
 .container{width:min(820px,94%);margin:20px auto 40px}
 .section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:18px}
-.section h2{font-size:20px;margin-bottom:14px}
+.section h2{font-size:20px;margin-bottom:6px}
+.section .sub{color:var(--muted);font-size:14px;margin-bottom:14px}
 label{font-size:14px;color:var(--muted)}
 input,select,button{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--text);margin-top:6px;font-size:15px}
 button{background:var(--accent);color:#0c1a0f;border:none;cursor:pointer;font-weight:700}
@@ -47,11 +48,31 @@ button.ghost:hover{color:var(--text);background:var(--panel2)}
 .btns{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:6px}
 .cost-ok{color:var(--accent)} .cost-bad{color:#ff6b6b}
 
+/* Optimizer */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+@media(max-width:650px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text);font-size:15px;cursor:pointer}
+.opt.on{border-color:#7a4bd1;background:#1c1630}
+.opt input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:#8b5cf6;flex:none}
+.opt .nm{flex:1}
+.opt select{width:auto;margin:0;padding:5px 8px;font-size:14px}
+.plan{margin-top:14px;background:var(--panel2);border-radius:8px;padding:14px}
+.plan .nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;margin-bottom:12px}
+@media(max-width:650px){.plan .nums{grid-template-columns:1fr}}
+.plan .nums div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
+.plan .nums b{display:block;font-size:22px}
+.plan .nums span{color:var(--muted);font-size:13px}
+.plan ol{padding-left:22px}
+.plan li{margin:8px 0;font-size:14px}
+.plan li .c{color:var(--gold);font-weight:700;white-space:nowrap}
+.plan li .it{color:#d9c2ff}
+.warn{color:#ff9b6b}
+
 /* Farms */
-.farms{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.farms{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .farm{display:block;text-decoration:none;color:inherit;background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s,transform .15s}
 .farm:hover,.farm:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
-.farm .thumb{height:110px;display:flex;align-items:center;justify-content:center;background:#0d1117;font-size:48px}
+.farm img{display:block;width:100%;height:170px;object-fit:cover;background:#0d1117}
 .farm .body{padding:12px 14px}
 .farm h3{font-size:16px;margin-bottom:4px}
 .farm p{color:var(--muted);font-size:13px}
@@ -64,7 +85,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
 <header>
   <h1>⛏ Minecraft XP & Anvil Optimizer</h1>
-  <p>XP calculator, anvil upgrades, XP farms</p>
+  <p>XP calculator, anvil upgrades, cheapest book order, XP farms</p>
 </header>
 
 <div class="container">
@@ -72,7 +93,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 <!-- XP CALCULATOR -->
 <section class="section">
   <h2>🟢 XP Calculator</h2>
-  <div class="grid">
+  <div class="grid" style="margin-top:12px">
     <div><label for="currentLevel">Current level</label>
       <input id="currentLevel" type="number" min="0" value="0"></div>
     <div><label for="targetLevel">Target level</label>
@@ -85,6 +106,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 <!-- ANVIL -->
 <section class="section">
   <h2>🔨 Anvil &amp; Item Upgrade</h2>
+  <p class="sub">Pick an item, then add enchanted books one by one and watch the cost grow.</p>
 
   <div class="grid3">
     <div><label for="itemSelect">Item</label>
@@ -111,24 +133,43 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
   </div>
 
   <div class="tags" id="tags"></div>
-
   <div class="result" id="costPreview"></div>
 
   <div class="btns">
     <button onclick="useAnvil()">Combine items</button>
     <button class="ghost" onclick="resetItem()">Reset item</button>
   </div>
-  <div class="result" id="anvilResult">Choose an item and a book, then combine.</div>
+  <div class="result" id="anvilResult">Choose a book, then combine.</div>
+</section>
+
+<!-- OPTIMIZER -->
+<section class="section">
+  <h2>🧠 XP Optimizer</h2>
+  <p class="sub">Tick the enchantments you want on <b id="optItemName">Diamond Sword</b>. The optimizer finds the order of merging books that costs the fewest levels.</p>
+
+  <div class="opts" id="optList"></div>
+
+  <div class="grid" style="align-items:end">
+    <div><label for="initUses">Times the item was already used in an anvil</label>
+      <select id="initUses">
+        <option value="0">0 (new item)</option><option value="1">1</option><option value="2">2</option>
+        <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+      </select></div>
+    <button onclick="optimize()">Find cheapest order</button>
+  </div>
+
+  <div id="optResult"></div>
 </section>
 
 <!-- XP FARMS -->
 <section class="section">
   <h2>🔥 XP Farms</h2>
+  <p class="sub">Tap a farm to open a video tutorial on YouTube.</p>
   <div class="farms">
 
     <a class="farm" target="_blank" rel="noopener"
        href="https://www.youtube.com/results?search_query=armadillo+xp+farm+minecraft">
-      <div class="thumb"><span>🐾</span></div>
+      <img src="images/armadillo.jpg" alt="Armadillo XP farm" loading="lazy">
       <div class="body">
         <h3>Armadillo XP Farm</h3>
         <p>The simplest farm: easy to build, steady XP.</p>
@@ -137,8 +178,18 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
+       href="https://www.youtube.com/results?search_query=minecraft+mob+xp+farm">
+      <img src="images/mob-farm.jpg" alt="Mob XP farm" style="object-position:center 25%" loading="lazy">
+      <div class="body">
+        <h3>Mob Farm</h3>
+        <p>Early-game XP and loot from all hostile mobs.</p>
+        <span class="watch">Watch tutorial</span>
+      </div>
+    </a>
+
+    <a class="farm" target="_blank" rel="noopener"
        href="https://www.youtube.com/results?search_query=minecraft+enderman+xp+farm">
-      <div class="thumb"><span>👁</span></div>
+      <img src="images/enderman-farm.jpg" alt="Enderman XP farm" style="object-position:center 35%" loading="lazy">
       <div class="body">
         <h3>Enderman Farm</h3>
         <p>Very fast XP and Ender Pearls.</p>
@@ -147,21 +198,21 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=minecraft+mob+xp+farm">
-      <div class="thumb"><span>🧟</span></div>
+       href="https://www.youtube.com/results?search_query=minecraft+villager+trading+emerald+farm">
+      <img src="images/villager-trading.jpg" alt="Villager trading" style="object-position:center 30%" loading="lazy">
       <div class="body">
-        <h3>Mob Farm</h3>
-        <p>Simple early-game XP source.</p>
+        <h3>Villager Trading</h3>
+        <p>Trade for emeralds, and for XP from every trade.</p>
         <span class="watch">Watch tutorial</span>
       </div>
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=minecraft+guardian+xp+farm">
-      <div class="thumb"><span>🐟</span></div>
+       href="https://www.youtube.com/results?search_query=minecraft+fast+gold+farm+nether">
+      <img src="images/gold-farm.jpg" alt="Gold farm" loading="lazy">
       <div class="body">
-        <h3>Guardian Farm</h3>
-        <p>Huge XP production in the late game.</p>
+        <h3>Gold Farm</h3>
+        <p>Nether farm that gives gold and plenty of XP.</p>
         <span class="watch">Watch tutorial</span>
       </div>
     </a>
@@ -171,9 +222,11 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
 </div>
 
-<footer>Minecraft XP &amp; Anvil Optimizer</footer>
+<footer>Minecraft XP &amp; Anvil Optimizer (Java Edition rules)</footer>
 
 <script>
+const $=id=>document.getElementById(id);
+
 /* ========== XP ========== */
 function totalXP(l){
   if(l<=16) return l*l+6*l;
@@ -181,74 +234,92 @@ function totalXP(l){
   return Math.floor(4.5*l*l-162.5*l+2220);
 }
 function calculateXP(){
-  const c=Number(document.getElementById("currentLevel").value);
-  const t=Number(document.getElementById("targetLevel").value);
-  document.getElementById("xpResult").textContent =
-    t<c ? "Target level must be higher." : "Required XP: "+(totalXP(t)-totalXP(c));
+  const c=Number($("currentLevel").value), t=Number($("targetLevel").value);
+  $("xpResult").textContent = t<c ? "Target level must be higher." : "Required XP: "+(totalXP(t)-totalXP(c));
 }
 
 /* ========== DATA ========== */
+/* max level, anvil multiplier when the enchantment comes from a book */
+const ench={
+  "Protection":{max:4,m:1}, "Fire Protection":{max:4,m:1}, "Blast Protection":{max:4,m:2}, "Projectile Protection":{max:4,m:1},
+  "Respiration":{max:3,m:2}, "Aqua Affinity":{max:1,m:2}, "Thorns":{max:3,m:4},
+  "Feather Falling":{max:4,m:1}, "Depth Strider":{max:3,m:2}, "Frost Walker":{max:2,m:2}, "Soul Speed":{max:3,m:4},
+  "Swift Sneak":{max:3,m:4},
+  "Sharpness":{max:5,m:1}, "Smite":{max:5,m:1}, "Bane of Arthropods":{max:5,m:1},
+  "Knockback":{max:2,m:1}, "Fire Aspect":{max:2,m:2}, "Looting":{max:3,m:2}, "Sweeping Edge":{max:3,m:2},
+  "Efficiency":{max:5,m:1}, "Silk Touch":{max:1,m:4}, "Fortune":{max:3,m:2},
+  "Power":{max:5,m:1}, "Punch":{max:2,m:2}, "Flame":{max:1,m:2}, "Infinity":{max:1,m:4},
+  "Multishot":{max:1,m:2}, "Piercing":{max:4,m:1}, "Quick Charge":{max:3,m:1},
+  "Impaling":{max:5,m:2}, "Riptide":{max:3,m:2}, "Loyalty":{max:3,m:1}, "Channeling":{max:1,m:4},
+  "Density":{max:5,m:1}, "Breach":{max:4,m:2}, "Wind Burst":{max:3,m:2},
+  "Lunge":{max:3,m:2},
+  "Luck of the Sea":{max:3,m:2}, "Lure":{max:3,m:2},
+  "Unbreaking":{max:3,m:1}, "Mending":{max:1,m:2}
+};
+const PROT=["Protection","Fire Protection","Blast Protection","Projectile Protection"];
+const COMMON=["Unbreaking","Mending"];
+const DIG=["Efficiency","Silk Touch","Fortune"];
+
 const items={
-  diamond_sword:{name:"Diamond Sword",type:"sword"},
-  diamond_pickaxe:{name:"Diamond Pickaxe",type:"tool"},
-  diamond_axe:{name:"Diamond Axe",type:"tool"},
-  diamond_shovel:{name:"Diamond Shovel",type:"tool"},
-  diamond_helmet:{name:"Diamond Helmet",type:"armor"},
-  diamond_chestplate:{name:"Diamond Chestplate",type:"armor"},
-  diamond_leggings:{name:"Diamond Leggings",type:"armor"},
-  diamond_boots:{name:"Diamond Boots",type:"boots"},
-  bow:{name:"Bow",type:"bow"},
-  trident:{name:"Trident",type:"trident"},
-  mace:{name:"Mace",type:"mace"},
-  elytra:{name:"Elytra",type:"elytra"}
+  diamond_sword:{name:"Diamond Sword",ench:["Sharpness","Smite","Bane of Arthropods","Knockback","Fire Aspect","Looting","Sweeping Edge",...COMMON]},
+  diamond_axe:{name:"Diamond Axe",ench:["Sharpness","Smite","Bane of Arthropods",...DIG,...COMMON]},
+  diamond_pickaxe:{name:"Diamond Pickaxe",ench:[...DIG,...COMMON]},
+  diamond_shovel:{name:"Diamond Shovel",ench:[...DIG,...COMMON]},
+  diamond_hoe:{name:"Diamond Hoe",ench:[...DIG,...COMMON]},
+  diamond_helmet:{name:"Diamond Helmet",ench:[...PROT,"Respiration","Aqua Affinity","Thorns",...COMMON]},
+  diamond_chestplate:{name:"Diamond Chestplate",ench:[...PROT,"Thorns",...COMMON]},
+  diamond_leggings:{name:"Diamond Leggings",ench:[...PROT,"Thorns","Swift Sneak",...COMMON]},
+  diamond_boots:{name:"Diamond Boots",ench:[...PROT,"Feather Falling","Depth Strider","Frost Walker","Soul Speed","Thorns",...COMMON]},
+  bow:{name:"Bow",ench:["Power","Punch","Flame","Infinity",...COMMON]},
+  crossbow:{name:"Crossbow",ench:["Multishot","Piercing","Quick Charge",...COMMON]},
+  trident:{name:"Trident",ench:["Impaling","Riptide","Loyalty","Channeling",...COMMON]},
+  mace:{name:"Mace",ench:["Density","Breach","Wind Burst","Smite","Bane of Arthropods","Fire Aspect",...COMMON]},
+  diamond_spear:{name:"Diamond Spear",ench:["Sharpness","Smite","Bane of Arthropods","Knockback","Fire Aspect","Looting","Lunge",...COMMON]},
+  fishing_rod:{name:"Fishing Rod",ench:["Luck of the Sea","Lure",...COMMON]},
+  shield:{name:"Shield",ench:COMMON},
+  elytra:{name:"Elytra",ench:COMMON}
 };
 
-/* max level, anvil cost multiplier (book), item types */
-const ench={
-  "Sharpness":      {max:5,m:1,on:["sword"]},
-  "Smite":          {max:5,m:1,on:["sword"]},
-  "Looting":        {max:3,m:2,on:["sword"]},
-  "Fire Aspect":    {max:2,m:2,on:["sword","mace"]},
-  "Unbreaking":     {max:3,m:1,on:["sword","tool","armor","boots","bow","trident","mace","elytra"]},
-  "Mending":        {max:1,m:2,on:["sword","tool","armor","boots","bow","trident","mace","elytra"]},
-  "Efficiency":     {max:5,m:1,on:["tool"]},
-  "Fortune":        {max:3,m:2,on:["tool"]},
-  "Silk Touch":     {max:1,m:4,on:["tool"]},
-  "Protection":     {max:4,m:1,on:["armor"]},
-  "Feather Falling":{max:4,m:2,on:["boots"]},
-  "Power":          {max:5,m:1,on:["bow"]},
-  "Infinity":       {max:1,m:4,on:["bow"]},
-  "Impaling":       {max:5,m:2,on:["trident"]},
-  "Density":        {max:5,m:1,on:["mace"]}
-};
+/* enchantments that cannot be on the same item */
+const CONFLICTS=[
+  PROT,
+  ["Sharpness","Smite","Bane of Arthropods","Density","Breach"],
+  ["Silk Touch","Fortune"],
+  ["Depth Strider","Frost Walker"],
+  ["Multishot","Piercing"],
+  ["Riptide","Loyalty"],["Riptide","Channeling"],
+  ["Infinity","Mending"]
+];
+function conflicts(a,b){ return a!==b && CONFLICTS.some(g=>g.includes(a)&&g.includes(b)); }
+
 const ROMAN=["","I","II","III","IV","V"];
 const img=n=>"https://blockrender.dev/render/item/"+n+".png?size=512";
+const pen=u=>Math.pow(2,u)-1;           // work penalty after u anvil uses
 
-/* ========== ITEM STATE ========== */
-let state={enchants:{},uses:0};   // uses = number of anvil operations (prior work penalty)
-const $=id=>document.getElementById(id);
+/* ========== MANUAL ANVIL ========== */
+let state={enchants:{},uses:0};
 
 function init(){
   const sel=$("itemSelect");
   for(const k in items){
-    const o=document.createElement("option");
-    o.value=k;o.textContent=items[k].name;sel.appendChild(o);
+    const o=document.createElement("option");o.value=k;o.textContent=items[k].name;sel.appendChild(o);
   }
+  $("leftItem").onerror=function(){this.style.visibility="hidden"};
   changeItem();
 }
 
 function changeItem(){
   const key=$("itemSelect").value, it=items[key];
+  $("leftItem").style.visibility="visible";
   $("leftItem").src=img(key);
   $("leftName").textContent=it.name;
+  $("optItemName").textContent=it.name;
   state={enchants:{},uses:0};
   const es=$("enchantSelect"); es.innerHTML="";
-  for(const n in ench){
-    if(ench[n].on.includes(it.type)){
-      const o=document.createElement("option");o.value=n;o.textContent=n;es.appendChild(o);
-    }
-  }
+  it.ench.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;es.appendChild(o);});
   fillLevels();
+  buildOptList();
+  $("optResult").innerHTML="";
   $("anvilResult").textContent="Choose a book, then combine.";
   render();
 }
@@ -259,26 +330,30 @@ function fillLevels(){
   for(let i=ench[n].max;i>=1;i--){
     const o=document.createElement("option");o.value=i;o.textContent=ROMAN[i];ls.appendChild(o);
   }
-  $("rightName").textContent=n+" "+ROMAN[Number(ls.value)];
-  ls.onchange=()=>{ $("rightName").textContent=n+" "+ROMAN[Number(ls.value)]; render(); };
+  ls.onchange=()=>{ updateBookName(); render(); };
+  updateBookName();
   render();
+}
+function updateBookName(){
+  const n=$("enchantSelect").value;
+  $("rightName").textContent=n+" "+ROMAN[Number($("levelSelect").value)];
 }
 
 function currentPlan(){
   const n=$("enchantSelect").value, lvl=Number($("levelSelect").value);
   const have=state.enchants[n]||0;
+  const clash=Object.keys(state.enchants).find(x=>conflicts(x,n));
   let newLvl=lvl;
-  if(have===lvl && lvl<ench[n].max) newLvl=lvl+1;   // same level merges up
-  else if(have>lvl) newLvl=have;                     // no downgrade
-  const penalty=Math.pow(2,state.uses)-1;
-  const cost=newLvl*ench[n].m+penalty;
-  return {n,newLvl,have,cost,wasted:newLvl===have};
+  if(have===lvl && lvl<ench[n].max) newLvl=lvl+1;
+  else if(have>lvl) newLvl=have;
+  const cost=newLvl*ench[n].m+pen(state.uses);
+  return {n,newLvl,have,cost,clash,wasted:newLvl===have};
 }
 
 function render(){
   const tags=$("tags"); tags.innerHTML="";
   const names=Object.keys(state.enchants);
-  if(!names.length){ tags.innerHTML='<span style="color:var(--muted);font-size:13px">No enchantments yet</span>'; }
+  if(!names.length) tags.innerHTML='<span style="color:var(--muted);font-size:13px">No enchantments yet</span>';
   names.forEach(n=>{
     const s=document.createElement("span");s.className="tag";
     s.textContent=n+" "+ROMAN[state.enchants[n]];tags.appendChild(s);
@@ -289,7 +364,8 @@ function render(){
   const p=currentPlan();
   const tooExp=p.cost>=40;
   let msg="Cost: <b class='"+(tooExp?"cost-bad":"cost-ok")+"'>"+p.cost+" levels</b> ("+totalXP(p.cost)+" XP)";
-  if(p.wasted) msg+="<br><small>Already has this level or higher.</small>";
+  if(p.clash) msg+="<br><small class='warn'>Incompatible with "+p.clash+".</small>";
+  else if(p.wasted) msg+="<br><small>Already has this level or higher.</small>";
   else if(tooExp) msg+="<br><small>Too expensive (40+) in survival.</small>";
   if(state.uses>0) msg+="<br><small>Item used "+state.uses+"x in the anvil.</small>";
   $("costPreview").innerHTML=msg;
@@ -301,7 +377,6 @@ function resetItem(){
   render();
 }
 
-/* ========== ANVIL ========== */
 function useAnvil(){
   const p=currentPlan();
   const hammer=$("hammer"), spark=$("spark");
@@ -310,19 +385,157 @@ function useAnvil(){
   hammer.classList.add("hit");spark.classList.add("active");
 
   setTimeout(()=>{
-    if(p.wasted){
-      $("anvilResult").textContent="No change: the item already has "+p.n+" "+ROMAN[p.have]+" or higher.";
-      return;
-    }
-    if(p.cost>=40){
-      $("anvilResult").textContent="Too expensive! "+p.cost+" levels is over the limit of 39.";
-      return;
-    }
+    if(p.clash){ $("anvilResult").textContent=p.n+" is incompatible with "+p.clash+"."; return; }
+    if(p.wasted){ $("anvilResult").textContent="No change: the item already has "+p.n+" "+ROMAN[p.have]+" or higher."; return; }
+    if(p.cost>=40){ $("anvilResult").textContent="Too expensive! "+p.cost+" levels is over the limit of 39."; return; }
     state.enchants[p.n]=p.newLvl;
     state.uses++;
     $("anvilResult").textContent="Done! "+p.n+" "+ROMAN[p.newLvl]+" added. Cost: "+p.cost+" levels.";
     render();
   },400);
+}
+
+/* ========== OPTIMIZER ========== */
+function buildOptList(){
+  const box=$("optList"); box.innerHTML="";
+  items[$("itemSelect").value].ench.forEach(n=>{
+    const row=document.createElement("label"); row.className="opt";
+    const cb=document.createElement("input"); cb.type="checkbox"; cb.dataset.n=n;
+    const nm=document.createElement("span"); nm.className="nm"; nm.textContent=n;
+    const sel=document.createElement("select"); sel.dataset.n=n;
+    for(let i=ench[n].max;i>=1;i--){const o=document.createElement("option");o.value=i;o.textContent=ROMAN[i];sel.appendChild(o);}
+    cb.onchange=()=>{
+      if(cb.checked){
+        box.querySelectorAll("input[type=checkbox]").forEach(o=>{
+          if(o!==cb && o.checked && conflicts(o.dataset.n,n)){ o.checked=false; o.parentElement.classList.remove("on"); }
+        });
+      }
+      row.classList.toggle("on",cb.checked);
+    };
+    sel.onclick=e=>e.stopPropagation();
+    row.append(cb,nm,sel);
+    box.appendChild(row);
+  });
+}
+
+function getSelected(){
+  const out=[];
+  $("optList").querySelectorAll(".opt").forEach(row=>{
+    const cb=row.querySelector("input"), sel=row.querySelector("select");
+    if(cb.checked){
+      const n=cb.dataset.n, lvl=Number(sel.value);
+      out.push({name:n+" "+ROMAN[lvl], cost:lvl*ench[n].m});
+    }
+  });
+  return out;
+}
+
+function names(t){ return t.leaf!==undefined ? [BOOKS[t.leaf].name] : names(t.l).concat(names(t.r)); }
+function label(t){ return t.leaf!==undefined ? BOOKS[t.leaf].name+" book" : "Book ["+names(t).join(" + ")+"]"; }
+function walk(t,out){
+  if(t.leaf!==undefined) return;
+  walk(t.l,out); walk(t.r,out);
+  out.push({left:label(t.l),right:label(t.r),cost:t.step});
+}
+let BOOKS=[];
+
+function optimize(){
+  BOOKS=getSelected();
+  const n=BOOKS.length, out=$("optResult");
+  if(n===0){ out.innerHTML='<div class="result">Tick at least one enchantment.</div>'; return; }
+  if(n>10){ out.innerHTML='<div class="result warn">Please pick 10 enchantments or fewer.</div>'; return; }
+  const init=Number($("initUses").value);
+  const full=(1<<n)-1;
+
+  // sum of book costs for each subset
+  const ec=new Array(full+1).fill(0);
+  for(let m=1;m<=full;m++){
+    const low=m&-m, i=31-Math.clz32(low);
+    ec[m]=ec[m^low]+BOOKS[i].cost;
+  }
+
+  // g[mask]: best ways to merge those books into ONE book -> [{c: total cost, u: anvil uses, t: tree}]
+  const g=new Array(full+1);
+  for(let i=0;i<n;i++) g[1<<i]=[{c:0,u:0,t:{leaf:i}}];
+  for(let m=1;m<=full;m++){
+    if((m&(m-1))===0) continue;
+    const best={};
+    for(let a=(m-1)&m;a>0;a=(a-1)&m){
+      const b=m^a;                        // a = left (kept), b = right (sacrificed, you pay for it)
+      for(const A of g[a]) for(const B of g[b]){
+        const step=pen(A.u)+pen(B.u)+ec[b];
+        if(step>=40) continue;
+        const u=Math.max(A.u,B.u)+1, c=A.c+B.c+step;
+        if(!best[u]||c<best[u].c) best[u]={c,u,t:{l:A.t,r:B.t,step}};
+      }
+    }
+    const arr=Object.values(best).sort((x,y)=>x.u-y.u);
+    const keep=[]; let minC=Infinity;
+    for(const o of arr){ if(o.c<minC){keep.push(o);minC=o.c;} }
+    g[m]=keep;
+  }
+
+  // apply merged groups to the item one after another
+  const K=init+n;
+  const dp=Array.from({length:full+1},()=>new Array(K+1).fill(null));
+  dp[0][init]={c:0};
+  for(let m=0;m<=full;m++){
+    for(let k=0;k<=K;k++){
+      const st=dp[m][k]; if(!st) continue;
+      const rest=full^m;
+      for(let s=rest;s>0;s=(s-1)&rest){
+        for(const o of g[s]){
+          const step=pen(k)+pen(o.u)+ec[s];
+          if(step>=40) continue;
+          const nk=Math.max(k,o.u)+1;
+          if(nk>K) continue;
+          const c=st.c+o.c+step, nm=m|s, cur=dp[nm][nk];
+          if(!cur||c<cur.c) dp[nm][nk]={c,pm:m,pk:k,o,step};
+        }
+      }
+    }
+  }
+  let endK=-1;
+  for(let k=0;k<=K;k++){
+    if(dp[full][k] && (endK<0 || dp[full][k].c<dp[full][endK].c)) endK=k;
+  }
+
+  // naive plan: add books to the item one by one in list order
+  let nk=init, nTotal=0, nBad=false;
+  BOOKS.forEach(b=>{ const s=pen(nk)+b.cost; if(s>=40) nBad=true; nTotal+=s; nk++; });
+
+  if(endK<0){
+    out.innerHTML='<div class="result warn">No order works: every sequence has a step costing 40+ levels. Remove an enchantment or lower a level.</div>';
+    return;
+  }
+
+  // rebuild the steps
+  const groups=[];
+  let m=full,k=endK;
+  while(m){ const st=dp[m][k]; groups.push(st); m=st.pm; k=st.pk; }
+  groups.reverse();
+  const itemName=items[$("itemSelect").value].name;
+  const steps=[];
+  groups.forEach(gr=>{
+    walk(gr.o.t,steps);
+    steps.push({left:itemName,right:label(gr.o.t),cost:gr.step,item:true});
+  });
+
+  const total=dp[full][endK].c;
+  const xpBest=steps.reduce((s,x)=>s+totalXP(x.cost),0);
+  const saved=nTotal-total;
+
+  let html='<div class="plan"><div class="nums">'+
+    '<div><b class="cost-ok">'+total+'</b><span>levels (best order)</span></div>'+
+    '<div><b>'+xpBest+'</b><span>XP (approx.)</span></div>'+
+    '<div><b class="'+(nBad?"cost-bad":"cost-ok")+'">'+(nBad?"too expensive":"-"+saved)+'</b><span>'+(nBad?"one by one fails":"levels saved vs one by one ("+nTotal+")")+'</span></div>'+
+    '</div><ol>';
+  steps.forEach(s=>{
+    html+='<li>'+(s.item?'<span class="it">'+s.left+'</span>':s.left)+' + '+s.right+
+          ' &rarr; <span class="c">'+s.cost+' levels</span></li>';
+  });
+  html+='</ol><p style="color:var(--muted);font-size:13px;margin-top:8px">Left slot keeps its enchantments, the right slot is what you pay for. XP is counted per step from level 0.</p></div>';
+  out.innerHTML=html;
 }
 
 init();
