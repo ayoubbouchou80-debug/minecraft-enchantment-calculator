@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    font-family:Arial,sans-serif;
+    font-family: Arial, sans-serif;
     background:#111827;
     color:#fff;
     min-height:100vh;
@@ -17,22 +17,23 @@ body{
 
 header{
     text-align:center;
-    padding:35px 15px;
+    padding:30px 15px;
     background:#0b1220;
     border-bottom:2px solid #263247;
 }
 
 header h1{
-    font-size:32px;
+    font-size:28px;
     margin-bottom:8px;
 }
 
 header p{
     color:#9ca3af;
+    font-size:14px;
 }
 
 .container{
-    width:min(1000px,94%);
+    width:min(900px,94%);
     margin:25px auto;
 }
 
@@ -40,13 +41,20 @@ header p{
     background:#182235;
     border:1px solid #2b3950;
     border-radius:14px;
-    padding:22px;
+    padding:20px;
     margin-bottom:20px;
 }
 
 .section h2{
-    margin-bottom:18px;
-    font-size:22px;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-size:14px;
+    color:#cbd5e1;
 }
 
 input,select,button{
@@ -56,7 +64,8 @@ input,select,button{
     border:1px solid #3b4a63;
     background:#0f172a;
     color:#fff;
-    margin-top:8px;
+    margin-top:5px;
+    font-size:15px;
 }
 
 button{
@@ -64,6 +73,8 @@ button{
     border:none;
     cursor:pointer;
     font-weight:bold;
+    margin-top:15px;
+    transition:background 0.2s;
 }
 
 button:hover{
@@ -72,11 +83,13 @@ button:hover{
 
 .result{
     margin-top:15px;
-    padding:15px;
+    padding:12px;
     background:#0f172a;
     border-radius:8px;
     text-align:center;
-    font-size:18px;
+    font-size:16px;
+    color:#4ade80;
+    font-weight:bold;
 }
 
 .grid{
@@ -95,32 +108,32 @@ button:hover{
     display:flex;
     align-items:center;
     gap:15px;
-    padding:15px;
+    padding:12px;
     background:#0f172a;
     border-radius:10px;
-    margin-top:15px;
+    margin-top:10px;
 }
 
 .item-box img{
-    width:70px;
-    height:70px;
+    width:50px;
+    height:50px;
     image-rendering:pixelated;
 }
 
+/* Anvil Styles */
 .anvil{
     text-align:center;
-    padding:20px;
 }
 
 .anvil-slots{
     display:grid;
-    grid-template-columns:1fr 80px 1fr;
+    grid-template-columns:1fr 60px 1fr;
     align-items:center;
     gap:15px;
 }
 
 .slot{
-    height:100px;
+    height:90px;
     background:#0b1220;
     border:2px dashed #475569;
     border-radius:10px;
@@ -130,12 +143,19 @@ button:hover{
 }
 
 .slot img{
-    width:70px;
+    width:60px;
     image-rendering:pixelated;
 }
 
+.hammer-wrapper{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
 .hammer{
-    font-size:45px;
+    font-size:36px;
     transition:.4s;
 }
 
@@ -165,42 +185,56 @@ button:hover{
     100%{opacity:0;transform:scale(2) translateY(-25px)}
 }
 
+/* Farms Section */
 .farms{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:15px;
 }
 
-.farm{
+.farm-card{
     background:#0f172a;
     border-radius:10px;
     overflow:hidden;
     border:1px solid #2b3950;
+    text-decoration:none;
+    color:inherit;
+    transition:transform 0.2s, border-color 0.2s;
+    display:flex;
+    flex-direction:column;
 }
 
-.farm img{
+.farm-card:hover{
+    transform:translateY(-4px);
+    border-color:#2563eb;
+}
+
+.farm-card img{
     width:100%;
-    height:140px;
+    height:130px;
     object-fit:cover;
 }
 
 .farm-content{
-    padding:14px;
+    padding:12px;
 }
 
-.farm h3{
-    margin-bottom:7px;
+.farm-content h3{
+    font-size:16px;
+    margin-bottom:5px;
+    color:#f8fafc;
 }
 
-.farm p{
+.farm-content p{
     color:#9ca3af;
-    font-size:14px;
+    font-size:13px;
 }
 
 footer{
     text-align:center;
     color:#6b7280;
-    padding:25px;
+    padding:20px;
+    font-size:14px;
 }
 </style>
 </head>
@@ -209,44 +243,42 @@ footer{
 
 <header>
     <h1>⛏ Minecraft XP & Anvil Optimizer</h1>
-    <p>XP Calculator • Enchantments • Anvil • XP Farms</p>
+    <p>حاسبة الخبرة (XP) • التطوير • السندان • مزارع الـ XP</p>
 </header>
 
 <div class="container">
 
 <!-- XP CALCULATOR -->
 <section class="section">
-    <h2>🟢 XP Calculator</h2>
+    <h2>🟢 حاسبة مستويات الـ XP</h2>
 
     <div class="grid">
         <div>
-            <label>Current Level</label>
+            <label>المستوى الحالي (Current Level)</label>
             <input id="currentLevel" type="number" min="0" value="0">
         </div>
 
         <div>
-            <label>Target Level</label>
+            <label>المستوى المستهدف (Target Level)</label>
             <input id="targetLevel" type="number" min="0" value="30">
         </div>
     </div>
 
-    <button onclick="calculateXP()">Calculate XP</button>
+    <button onclick="calculateXP()">احسب الـ XP المطلوب</button>
 
     <div class="result" id="xpResult">
-        Required XP: 825
+        الـ XP المطلوب: 825
     </div>
 </section>
 
 
 <!-- ITEM + ENCHANTMENT -->
 <section class="section">
-    <h2>🧰 Item & Enchantment</h2>
+    <h2>🧰 تطوير العناصر</h2>
 
     <div class="grid">
-
         <div>
-            <label>Item</label>
-
+            <label>اختر العنصر</label>
             <select id="itemSelect" onchange="updateItem()">
                 <option value="diamond_sword">Diamond Sword</option>
                 <option value="diamond_pickaxe">Diamond Pickaxe</option>
@@ -259,13 +291,11 @@ footer{
                 <option value="bow">Bow</option>
                 <option value="trident">Trident</option>
                 <option value="mace">Mace</option>
-                <option value="spear">Spear</option>
                 <option value="elytra">Elytra</option>
             </select>
 
             <div class="item-box">
-                <img id="itemImage"
-                     src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
+                <img id="itemImage" src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
                 <div>
                     <b id="itemName">Diamond Sword</b>
                 </div>
@@ -273,319 +303,91 @@ footer{
         </div>
 
         <div>
-            <label>Enchantment</label>
-
+            <label>اختر التطوير</label>
             <select id="enchantSelect">
-                <option>Sharpness</option>
-                <option>Smite</option>
-                <option>Looting</option>
-                <option>Fire Aspect</option>
-                <option>Unbreaking</option>
+                <option>Sharpness V</option>
+                <option>Smite V</option>
+                <option>Looting III</option>
+                <option>Fire Aspect II</option>
+                <option>Unbreaking III</option>
                 <option>Mending</option>
-                <option>Efficiency</option>
-                <option>Fortune</option>
+                <option>Efficiency V</option>
+                <option>Fortune III</option>
                 <option>Silk Touch</option>
-                <option>Protection</option>
-                <option>Feather Falling</option>
-                <option>Power</option>
-                <option>Infinity</option>
+                <option>Protection IV</option>
             </select>
 
-            <button onclick="showEnchant()">
-                Show Enchantment
-            </button>
+            <button onclick="showEnchant()">تأكيد التطوير</button>
 
             <div class="result" id="enchantResult">
-                Select an enchantment.
+                اختر التطوير واضغط تأكيد.
             </div>
         </div>
-
     </div>
 </section>
 
 
-<!-- ANVIL -->
+<!-- ANVIL OPTIMIZER -->
 <section class="section">
-    <h2>🔨 Anvil Optimizer</h2>
+    <h2>🔨 محاكي السندان (Anvil)</h2>
 
     <div class="anvil">
-
         <div class="anvil-slots">
-
             <div class="slot">
-                <img id="leftItem"
-                     src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
+                <img id="leftItem" src="https://blockrender.dev/render/item/diamond_sword.png?size=512">
             </div>
 
-            <div>
+            <div class="hammer-wrapper">
                 <div class="hammer" id="hammer">🔨</div>
                 <div class="spark" id="spark">✦</div>
             </div>
 
             <div class="slot">
-                <img id="rightItem"
-                     src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
+                <img id="rightItem" src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
             </div>
-
         </div>
 
-        <div style="margin-top:20px">
-            <label>Estimated Anvil Cost</label>
-            <input id="anvilCost" type="number" min="0" value="8">
+        <div style="margin-top:15px">
+            <label>التكلفة التقديرية (بالـ Levels)</label>
+            <input id="anvilCost" type="number" min="0" value="4">
         </div>
 
-        <button onclick="useAnvil()">Combine Items</button>
+        <button onclick="useAnvil()">دمج العناصر</button>
 
         <div class="result" id="anvilResult">
-            Put your items together.
+            ضع العناصر وقم بالدمج.
         </div>
-
     </div>
 </section>
 
 
 <!-- XP FARMS -->
 <section class="section">
-    <h2>🔥 XP Farms</h2>
+    <h2>🔥 مزارع الـ XP (اضغط للمشاهدة على يوتيوب)</h2>
 
     <div class="farms">
 
-        <div class="farm">
-            <img src="farm-image.png" alt="XP Farm">
+        <!-- Armadillo Farm (الأبسط) -->
+        <a class="farm-card" href="https://www.youtube.com/results?search_query=minecraft+armadillo+xp+farm+tutorial" target="_blank">
+            <img src="https://minecraft.wiki/images/Armadillo_JE1_BE1.png" alt="Armadillo Farm">
             <div class="farm-content">
-                <h3>⭐ Your XP Farm</h3>
-                <p>Your uploaded farm image.</p>
+                <h3>🦔 Armadillo Farm (الأبسط)</h3>
+                <p>أسهل وأبسط مزرعة للحصول على XP وتصنيع دروع الذئاب.</p>
             </div>
-        </div>
+        </a>
 
-        <div class="farm">
-            <img src="https://minecraft.wiki/images/Enderman.png"
-                 alt="Enderman Farm">
+        <!-- Mob Farm -->
+        <a class="farm-card" href="https://www.youtube.com/results?search_query=minecraft+simple+mob+farm+tutorial" target="_blank">
+            <img src="https://minecraft.wiki/images/Zombie.png" alt="Mob Farm">
             <div class="farm-content">
-                <h3>Enderman Farm</h3>
-                <p>Very fast XP and Ender Pearls.</p>
+                <h3>🧟 Mob Farm بسيطة</h3>
+                <p>مزرعة ممتازة لبداية اللعبة للحصول على XP وموارد مختلفة.</p>
             </div>
-        </div>
+        </a>
 
-        <div class="farm">
-            <img src="https://minecraft.wiki/images/Zombie.png"
-                 alt="Mob Farm">
+        <!-- Enderman Farm -->
+        <a class="farm-card" href="https://www.youtube.com/results?search_query=minecraft+enderman+xp+farm+tutorial" target="_blank">
+            <img src="https://minecraft.wiki/images/Enderman.png" alt="Enderman Farm">
             <div class="farm-content">
-                <h3>Mob Farm</h3>
-                <p>Simple early-game XP source.</p>
-            </div>
-        </div>
-
-        <div class="farm">
-            <img src="https://minecraft.wiki/images/Guardian.png"
-                 alt="Guardian Farm">
-            <div class="farm-content">
-                <h3>Guardian Farm</h3>
-                <p>Huge XP production in the late game.</p>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-</div>
-
-<footer>
-    Minecraft XP & Anvil Optimizer
-</footer>
-
-
-<script>
-
-/* =========================
-   XP CALCULATOR
-========================= */
-
-function totalXP(level){
-
-    if(level <= 16){
-        return level * level + 6 * level;
-    }
-
-    if(level <= 31){
-        return Math.floor(
-            2.5 * level * level -
-            40.5 * level +
-            360
-        );
-    }
-
-    return Math.floor(
-        4.5 * level * level -
-        162.5 * level +
-        2220
-    );
-}
-
-function calculateXP(){
-
-    let current =
-        Number(document.getElementById("currentLevel").value);
-
-    let target =
-        Number(document.getElementById("targetLevel").value);
-
-    if(target < current){
-        document.getElementById("xpResult").textContent =
-            "Target level must be higher.";
-        return;
-    }
-
-    let xp = totalXP(target) - totalXP(current);
-
-    document.getElementById("xpResult").textContent =
-        "Required XP: " + xp;
-}
-
-
-/* =========================
-   ITEMS
-========================= */
-
-const items = {
-
-    diamond_sword:{
-        name:"Diamond Sword",
-        image:"diamond_sword"
-    },
-
-    diamond_pickaxe:{
-        name:"Diamond Pickaxe",
-        image:"diamond_pickaxe"
-    },
-
-    diamond_axe:{
-        name:"Diamond Axe",
-        image:"diamond_axe"
-    },
-
-    diamond_shovel:{
-        name:"Diamond Shovel",
-        image:"diamond_shovel"
-    },
-
-    diamond_helmet:{
-        name:"Diamond Helmet",
-        image:"diamond_helmet"
-    },
-
-    diamond_chestplate:{
-        name:"Diamond Chestplate",
-        image:"diamond_chestplate"
-    },
-
-    diamond_leggings:{
-        name:"Diamond Leggings",
-        image:"diamond_leggings"
-    },
-
-    diamond_boots:{
-        name:"Diamond Boots",
-        image:"diamond_boots"
-    },
-
-    bow:{
-        name:"Bow",
-        image:"bow"
-    },
-
-    trident:{
-        name:"Trident",
-        image:"trident"
-    },
-
-    mace:{
-        name:"Mace",
-        image:"mace"
-    },
-
-    spear:{
-        name:"Spear",
-        image:"spear"
-    },
-
-    elytra:{
-        name:"Elytra",
-        image:"elytra"
-    }
-
-};
-
-
-function updateItem(){
-
-    const value =
-        document.getElementById("itemSelect").value;
-
-    const item = items[value];
-
-    document.getElementById("itemName").textContent =
-        item.name;
-
-    document.getElementById("itemImage").src =
-        "https://blockrender.dev/render/item/" +
-        item.image +
-        ".png?size=512";
-
-    document.getElementById("leftItem").src =
-        "https://blockrender.dev/render/item/" +
-        item.image +
-        ".png?size=512";
-}
-
-
-/* =========================
-   ENCHANTMENT
-========================= */
-
-function showEnchant(){
-
-    const enchant =
-        document.getElementById("enchantSelect").value;
-
-    document.getElementById("enchantResult").textContent =
-        enchant + " selected.";
-}
-
-
-/* =========================
-   ANVIL
-========================= */
-
-function useAnvil(){
-
-    const cost =
-        Number(document.getElementById("anvilCost").value);
-
-    const hammer =
-        document.getElementById("hammer");
-
-    const spark =
-        document.getElementById("spark");
-
-    hammer.classList.remove("hit");
-    spark.classList.remove("active");
-
-    void hammer.offsetWidth;
-    void spark.offsetWidth;
-
-    hammer.classList.add("hit");
-    spark.classList.add("active");
-
-    setTimeout(function(){
-
-        document.getElementById("anvilResult").textContent =
-            "Items combined! Cost: " + cost + " XP levels.";
-
-    },400);
-}
-
-</script>
-
-</body>
-</html>
+                <h3>👁️ Enderman Farm</h3>
+                <p>من أسرع مزارع
