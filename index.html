@@ -77,6 +77,21 @@ button.ghost:hover{color:var(--text);background:var(--panel2)}
 .farm h3{font-size:16px;margin-bottom:4px}
 .farm p{color:var(--muted);font-size:13px}
 .farm .watch{display:inline-block;margin-top:8px;color:var(--accent);font-size:13px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{width:auto;margin:0;padding:7px 14px;background:var(--panel2);color:var(--muted);border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:600}
+.chip.on{background:var(--accent);color:#0c1a0f;border-color:var(--accent)}
+.rate{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:var(--gold);letter-spacing:1px}
+.act{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.act button{margin:0;font-size:13px;padding:9px}
+@media(max-width:650px){.act{grid-template-columns:1fr}}
+.note{color:var(--muted);font-size:13px;margin-top:10px}
+.saved{margin-top:14px}
+.saved h3{font-size:15px;margin-bottom:8px}
+.sv{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px}
+.sv span{flex:1}
+.sv button{width:auto;margin:0;padding:5px 10px;font-size:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--accent);color:#0c1a0f;padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+#toast.show{opacity:1}
 footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -85,7 +100,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
 <header>
   <h1>⛏ Minecraft XP & Anvil Optimizer</h1>
-  <p>XP calculator, anvil upgrades, cheapest book order, XP farms</p>
+  <p>XP calculator, anvil, cheapest book order, Mending, Grindstone, villager prices, XP farms</p>
 </header>
 
 <div class="container">
@@ -159,16 +174,53 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
   </div>
 
   <div id="optResult"></div>
+  <div class="saved" id="savedBuilds"></div>
+</section>
+
+<!-- MENDING -->
+<section class="section">
+  <h2>🛠 Mending Calculator</h2>
+  <p class="sub">XP needed to repair <b id="mendName"></b> with Mending. Every 1 XP repairs 2 durability.</p>
+  <div class="grid">
+    <div><label for="mendMax">Max durability</label><input id="mendMax" type="number" min="1" oninput="calcMend()"></div>
+    <div><label for="mendCur">Current durability</label><input id="mendCur" type="number" min="0" oninput="calcMend()"></div>
+  </div>
+  <div class="result" id="mendResult"></div>
+</section>
+
+<!-- GRINDSTONE -->
+<section class="section">
+  <h2>♻ Grindstone Refund</h2>
+  <p class="sub">Tick the enchantments on <b id="grindItemName"></b> to see how much XP you get back when you remove them (curses are ignored).</p>
+  <div class="opts" id="grindList"></div>
+  <button onclick="calcGrind()">Calculate refund</button>
+  <div id="grindResult"></div>
+</section>
+
+<!-- VILLAGER PRICES -->
+<section class="section">
+  <h2>💎 Villager Book Prices</h2>
+  <p class="sub">Librarian price of an enchanted book in emeralds (before discounts, capped at 64).</p>
+  <div class="grid">
+    <div><label for="vilEnch">Enchantment</label><select id="vilEnch" onchange="vilLevels()"></select></div>
+    <div><label for="vilLvl">Level</label><select id="vilLvl" onchange="calcVil()"></select></div>
+  </div>
+  <div class="result" id="vilResult"></div>
 </section>
 
 <!-- XP FARMS -->
 <section class="section">
   <h2>🔥 XP Farms</h2>
-  <p class="sub">Tap a farm to open a video tutorial on YouTube.</p>
+  <p class="sub">Tap a farm to open a video tutorial on YouTube. Ratings are rough estimates.</p>
+  <div class="chips">
+    <button class="chip on" onclick="sortFarms('def',this)">Default</button>
+    <button class="chip" onclick="sortFarms('xp',this)">Highest XP</button>
+    <button class="chip" onclick="sortFarms('easy',this)">Easiest to build</button>
+  </div>
   <div class="farms">
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=armadillo+xp+farm+minecraft">
+       data-xp="2" data-diff="1" href="https://www.youtube.com/results?search_query=armadillo+xp+farm+minecraft">
       <img src="images/armadillo.jpg" alt="Armadillo XP farm" loading="lazy">
       <div class="body">
         <h3>Armadillo XP Farm</h3>
@@ -178,7 +230,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=minecraft+mob+xp+farm">
+       data-xp="3" data-diff="3" href="https://www.youtube.com/results?search_query=minecraft+mob+xp+farm">
       <img src="images/mob-farm.jpg" alt="Mob XP farm" style="object-position:center 25%" loading="lazy">
       <div class="body">
         <h3>Mob Farm</h3>
@@ -188,7 +240,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=minecraft+enderman+xp+farm">
+       data-xp="5" data-diff="4" href="https://www.youtube.com/results?search_query=minecraft+enderman+xp+farm">
       <img src="images/enderman-farm.jpg" alt="Enderman XP farm" style="object-position:center 35%" loading="lazy">
       <div class="body">
         <h3>Enderman Farm</h3>
@@ -198,7 +250,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=minecraft+villager+trading+emerald+farm">
+       data-xp="1" data-diff="2" href="https://www.youtube.com/results?search_query=minecraft+villager+trading+emerald+farm">
       <img src="images/villager-trading.jpg" alt="Villager trading" style="object-position:center 30%" loading="lazy">
       <div class="body">
         <h3>Villager Trading</h3>
@@ -208,7 +260,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     </a>
 
     <a class="farm" target="_blank" rel="noopener"
-       href="https://www.youtube.com/results?search_query=minecraft+fast+gold+farm+nether">
+       data-xp="4" data-diff="4" href="https://www.youtube.com/results?search_query=minecraft+fast+gold+farm+nether">
       <img src="images/gold-farm.jpg" alt="Gold farm" loading="lazy">
       <div class="body">
         <h3>Gold Farm</h3>
@@ -221,6 +273,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 </section>
 
 </div>
+<div id="toast"></div>
 
 <footer>Minecraft XP &amp; Anvil Optimizer (Java Edition rules)</footer>
 
@@ -319,6 +372,7 @@ function changeItem(){
   it.ench.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;es.appendChild(o);});
   fillLevels();
   buildOptList();
+  syncExtra();
   $("optResult").innerHTML="";
   $("anvilResult").textContent="Choose a book, then combine.";
   render();
@@ -396,8 +450,8 @@ function useAnvil(){
 }
 
 /* ========== OPTIMIZER ========== */
-function buildOptList(){
-  const box=$("optList"); box.innerHTML="";
+function buildOptList(id){
+  const box=$(id||"optList"); box.innerHTML="";
   items[$("itemSelect").value].ench.forEach(n=>{
     const row=document.createElement("label"); row.className="opt";
     const cb=document.createElement("input"); cb.type="checkbox"; cb.dataset.n=n;
@@ -418,13 +472,13 @@ function buildOptList(){
   });
 }
 
-function getSelected(){
+function getSelected(id){
   const out=[];
-  $("optList").querySelectorAll(".opt").forEach(row=>{
+  $(id||"optList").querySelectorAll(".opt").forEach(row=>{
     const cb=row.querySelector("input"), sel=row.querySelector("select");
     if(cb.checked){
       const n=cb.dataset.n, lvl=Number(sel.value);
-      out.push({name:n+" "+ROMAN[lvl], cost:lvl*ench[n].m});
+      out.push({n,lvl,name:n+" "+ROMAN[lvl], cost:lvl*ench[n].m});
     }
   });
   return out;
@@ -536,10 +590,180 @@ function optimize(){
   });
   html+='</ol><p style="color:var(--muted);font-size:13px;margin-top:8px">Left slot keeps its enchantments, the right slot is what you pay for. XP is counted per step from level 0.</p></div>';
   out.innerHTML=html;
+  afterPlan(steps,total,xpBest);
+}
+
+/* ========== EXTRA TOOLS ========== */
+const DUR={diamond_sword:1561,diamond_axe:1561,diamond_pickaxe:1561,diamond_shovel:1561,diamond_hoe:1561,
+  diamond_helmet:363,diamond_chestplate:528,diamond_leggings:495,diamond_boots:429,bow:384,crossbow:465,
+  trident:250,mace:500,fishing_rod:64,shield:336,elytra:432};
+/* minimum enchanting power: base + perLevel*(level-1) (approximate, used for Grindstone refund) */
+const MINC={"Protection":[1,11],"Fire Protection":[10,8],"Blast Protection":[5,8],"Projectile Protection":[3,6],
+  "Feather Falling":[5,6],"Respiration":[10,10],"Aqua Affinity":[1,0],"Thorns":[10,20],"Depth Strider":[10,10],
+  "Frost Walker":[10,10],"Soul Speed":[10,10],"Swift Sneak":[25,25],"Sharpness":[1,11],"Smite":[5,8],
+  "Bane of Arthropods":[5,8],"Knockback":[5,20],"Fire Aspect":[10,20],"Looting":[15,9],"Sweeping Edge":[5,9],
+  "Efficiency":[1,10],"Silk Touch":[15,0],"Fortune":[15,9],"Power":[1,10],"Punch":[12,20],"Flame":[20,0],
+  "Infinity":[20,0],"Multishot":[20,0],"Piercing":[1,10],"Quick Charge":[12,20],"Impaling":[1,8],"Riptide":[17,7],
+  "Loyalty":[12,7],"Channeling":[25,0],"Density":[5,8],"Breach":[15,9],"Wind Burst":[15,9],"Lunge":[5,8],
+  "Luck of the Sea":[15,9],"Lure":[15,9],"Unbreaking":[5,8],"Mending":[25,25]};
+const TREASURE=["Mending","Frost Walker"];
+const UNTRADE=["Soul Speed","Swift Sneak","Wind Burst","Density","Breach","Lunge"];
+const minCost=(n,l)=>MINC[n][0]+MINC[n][1]*(l-1);
+function price(n,l){
+  if(UNTRADE.includes(n)) return null;
+  let lo=2+3*l, hi=6+13*l;
+  if(TREASURE.includes(n)){lo*=2;hi*=2;}
+  return [Math.min(lo,64),Math.min(hi,64)];
+}
+function toast(msg){
+  const t=$("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toast.id); toast.id=setTimeout(()=>t.classList.remove("show"),1800);
+}
+
+/* item-dependent parts */
+function syncExtra(){
+  const k=$("itemSelect").value, name=items[k].name;
+  $("mendName").textContent=name; $("grindItemName").textContent=name;
+  $("mendMax").value=DUR[k]||""; $("mendCur").value=DUR[k]?Math.floor(DUR[k]*0.2):"";
+  buildOptList("grindList"); $("grindResult").innerHTML="";
+  calcMend();
+}
+
+/* Mending */
+function calcMend(){
+  const mx=Number($("mendMax").value), cur=Number($("mendCur").value), r=$("mendResult");
+  if(!mx){ r.textContent="Enter the item's max durability."; return; }
+  if(cur>=mx){ r.textContent="Nothing to repair."; return; }
+  const miss=mx-Math.max(cur,0), xp=Math.ceil(miss/2);
+  r.innerHTML="Missing: <b>"+miss+"</b> durability<br>XP needed: <b class='cost-ok'>"+xp+"</b>"+
+    "<br><small>about "+Math.ceil(xp/7)+" XP bottles, or "+Math.ceil(xp/5)+" zombies</small>";
+}
+
+/* Grindstone */
+function calcGrind(){
+  const picks=getSelected("grindList"), r=$("grindResult");
+  if(!picks.length){ r.innerHTML='<div class="result">Tick at least one enchantment.</div>'; return; }
+  const sum=picks.reduce((a,p)=>a+minCost(p.n,p.lvl),0);
+  const lo=Math.ceil(sum/2), hi=lo*2-1;
+  r.innerHTML='<div class="result">Refund: <b class="cost-ok">'+lo+' to '+hi+' XP</b><br><small>Base value '+sum+'. The exact amount is random.</small></div>';
+}
+
+/* Villager prices */
+function initVil(){
+  const s=$("vilEnch");
+  Object.keys(ench).filter(n=>!UNTRADE.includes(n)).forEach(n=>{
+    const o=document.createElement("option");o.value=n;o.textContent=n;s.appendChild(o);
+  });
+  vilLevels();
+}
+function vilLevels(){
+  const n=$("vilEnch").value, ls=$("vilLvl"); ls.innerHTML="";
+  for(let i=1;i<=ench[n].max;i++){const o=document.createElement("option");o.value=i;o.textContent=ROMAN[i];ls.appendChild(o);}
+  ls.value=ench[n].max; calcVil();
+}
+function calcVil(){
+  const n=$("vilEnch").value, l=Number($("vilLvl").value), p=price(n,l);
+  $("vilResult").innerHTML="<b class='cost-ok'>"+p[0]+" to "+p[1]+"</b> emeralds"+
+    (TREASURE.includes(n)?"<br><small>Treasure enchantment: price is doubled.</small>":"")+
+    "<br><small>Tip: before your first trade, break and replace the lectern to reroll until the price is near "+p[0]+".</small>";
+}
+
+/* Farms */
+const dots=n=>"●".repeat(n)+"○".repeat(5-n);
+function initFarms(){
+  document.querySelectorAll(".farm").forEach((a,i)=>{
+    a.dataset.i=i;
+    a.querySelector(".body").insertAdjacentHTML("beforeend",'<div class="rate"><span>XP '+dots(+a.dataset.xp)+'</span><span>Difficulty '+dots(+a.dataset.diff)+'</span></div>');
+  });
+}
+function sortFarms(mode,btn){
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===btn));
+  const box=document.querySelector(".farms"), arr=[...box.children];
+  arr.sort((a,b)=> mode==="xp" ? (b.dataset.xp-a.dataset.xp)||(a.dataset.diff-b.dataset.diff)
+                 : mode==="easy" ? (a.dataset.diff-b.dataset.diff)||(b.dataset.xp-a.dataset.xp)
+                 : a.dataset.i-b.dataset.i);
+  arr.forEach(x=>box.appendChild(x));
+}
+
+/* Plan actions: copy, share, save */
+let LAST=null;
+function afterPlan(steps,total,xp){
+  const key=$("itemSelect").value;
+  LAST={key,init:Number($("initUses").value),picks:BOOKS.map(b=>[b.n,b.lvl])};
+  LAST.text=items[key].name+": "+BOOKS.map(b=>b.name).join(", ")+"\n"+
+    steps.map((x,i)=>(i+1)+". "+x.left+" + "+x.right+" -> "+x.cost+" levels").join("\n")+
+    "\nTotal: "+total+" levels (about "+xp+" XP)";
+  let lo=0,hi=0,skipped=0;
+  BOOKS.forEach(b=>{const p=price(b.n,b.lvl); if(p){lo+=p[0];hi+=p[1];} else skipped++;});
+  $("optResult").insertAdjacentHTML("beforeend",
+    '<p class="note">Villager price for these books: '+lo+' to '+hi+' emeralds'+(skipped?' ('+skipped+' not sold by villagers)':'')+'.</p>'+
+    '<div class="act"><button class="ghost" onclick="copyPlan()">Copy plan</button>'+
+    '<button class="ghost" onclick="shareBuild()">Copy share link</button>'+
+    '<button class="ghost" onclick="saveBuild()">Save build</button></div>');
+}
+function copyText(text,msg){
+  const done=()=>toast(msg);
+  if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(text).then(done,()=>fallbackCopy(text,done)); }
+  else fallbackCopy(text,done);
+}
+function fallbackCopy(text,done){
+  const t=document.createElement("textarea"); t.value=text; document.body.appendChild(t); t.select();
+  try{document.execCommand("copy");done();}catch(e){toast("Copy failed");}
+  t.remove();
+}
+function copyPlan(){ if(LAST) copyText(LAST.text,"Plan copied"); }
+function buildLink(b){
+  const q=new URLSearchParams({item:b.key,uses:b.init,e:b.picks.map(p=>p[0]+":"+p[1]).join(",")});
+  return location.origin+location.pathname+"#"+q.toString();
+}
+function shareBuild(){ if(LAST) copyText(buildLink(LAST),"Link copied"); }
+
+const SAVE_KEY="mcxp_builds";
+function readSaved(){ try{return JSON.parse(localStorage.getItem(SAVE_KEY))||[];}catch(e){return [];} }
+function writeSaved(a){ try{localStorage.setItem(SAVE_KEY,JSON.stringify(a));}catch(e){toast("Cannot save here");} }
+function saveBuild(){
+  if(!LAST) return;
+  const a=readSaved();
+  a.unshift({id:Date.now(),key:LAST.key,init:LAST.init,picks:LAST.picks});
+  writeSaved(a.slice(0,10)); renderSaved(); toast("Build saved");
+}
+function renderSaved(){
+  const a=readSaved(), box=$("savedBuilds");
+  if(!a.length){ box.innerHTML=""; return; }
+  box.innerHTML="<h3>Saved builds</h3>"+a.map(b=>
+    '<div class="sv"><span>'+items[b.key].name+': '+b.picks.map(p=>p[0]+" "+ROMAN[p[1]]).join(", ")+'</span>'+
+    '<button onclick="loadSaved('+b.id+')">Load</button>'+
+    '<button class="ghost" onclick="delSaved('+b.id+')">✕</button></div>').join("");
+}
+function loadSaved(id){ const b=readSaved().find(x=>x.id===id); if(b) applyBuild(b); }
+function delSaved(id){ writeSaved(readSaved().filter(x=>x.id!==id)); renderSaved(); }
+function applyBuild(b){
+  if(!items[b.key]) return;
+  $("itemSelect").value=b.key; changeItem();
+  $("initUses").value=String(b.init||0);
+  b.picks.forEach(([n,l])=>{
+    const cb=$("optList").querySelector('input[data-n="'+n+'"]');
+    if(!cb) return;
+    cb.checked=true; cb.parentElement.classList.add("on");
+    cb.parentElement.querySelector("select").value=String(l);
+  });
+  optimize();
+  $("optList").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function loadFromHash(){
+  if(!location.hash) return;
+  try{
+    const q=new URLSearchParams(location.hash.slice(1)), e=q.get("e");
+    if(!q.get("item")||!e) return;
+    applyBuild({key:q.get("item"),init:Number(q.get("uses"))||0,
+      picks:e.split(",").map(x=>{const i=x.lastIndexOf(":");return [x.slice(0,i),Number(x.slice(i+1))];}).filter(p=>ench[p[0]]&&p[1]>=1)});
+  }catch(err){}
 }
 
 init();
+initVil();initFarms();renderSaved();
 calculateXP();
+loadFromHash();
 </script>
 </body>
 </html>
