@@ -11,31 +11,45 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
-header{text-align:center;padding:30px 16px 10px}
-header h1{font-size:28px}
+header{text-align:center;padding:30px 16px 10px;position:relative;overflow:hidden}
+header h1{font-size:28px;background:linear-gradient(90deg,#f1f3f6 30%,#9dff9d 50%,#f1f3f6 70%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:-250% 0}}
 header p{color:var(--muted);margin-top:4px}
+.hdr-orbs i{position:absolute;bottom:-10px;left:var(--x);width:10px;height:10px;border-radius:50%;background:radial-gradient(#d4ff6a,#5ec26a);box-shadow:0 0 10px #b6ff4a;opacity:0;animation:rise-orb 5s ease-in infinite;animation-delay:var(--d)}
+@keyframes rise-orb{0%{transform:translateY(0) scale(.5);opacity:0}15%{opacity:.9}100%{transform:translateY(-120px) scale(1);opacity:0}}
 .container{width:min(820px,94%);margin:20px auto 40px}
-.section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:18px}
+.section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:18px;opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease,border-color .25s,box-shadow .25s}
+.section.in{opacity:1;transform:none}
+.section:hover{border-color:#44516a;box-shadow:0 6px 22px rgba(0,0,0,.25)}
 .section h2{font-size:20px;margin-bottom:6px}
 .section .sub{color:var(--muted);font-size:14px;margin-bottom:14px}
 label{font-size:14px;color:var(--muted)}
 input,select,button{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--text);margin-top:6px;font-size:15px}
-button{background:var(--accent);color:#0c1a0f;border:none;cursor:pointer;font-weight:700}
-button:hover{background:var(--accent2)}
+button{background:var(--accent);color:#0c1a0f;border:none;cursor:pointer;font-weight:700;transition:transform .15s,background .15s,box-shadow .15s}
+button:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 4px 12px rgba(94,194,106,.3)}
+button:active{transform:scale(.97)}
 button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
-button.ghost:hover{color:var(--text);background:var(--panel2)}
+button.ghost:hover{color:var(--text);background:var(--panel2);box-shadow:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 @media(max-width:650px){.grid,.grid3{grid-template-columns:1fr}}
 .result{margin-top:14px;padding:14px;background:var(--panel2);border-radius:8px;text-align:center;font-size:17px}
+.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(.92);opacity:.4}100%{transform:none;opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.float{animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
 /* Anvil */
 .anvil-slots{display:grid;grid-template-columns:1fr 80px 1fr;align-items:center;gap:12px;margin:16px 0 6px}
-.slot{height:130px;background:var(--panel2);border:2px dashed var(--line);border-radius:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;font-size:13px;color:var(--muted);padding:6px}
+.slot{height:130px;background:var(--panel2);border:2px dashed var(--line);border-radius:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;font-size:13px;color:var(--muted);padding:6px;transition:border-color .3s,box-shadow .3s}
 .slot img{width:64px;height:64px;image-rendering:pixelated}
-.slot.glow img{filter:drop-shadow(0 0 8px #b46bff)}
-.slot.glow{border-color:#b46bff;border-style:solid}
+.slot.glow img{filter:drop-shadow(0 0 8px #b46bff);animation:glow 2s ease-in-out infinite}
+@keyframes glow{50%{filter:drop-shadow(0 0 16px #d29bff)}}
+.slot.glow{border-color:#b46bff;border-style:solid;box-shadow:0 0 18px rgba(180,107,255,.25)}
+.slot.flash{animation:flash .6s}
+@keyframes flash{30%{box-shadow:0 0 30px 6px rgba(245,197,66,.6);border-color:var(--gold)}}
 .mid{position:relative;text-align:center}
 .hammer{font-size:44px;display:inline-block}
 .hammer.hit{animation:hammer .45s}
@@ -44,35 +58,66 @@ button.ghost:hover{color:var(--text);background:var(--panel2)}
 .spark.active{animation:spark .6s}
 @keyframes spark{0%{opacity:1;transform:scale(.5)}100%{opacity:0;transform:scale(2) translateY(-25px)}}
 .tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:28px;margin-top:10px}
-.tag{background:#2b2147;border:1px solid #7a4bd1;color:#d9c2ff;border-radius:999px;padding:3px 10px;font-size:13px}
+.tag{background:#2b2147;border:1px solid #7a4bd1;color:#d9c2ff;border-radius:999px;padding:3px 10px;font-size:13px;animation:pop .4s}
 .btns{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:6px}
 .cost-ok{color:var(--accent)} .cost-bad{color:#ff6b6b}
 
 /* Optimizer */
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
 @media(max-width:650px){.opts{grid-template-columns:1fr}}
-.opt{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text);font-size:15px;cursor:pointer}
+.opt{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text);font-size:15px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+.opt:hover{transform:translateX(3px)}
 .opt.on{border-color:#7a4bd1;background:#1c1630}
 .opt input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:#8b5cf6;flex:none}
 .opt .nm{flex:1}
 .opt select{width:auto;margin:0;padding:5px 8px;font-size:14px}
-.plan{margin-top:14px;background:var(--panel2);border-radius:8px;padding:14px}
+.plan{margin-top:14px;background:var(--panel2);border-radius:8px;padding:14px;animation:rise .5s}
 .plan .nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;margin-bottom:12px}
 @media(max-width:650px){.plan .nums{grid-template-columns:1fr}}
-.plan .nums div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
+.plan .nums div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px;animation:pop .5s both}
+.plan .nums div:nth-child(2){animation-delay:.1s}.plan .nums div:nth-child(3){animation-delay:.2s}
 .plan .nums b{display:block;font-size:22px}
 .plan .nums span{color:var(--muted);font-size:13px}
 .plan ol{padding-left:22px}
-.plan li{margin:8px 0;font-size:14px}
+.plan li{margin:8px 0;font-size:14px;animation:rise .4s both}
 .plan li .c{color:var(--gold);font-weight:700;white-space:nowrap}
 .plan li .it{color:#d9c2ff}
 .warn{color:#ff9b6b}
 
+/* Mending */
+.mend-vis{display:grid;grid-template-columns:90px 1fr;gap:16px;align-items:end;margin:16px 0 4px}
+.mbookcard{text-align:center;font-size:12px;color:var(--muted)}
+.mbookcard img,.mbookcard .fb{width:64px;height:64px;image-rendering:pixelated;display:block;margin:0 auto 4px;font-size:52px;line-height:64px;filter:drop-shadow(0 0 8px #b46bff)}
+.mbookcard.active img,.mbookcard.active .fb{animation:float .5s ease-in-out infinite,glow .5s infinite}
+.orbs{position:relative;height:50px;overflow:hidden}
+.orb{position:absolute;top:0;width:12px;height:12px;border-radius:50%;background:radial-gradient(#d4ff6a,#5ec26a);box-shadow:0 0 10px #b6ff4a;animation:orb .8s ease-in forwards}
+@keyframes orb{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:1}100%{transform:translate(var(--dx),44px) scale(1);opacity:.2}}
+.mbar{height:18px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.mbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e0503c,#f5c542,#5ec26a);background-size:200% 100%;border-radius:999px;transition:width .4s}
+.mbtxt{text-align:center;font-size:13px;color:var(--muted);margin-top:4px}
+.mbcost{margin-top:12px;background:var(--panel2);border:1px solid #7a4bd1;border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center}
+.mbcost select{width:auto;margin:0 0 0 6px;padding:4px 8px;font-size:14px}
+.mbcost small{color:var(--muted)}
+
+/* Villager */
+.vilbox{display:flex;align-items:center;gap:14px;justify-content:center}
+.vilbox img,.vilbox .fb{width:56px;height:56px;image-rendering:pixelated;font-size:44px;line-height:56px}
+details.allb{margin-top:14px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+details.allb summary{cursor:pointer;font-weight:700;color:var(--accent)}
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+@media(max-width:650px){.vgrid{grid-template-columns:1fr}}
+.vrow{display:flex;justify-content:space-between;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer;transition:border-color .2s,transform .15s}
+.vrow:hover{border-color:var(--accent);transform:translateX(3px)}
+.vrow.no{opacity:.45;cursor:default}.vrow.no:hover{border-color:var(--line);transform:none}
+.vrow b{color:var(--gold);white-space:nowrap}
+
 /* Farms */
 .farms{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.farm{display:block;text-decoration:none;color:inherit;background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s,transform .15s}
-.farm:hover,.farm:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
-.farm img{display:block;width:100%;height:170px;object-fit:cover;background:#0d1117}
+.farm{display:block;text-decoration:none;color:inherit;background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s,transform .2s,box-shadow .2s}
+.farm:hover,.farm:focus-visible{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.farm img{display:block;width:100%;height:170px;object-fit:cover;background:#0d1117;transition:transform .5s}
+.farm:hover img{transform:scale(1.08)}
+.farm .imgw{overflow:hidden}
 .farm .body{padding:12px 14px}
 .farm h3{font-size:16px;margin-bottom:4px}
 .farm p{color:var(--muted);font-size:13px}
@@ -87,18 +132,19 @@ button.ghost:hover{color:var(--text);background:var(--panel2)}
 .note{color:var(--muted);font-size:13px;margin-top:10px}
 .saved{margin-top:14px}
 .saved h3{font-size:15px;margin-bottom:8px}
-.sv{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px}
+.sv{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px;animation:rise .4s}
 .sv span{flex:1}
 .sv button{width:auto;margin:0;padding:5px 10px;font-size:12px}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--accent);color:#0c1a0f;padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
-#toast.show{opacity:1}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#0c1a0f;padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9}
+#toast.show{opacity:1;transform:translateX(-50%)}
 footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.section{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
 <header>
+  <div class="hdr-orbs"><i style="--x:12%;--d:0s"></i><i style="--x:28%;--d:1.2s"></i><i style="--x:45%;--d:.5s"></i><i style="--x:63%;--d:2s"></i><i style="--x:80%;--d:.9s"></i><i style="--x:92%;--d:2.6s"></i></div>
   <h1>⛏ Minecraft XP & Anvil Optimizer</h1>
   <p>XP calculator, anvil, cheapest book order, Mending, Grindstone, villager prices, XP farms</p>
 </header>
@@ -142,7 +188,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
       <div class="spark" id="spark">✦</div>
     </div>
     <div class="slot">
-      <img id="rightItem" alt="Book" src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
+      <img id="rightItem" class="float" alt="Book" src="https://blockrender.dev/render/item/enchanted_book.png?size=512">
       <span id="rightName">Enchanted Book</span>
     </div>
   </div>
@@ -186,6 +232,28 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     <div><label for="mendCur">Current durability</label><input id="mendCur" type="number" min="0" oninput="calcMend()"></div>
   </div>
   <div class="result" id="mendResult"></div>
+
+  <div class="mend-vis">
+    <div class="mbookcard" id="mbook">
+      <img class="float" alt="Mending book" src="https://blockrender.dev/render/item/enchanted_book.png?size=512" onerror="this.outerHTML='<div class=&quot;fb float&quot;>📘</div>'">
+      Mending I
+    </div>
+    <div>
+      <div class="orbs" id="orbs"></div>
+      <div class="mbar"><i id="mbarFill"></i></div>
+      <div class="mbtxt" id="mbarTxt"></div>
+    </div>
+  </div>
+  <button onclick="playMend()" style="margin-top:10px">▶ Play repair animation</button>
+
+  <div class="mbcost">
+    <div style="flex:1">
+      <b>Upgraded book: Mending I</b>
+      <div id="mbCost" style="margin-top:2px"></div>
+      <small>Anvil uses on the item: <select id="mendUses" onchange="calcMendBook()">
+        <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></small>
+    </div>
+  </div>
 </section>
 
 <!-- GRINDSTONE -->
@@ -206,6 +274,10 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
     <div><label for="vilLvl">Level</label><select id="vilLvl" onchange="calcVil()"></select></div>
   </div>
   <div class="result" id="vilResult"></div>
+  <details class="allb">
+    <summary>Show all books (including ones villagers don't sell)</summary>
+    <div class="vgrid" id="vilAll"></div>
+  </details>
 </section>
 
 <!-- XP FARMS -->
@@ -221,7 +293,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
     <a class="farm" target="_blank" rel="noopener"
        data-xp="2" data-diff="1" href="https://www.youtube.com/results?search_query=armadillo+xp+farm+minecraft">
-      <img src="images/armadillo.jpg" alt="Armadillo XP farm" loading="lazy">
+      <div class="imgw"><img src="images/armadillo.jpg" alt="Armadillo XP farm" loading="lazy"></div>
       <div class="body">
         <h3>Armadillo XP Farm</h3>
         <p>The simplest farm: easy to build, steady XP.</p>
@@ -231,7 +303,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
     <a class="farm" target="_blank" rel="noopener"
        data-xp="3" data-diff="3" href="https://www.youtube.com/results?search_query=minecraft+mob+xp+farm">
-      <img src="images/mob-farm.jpg" alt="Mob XP farm" style="object-position:center 25%" loading="lazy">
+      <div class="imgw"><img src="images/mob-farm.jpg" alt="Mob XP farm" style="object-position:center 25%" loading="lazy"></div>
       <div class="body">
         <h3>Mob Farm</h3>
         <p>Early-game XP and loot from all hostile mobs.</p>
@@ -241,7 +313,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
     <a class="farm" target="_blank" rel="noopener"
        data-xp="5" data-diff="4" href="https://www.youtube.com/results?search_query=minecraft+enderman+xp+farm">
-      <img src="images/enderman-farm.jpg" alt="Enderman XP farm" style="object-position:center 35%" loading="lazy">
+      <div class="imgw"><img src="images/enderman-farm.jpg" alt="Enderman XP farm" style="object-position:center 35%" loading="lazy"></div>
       <div class="body">
         <h3>Enderman Farm</h3>
         <p>Very fast XP and Ender Pearls.</p>
@@ -251,7 +323,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
     <a class="farm" target="_blank" rel="noopener"
        data-xp="1" data-diff="2" href="https://www.youtube.com/results?search_query=minecraft+villager+trading+emerald+farm">
-      <img src="images/villager-trading.jpg" alt="Villager trading" style="object-position:center 30%" loading="lazy">
+      <div class="imgw"><img src="images/villager-trading.jpg" alt="Villager trading" style="object-position:center 30%" loading="lazy"></div>
       <div class="body">
         <h3>Villager Trading</h3>
         <p>Trade for emeralds, and for XP from every trade.</p>
@@ -261,7 +333,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
     <a class="farm" target="_blank" rel="noopener"
        data-xp="4" data-diff="4" href="https://www.youtube.com/results?search_query=minecraft+fast+gold+farm+nether">
-      <img src="images/gold-farm.jpg" alt="Gold farm" loading="lazy">
+      <div class="imgw"><img src="images/gold-farm.jpg" alt="Gold farm" loading="lazy"></div>
       <div class="body">
         <h3>Gold Farm</h3>
         <p>Nether farm that gives gold and plenty of XP.</p>
@@ -279,6 +351,7 @@ footer{text-align:center;color:#6b7280;padding:20px;font-size:14px}
 
 <script>
 const $=id=>document.getElementById(id);
+function pop(el){ el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); }
 
 /* ========== XP ========== */
 function totalXP(l){
@@ -289,10 +362,10 @@ function totalXP(l){
 function calculateXP(){
   const c=Number($("currentLevel").value), t=Number($("targetLevel").value);
   $("xpResult").textContent = t<c ? "Target level must be higher." : "Required XP: "+(totalXP(t)-totalXP(c));
+  pop($("xpResult"));
 }
 
 /* ========== DATA ========== */
-/* max level, anvil multiplier when the enchantment comes from a book */
 const ench={
   "Protection":{max:4,m:1}, "Fire Protection":{max:4,m:1}, "Blast Protection":{max:4,m:2}, "Projectile Protection":{max:4,m:1},
   "Respiration":{max:3,m:2}, "Aqua Affinity":{max:1,m:2}, "Thorns":{max:3,m:4},
@@ -307,11 +380,13 @@ const ench={
   "Density":{max:5,m:1}, "Breach":{max:4,m:2}, "Wind Burst":{max:3,m:2},
   "Lunge":{max:3,m:2},
   "Luck of the Sea":{max:3,m:2}, "Lure":{max:3,m:2},
-  "Unbreaking":{max:3,m:1}, "Mending":{max:1,m:2}
+  "Unbreaking":{max:3,m:1}, "Mending":{max:1,m:2},
+  "Curse of Binding":{max:1,m:4}, "Curse of Vanishing":{max:1,m:4}
 };
 const PROT=["Protection","Fire Protection","Blast Protection","Projectile Protection"];
-const COMMON=["Unbreaking","Mending"];
+const COMMON=["Unbreaking","Mending","Curse of Vanishing"];
 const DIG=["Efficiency","Silk Touch","Fortune"];
+const BIND="Curse of Binding";
 
 const items={
   diamond_sword:{name:"Diamond Sword",ench:["Sharpness","Smite","Bane of Arthropods","Knockback","Fire Aspect","Looting","Sweeping Edge",...COMMON]},
@@ -319,10 +394,10 @@ const items={
   diamond_pickaxe:{name:"Diamond Pickaxe",ench:[...DIG,...COMMON]},
   diamond_shovel:{name:"Diamond Shovel",ench:[...DIG,...COMMON]},
   diamond_hoe:{name:"Diamond Hoe",ench:[...DIG,...COMMON]},
-  diamond_helmet:{name:"Diamond Helmet",ench:[...PROT,"Respiration","Aqua Affinity","Thorns",...COMMON]},
-  diamond_chestplate:{name:"Diamond Chestplate",ench:[...PROT,"Thorns",...COMMON]},
-  diamond_leggings:{name:"Diamond Leggings",ench:[...PROT,"Thorns","Swift Sneak",...COMMON]},
-  diamond_boots:{name:"Diamond Boots",ench:[...PROT,"Feather Falling","Depth Strider","Frost Walker","Soul Speed","Thorns",...COMMON]},
+  diamond_helmet:{name:"Diamond Helmet",ench:[...PROT,"Respiration","Aqua Affinity","Thorns",BIND,...COMMON]},
+  diamond_chestplate:{name:"Diamond Chestplate",ench:[...PROT,"Thorns",BIND,...COMMON]},
+  diamond_leggings:{name:"Diamond Leggings",ench:[...PROT,"Thorns","Swift Sneak",BIND,...COMMON]},
+  diamond_boots:{name:"Diamond Boots",ench:[...PROT,"Feather Falling","Depth Strider","Frost Walker","Soul Speed","Thorns",BIND,...COMMON]},
   bow:{name:"Bow",ench:["Power","Punch","Flame","Infinity",...COMMON]},
   crossbow:{name:"Crossbow",ench:["Multishot","Piercing","Quick Charge",...COMMON]},
   trident:{name:"Trident",ench:["Impaling","Riptide","Loyalty","Channeling",...COMMON]},
@@ -330,10 +405,9 @@ const items={
   diamond_spear:{name:"Diamond Spear",ench:["Sharpness","Smite","Bane of Arthropods","Knockback","Fire Aspect","Looting","Lunge",...COMMON]},
   fishing_rod:{name:"Fishing Rod",ench:["Luck of the Sea","Lure",...COMMON]},
   shield:{name:"Shield",ench:COMMON},
-  elytra:{name:"Elytra",ench:COMMON}
+  elytra:{name:"Elytra",ench:[BIND,...COMMON]}
 };
 
-/* enchantments that cannot be on the same item */
 const CONFLICTS=[
   PROT,
   ["Sharpness","Smite","Bane of Arthropods","Density","Breach"],
@@ -347,7 +421,7 @@ function conflicts(a,b){ return a!==b && CONFLICTS.some(g=>g.includes(a)&&g.incl
 
 const ROMAN=["","I","II","III","IV","V"];
 const img=n=>"https://blockrender.dev/render/item/"+n+".png?size=512";
-const pen=u=>Math.pow(2,u)-1;           // work penalty after u anvil uses
+const pen=u=>Math.pow(2,u)-1;
 
 /* ========== MANUAL ANVIL ========== */
 let state={enchants:{},uses:0};
@@ -428,6 +502,7 @@ function render(){
 function resetItem(){
   state={enchants:{},uses:0};
   $("anvilResult").textContent="Item reset.";
+  pop($("anvilResult"));
   render();
 }
 
@@ -439,12 +514,15 @@ function useAnvil(){
   hammer.classList.add("hit");spark.classList.add("active");
 
   setTimeout(()=>{
-    if(p.clash){ $("anvilResult").textContent=p.n+" is incompatible with "+p.clash+"."; return; }
-    if(p.wasted){ $("anvilResult").textContent="No change: the item already has "+p.n+" "+ROMAN[p.have]+" or higher."; return; }
-    if(p.cost>=40){ $("anvilResult").textContent="Too expensive! "+p.cost+" levels is over the limit of 39."; return; }
+    const r=$("anvilResult"), slot=$("leftSlot");
+    pop(r);
+    if(p.clash){ r.textContent=p.n+" is incompatible with "+p.clash+"."; return; }
+    if(p.wasted){ r.textContent="No change: the item already has "+p.n+" "+ROMAN[p.have]+" or higher."; return; }
+    if(p.cost>=40){ r.textContent="Too expensive! "+p.cost+" levels is over the limit of 39."; return; }
     state.enchants[p.n]=p.newLvl;
     state.uses++;
-    $("anvilResult").textContent="Done! "+p.n+" "+ROMAN[p.newLvl]+" added. Cost: "+p.cost+" levels.";
+    r.textContent="Done! "+p.n+" "+ROMAN[p.newLvl]+" added. Cost: "+p.cost+" levels.";
+    slot.classList.remove("flash"); void slot.offsetWidth; slot.classList.add("flash");
     render();
   },400);
 }
@@ -501,21 +579,19 @@ function optimize(){
   const init=Number($("initUses").value);
   const full=(1<<n)-1;
 
-  // sum of book costs for each subset
   const ec=new Array(full+1).fill(0);
   for(let m=1;m<=full;m++){
     const low=m&-m, i=31-Math.clz32(low);
     ec[m]=ec[m^low]+BOOKS[i].cost;
   }
 
-  // g[mask]: best ways to merge those books into ONE book -> [{c: total cost, u: anvil uses, t: tree}]
   const g=new Array(full+1);
   for(let i=0;i<n;i++) g[1<<i]=[{c:0,u:0,t:{leaf:i}}];
   for(let m=1;m<=full;m++){
     if((m&(m-1))===0) continue;
     const best={};
     for(let a=(m-1)&m;a>0;a=(a-1)&m){
-      const b=m^a;                        // a = left (kept), b = right (sacrificed, you pay for it)
+      const b=m^a;
       for(const A of g[a]) for(const B of g[b]){
         const step=pen(A.u)+pen(B.u)+ec[b];
         if(step>=40) continue;
@@ -529,7 +605,6 @@ function optimize(){
     g[m]=keep;
   }
 
-  // apply merged groups to the item one after another
   const K=init+n;
   const dp=Array.from({length:full+1},()=>new Array(K+1).fill(null));
   dp[0][init]={c:0};
@@ -554,7 +629,6 @@ function optimize(){
     if(dp[full][k] && (endK<0 || dp[full][k].c<dp[full][endK].c)) endK=k;
   }
 
-  // naive plan: add books to the item one by one in list order
   let nk=init, nTotal=0, nBad=false;
   BOOKS.forEach(b=>{ const s=pen(nk)+b.cost; if(s>=40) nBad=true; nTotal+=s; nk++; });
 
@@ -563,7 +637,6 @@ function optimize(){
     return;
   }
 
-  // rebuild the steps
   const groups=[];
   let m=full,k=endK;
   while(m){ const st=dp[m][k]; groups.push(st); m=st.pm; k=st.pk; }
@@ -584,8 +657,8 @@ function optimize(){
     '<div><b>'+xpBest+'</b><span>XP (approx.)</span></div>'+
     '<div><b class="'+(nBad?"cost-bad":"cost-ok")+'">'+(nBad?"too expensive":"-"+saved)+'</b><span>'+(nBad?"one by one fails":"levels saved vs one by one ("+nTotal+")")+'</span></div>'+
     '</div><ol>';
-  steps.forEach(s=>{
-    html+='<li>'+(s.item?'<span class="it">'+s.left+'</span>':s.left)+' + '+s.right+
+  steps.forEach((s,i)=>{
+    html+='<li style="animation-delay:'+(250+i*70)+'ms">'+(s.item?'<span class="it">'+s.left+'</span>':s.left)+' + '+s.right+
           ' &rarr; <span class="c">'+s.cost+' levels</span></li>';
   });
   html+='</ol><p style="color:var(--muted);font-size:13px;margin-top:8px">Left slot keeps its enchantments, the right slot is what you pay for. XP is counted per step from level 0.</p></div>';
@@ -597,7 +670,6 @@ function optimize(){
 const DUR={diamond_sword:1561,diamond_axe:1561,diamond_pickaxe:1561,diamond_shovel:1561,diamond_hoe:1561,
   diamond_helmet:363,diamond_chestplate:528,diamond_leggings:495,diamond_boots:429,bow:384,crossbow:465,
   trident:250,mace:500,fishing_rod:64,shield:336,elytra:432};
-/* minimum enchanting power: base + perLevel*(level-1) (approximate, used for Grindstone refund) */
 const MINC={"Protection":[1,11],"Fire Protection":[10,8],"Blast Protection":[5,8],"Projectile Protection":[3,6],
   "Feather Falling":[5,6],"Respiration":[10,10],"Aqua Affinity":[1,0],"Thorns":[10,20],"Depth Strider":[10,10],
   "Frost Walker":[10,10],"Soul Speed":[10,10],"Swift Sneak":[25,25],"Sharpness":[1,11],"Smite":[5,8],
@@ -605,8 +677,9 @@ const MINC={"Protection":[1,11],"Fire Protection":[10,8],"Blast Protection":[5,8
   "Efficiency":[1,10],"Silk Touch":[15,0],"Fortune":[15,9],"Power":[1,10],"Punch":[12,20],"Flame":[20,0],
   "Infinity":[20,0],"Multishot":[20,0],"Piercing":[1,10],"Quick Charge":[12,20],"Impaling":[1,8],"Riptide":[17,7],
   "Loyalty":[12,7],"Channeling":[25,0],"Density":[5,8],"Breach":[15,9],"Wind Burst":[15,9],"Lunge":[5,8],
-  "Luck of the Sea":[15,9],"Lure":[15,9],"Unbreaking":[5,8],"Mending":[25,25]};
-const TREASURE=["Mending","Frost Walker"];
+  "Luck of the Sea":[15,9],"Lure":[15,9],"Unbreaking":[5,8],"Mending":[25,25],
+  "Curse of Binding":[25,0],"Curse of Vanishing":[25,0]};
+const TREASURE=["Mending","Frost Walker","Curse of Binding","Curse of Vanishing"];
 const UNTRADE=["Soul Speed","Swift Sneak","Wind Burst","Density","Breach","Lunge"];
 const minCost=(n,l)=>MINC[n][0]+MINC[n][1]*(l-1);
 function price(n,l){
@@ -620,7 +693,6 @@ function toast(msg){
   clearTimeout(toast.id); toast.id=setTimeout(()=>t.classList.remove("show"),1800);
 }
 
-/* item-dependent parts */
 function syncExtra(){
   const k=$("itemSelect").value, name=items[k].name;
   $("mendName").textContent=name; $("grindItemName").textContent=name;
@@ -632,20 +704,49 @@ function syncExtra(){
 /* Mending */
 function calcMend(){
   const mx=Number($("mendMax").value), cur=Number($("mendCur").value), r=$("mendResult");
-  if(!mx){ r.textContent="Enter the item's max durability."; return; }
+  calcMendBook();
+  if(!mx){ r.textContent="Enter the item's max durability."; setBar(0); $("mbarTxt").textContent=""; return; }
+  setBar(Math.min(Math.max(cur,0),mx)/mx*100); $("mbarTxt").textContent=Math.max(cur,0)+" / "+mx;
   if(cur>=mx){ r.textContent="Nothing to repair."; return; }
   const miss=mx-Math.max(cur,0), xp=Math.ceil(miss/2);
   r.innerHTML="Missing: <b>"+miss+"</b> durability<br>XP needed: <b class='cost-ok'>"+xp+"</b>"+
     "<br><small>about "+Math.ceil(xp/7)+" XP bottles, or "+Math.ceil(xp/5)+" zombies</small>";
 }
+function setBar(p){ $("mbarFill").style.width=p+"%"; }
+function calcMendBook(){
+  const u=Number($("mendUses").value), c=2+pen(u), p=price("Mending",1);
+  $("mbCost").innerHTML="Anvil cost: <b class='"+(c>=40?"cost-bad":"cost-ok")+"'>"+c+" levels</b> ("+totalXP(c)+" XP)"+
+    "<br><small>Villager price: "+p[0]+" to "+p[1]+" emeralds. Cannot be combined with Infinity.</small>";
+}
+let mendAnim=0;
+function spawnOrb(box){
+  const o=document.createElement("i"); o.className="orb";
+  o.style.left=(Math.random()*92)+"%"; o.style.setProperty("--dx",(Math.random()*30-15)+"px");
+  box.appendChild(o); setTimeout(()=>o.remove(),850);
+}
+function playMend(){
+  const mx=Number($("mendMax").value), cur=Math.max(0,Number($("mendCur").value));
+  if(!mx||cur>=mx){ toast("Nothing to repair"); return; }
+  cancelAnimationFrame(mendAnim);
+  const t0=performance.now(), dur=2800, orbs=$("orbs"), book=$("mbook"); let last=0;
+  book.classList.add("active");
+  const step=now=>{
+    const k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3), v=Math.round(cur+(mx-cur)*e);
+    setBar(v/mx*100); $("mbarTxt").textContent=v+" / "+mx;
+    if(k<1 && now-last>100){ last=now; spawnOrb(orbs); }
+    if(k<1) mendAnim=requestAnimationFrame(step);
+    else { book.classList.remove("active"); toast("Fully repaired!"); }
+  };
+  mendAnim=requestAnimationFrame(step);
+}
 
 /* Grindstone */
 function calcGrind(){
-  const picks=getSelected("grindList"), r=$("grindResult");
-  if(!picks.length){ r.innerHTML='<div class="result">Tick at least one enchantment.</div>'; return; }
+  const picks=getSelected("grindList").filter(p=>!p.n.startsWith("Curse")), r=$("grindResult");
+  if(!picks.length){ r.innerHTML='<div class="result">Tick at least one enchantment (curses give no XP).</div>'; return; }
   const sum=picks.reduce((a,p)=>a+minCost(p.n,p.lvl),0);
   const lo=Math.ceil(sum/2), hi=lo*2-1;
-  r.innerHTML='<div class="result">Refund: <b class="cost-ok">'+lo+' to '+hi+' XP</b><br><small>Base value '+sum+'. The exact amount is random.</small></div>';
+  r.innerHTML='<div class="result pop">Refund: <b class="cost-ok">'+lo+' to '+hi+' XP</b><br><small>Base value '+sum+'. The exact amount is random.</small></div>';
 }
 
 /* Villager prices */
@@ -654,18 +755,25 @@ function initVil(){
   Object.keys(ench).filter(n=>!UNTRADE.includes(n)).forEach(n=>{
     const o=document.createElement("option");o.value=n;o.textContent=n;s.appendChild(o);
   });
+  $("vilAll").innerHTML=Object.keys(ench).map(n=>{
+    const p=price(n,ench[n].max), rng=ench[n].max>1?"I-"+ROMAN[ench[n].max]:"I";
+    return p ? '<div class="vrow" onclick="pickVil(\''+n+'\')"><span>'+n+' '+rng+'</span><b>'+p[0]+'-'+p[1]+'</b></div>'
+             : '<div class="vrow no"><span>'+n+' '+rng+'</span><b>not sold</b></div>';
+  }).join("");
   vilLevels();
 }
+function pickVil(n){ $("vilEnch").value=n; vilLevels(); $("vilResult").scrollIntoView({behavior:"smooth",block:"center"}); }
 function vilLevels(){
   const n=$("vilEnch").value, ls=$("vilLvl"); ls.innerHTML="";
   for(let i=1;i<=ench[n].max;i++){const o=document.createElement("option");o.value=i;o.textContent=ROMAN[i];ls.appendChild(o);}
   ls.value=ench[n].max; calcVil();
 }
 function calcVil(){
-  const n=$("vilEnch").value, l=Number($("vilLvl").value), p=price(n,l);
-  $("vilResult").innerHTML="<b class='cost-ok'>"+p[0]+" to "+p[1]+"</b> emeralds"+
+  const n=$("vilEnch").value, l=Number($("vilLvl").value), p=price(n,l), r=$("vilResult");
+  r.innerHTML='<div class="vilbox"><img class="float" alt="" src="'+img("enchanted_book")+'" onerror="this.outerHTML=\'<div class=&quot;fb float&quot;>📘</div>\'"><div><b class="cost-ok">'+p[0]+' to '+p[1]+'</b> emeralds'+
     (TREASURE.includes(n)?"<br><small>Treasure enchantment: price is doubled.</small>":"")+
-    "<br><small>Tip: before your first trade, break and replace the lectern to reroll until the price is near "+p[0]+".</small>";
+    "<br><small>Tip: before your first trade, break and replace the lectern to reroll until the price is near "+p[0]+".</small></div></div>";
+  pop(r);
 }
 
 /* Farms */
@@ -682,10 +790,10 @@ function sortFarms(mode,btn){
   arr.sort((a,b)=> mode==="xp" ? (b.dataset.xp-a.dataset.xp)||(a.dataset.diff-b.dataset.diff)
                  : mode==="easy" ? (a.dataset.diff-b.dataset.diff)||(b.dataset.xp-a.dataset.xp)
                  : a.dataset.i-b.dataset.i);
-  arr.forEach(x=>box.appendChild(x));
+  arr.forEach((x,i)=>{ box.appendChild(x); x.style.animation="none"; void x.offsetWidth; x.style.animation="rise .45s both"; x.style.animationDelay=(i*60)+"ms"; });
 }
 
-/* Plan actions: copy, share, save */
+/* Plan actions */
 let LAST=null;
 function afterPlan(steps,total,xp){
   const key=$("itemSelect").value;
@@ -760,10 +868,20 @@ function loadFromHash(){
   }catch(err){}
 }
 
+/* Scroll reveal */
+function initReveal(){
+  const s=document.querySelectorAll(".section");
+  if(!("IntersectionObserver" in window)){ s.forEach(x=>x.classList.add("in")); return; }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:.08});
+  s.forEach(x=>io.observe(x));
+  setTimeout(()=>s.forEach(x=>x.classList.add("in")),2500);
+}
+
 init();
 initVil();initFarms();renderSaved();
 calculateXP();
 loadFromHash();
+initReveal();
 </script>
 </body>
 </html>
